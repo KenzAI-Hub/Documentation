@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Collaboration Microservice - ReDoc</title>
+<!-- needed for adaptive design -->
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+<link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png">
+<style>
+  body {
+    margin: 0;
+    padding-top: 56px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Modern Top Navigation Bar */
+  #recruify-top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #0f172a;
+    border-bottom: 1px solid #1e293b;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    z-index: 10000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow: hidden;
+  }
+
+  .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    height: 28px;
+  }
+
+  .brand-logo-img {
+    height: 24px;
+    max-height: 24px;
+    width: auto;
+    max-width: 130px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 22px;
+    background: #334155;
+    flex-shrink: 0;
+  }
+
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .service-badge .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 8px #38bdf8;
+    flex-shrink: 0;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .nav-label {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .service-select {
+    background: #1e293b;
+    color: #f1f5f9;
+    border: 1px solid #334155;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .service-select:hover, .service-select:focus {
+    border-color: #38bdf8;
+    background: #243248;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #334155;
+    color: #f8fafc;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.15s ease;
+  }
+
+  .nav-btn:hover {
+    background: #475569;
+  }
+</style>
+</head>
+<body>
+<header id="recruify-top-navbar">
+  <div class="nav-left">
+    <a href="../index.html" class="brand-logo" title="Recruify API Documentation">
+      <img src="../logo-light.svg" alt="Recruify" class="brand-logo-img" />
+    </a>
+    <div class="nav-divider"></div>
+    <div class="service-badge" id="active-service-badge">
+      <span class="pulse-dot"></span>
+      <span id="active-service-text">Active Service: <strong>👥 Collaboration Microservice</strong></span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <label for="service-selector" class="nav-label">Switch Microservice:</label>
+    <select id="service-selector" class="service-select">
+      <option value="../index.html" >🌐 All Microservices (Unified)</option>
+      <option value="../admin/index.html" >🏢 Admin Microservice</option>
+      <option value="../analytics/index.html" >📊 Analytics Microservice</option>
+      <option value="../ats/index.html" >📋 ATS Microservice</option>
+      <option value="../auth/index.html" >🔐 Auth Microservice</option>
+      <option value="../campus_pool/index.html" >🎓 Campus Pool Microservice</option>
+      <option value="../collaboration/index.html" selected>👥 Collaboration Microservice</option>
+      <option value="../interviews/index.html" >🎥 Interviews Microservice</option>
+      <option value="../jobs/index.html" >💼 Jobs Microservice</option>
+      <option value="../llm_metadata/index.html" >🧠 LLM Metadata Microservice</option>
+      <option value="../notifications/index.html" >🔔 Notifications Microservice</option>
+      <option value="../organization/index.html" >🏛️ Organization Microservice</option>
+      <option value="../payment/index.html" >💳 Payment Microservice</option>
+      <option value="../raas/index.html" >🚀 RaaS Microservice</option>
+      <option value="../resumes/index.html" >📄 Resumes Microservice</option>
+    </select>
+    <a href="../user-guide.html" class="nav-btn" title="View Step-by-Step User & Operations Guide" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35); color: #10b981;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+      User Guide
+    </a>
+    <a href="../architecture.html" class="nav-btn" title="View Inter-Service Dependency Graph & Architecture Matrix" style="background: rgba(124, 58, 237, 0.12); border-color: rgba(124, 58, 237, 0.35); color: #7c3aed;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      Dependency Graph
+    </a>
+    <a href="../openapi.json" target="_blank" class="nav-btn" title="Download raw OpenAPI JSON specification">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      OpenAPI JSON
+    </a>
+  </div>
+</header>
+
+<div id="redoc-container"></div>
+<script src="../redoc.standalone.js"></script>
+<script>
+  const spec = {"openapi": "3.1.0", "info": {"title": "Recruify - Collaboration Microservice", "description": "Autonomous microservice API for the Collaboration domain", "version": "v3"}, "paths": {"/health": {"get": {"tags": ["Collaboration Microservice - Health"], "summary": "Health Check", "description": "Service health check with DB ping.", "operationId": "health_check_health_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/share/{resource_type}/{resource_id}": {"post": {"tags": ["Resource Sharing & Collaboration"], "summary": "Share a resource with an organization member", "operationId": "share_resource_endpoint_share__resource_type___resource_id__post", "parameters": [{"name": "resource_type", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Type"}}, {"name": "resource_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Id"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ShareRequest"}}}}, "responses": {"201": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ShareResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "get": {"tags": ["Resource Sharing & Collaboration"], "summary": "List members who currently have access to a resource", "operationId": "list_shares_endpoint_share__resource_type___resource_id__get", "parameters": [{"name": "resource_type", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Type"}}, {"name": "resource_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/share/{resource_type}/{resource_id}/shared-users": {"get": {"tags": ["Resource Sharing & Collaboration"], "summary": "List user IDs who currently have access to a resource", "operationId": "list_shared_users_endpoint_share__resource_type___resource_id__shared_users_get", "parameters": [{"name": "resource_type", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Type"}}, {"name": "resource_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Id"}}, {"name": "relation", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "default": "collaborator", "title": "Relation"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/share/{resource_type}/{resource_id}/{member_keycloak_id}": {"delete": {"tags": ["Resource Sharing & Collaboration"], "summary": "Revoke collaborator access from an org member", "operationId": "revoke_share_endpoint_share__resource_type___resource_id___member_keycloak_id__delete", "parameters": [{"name": "resource_type", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Type"}}, {"name": "resource_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Id"}}, {"name": "member_keycloak_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Member Keycloak Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/activity/{resource_type}/{resource_id}": {"post": {"tags": ["Live Presence & Collaboration"], "summary": "Send a presence heartbeat: 'I am currently viewing this resource'", "operationId": "send_heartbeat_endpoint_activity__resource_type___resource_id__post", "parameters": [{"name": "resource_type", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Type"}}, {"name": "resource_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Id"}}], "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/ActivityHeartbeat", "default": {}}}}}, "responses": {"204": {"description": "Successful Response"}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "get": {"tags": ["Live Presence & Collaboration"], "summary": "List all users currently viewing this resource (seen in last 30s)", "operationId": "get_active_users_endpoint_activity__resource_type___resource_id__get", "parameters": [{"name": "resource_type", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Type"}}, {"name": "resource_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"$ref": "#/components/schemas/ActiveUserInfo"}, "title": "Response Get Active Users Endpoint Activity  Resource Type   Resource Id  Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/internal/collaboration/shares/{resource_type}/{resource_id}": {"get": {"tags": ["Internal - Collaboration"], "summary": "Get Internal Resource Shares", "description": "Fetch list of user emails with whom a specific resource has been shared.", "operationId": "get_internal_resource_shares_internal_collaboration_shares__resource_type___resource_id__get", "parameters": [{"name": "resource_type", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Type"}}, {"name": "resource_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Resource Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Get Internal Resource Shares Internal Collaboration Shares  Resource Type   Resource Id  Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/internal/collaboration/share": {"post": {"tags": ["Internal - Collaboration"], "summary": "Create Internal Resource Share", "description": "Idempotently share a resource with a user email.", "operationId": "create_internal_resource_share_internal_collaboration_share_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/ShareResourcePayload"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"additionalProperties": true, "type": "object", "title": "Response Create Internal Resource Share Internal Collaboration Share Post"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/internal/collaboration/check-share": {"get": {"tags": ["Internal - Collaboration"], "summary": "Check Internal Resource Share", "description": "Check if a resource is shared with a given email.", "operationId": "check_internal_resource_share_internal_collaboration_check_share_get", "parameters": [{"name": "resource_type", "in": "query", "required": true, "schema": {"type": "string", "title": "Resource Type"}}, {"name": "resource_id", "in": "query", "required": true, "schema": {"type": "string", "title": "Resource Id"}}, {"name": "email", "in": "query", "required": true, "schema": {"type": "string", "title": "Email"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": {"type": "boolean"}, "title": "Response Check Internal Resource Share Internal Collaboration Check Share Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/internal/collaboration/job/{job_id}": {"delete": {"tags": ["Internal - Collaboration"], "summary": "Delete Internal Job Collaboration", "description": "Clean up shared resource records and live activity for a deleted job.", "operationId": "delete_internal_job_collaboration_internal_collaboration_job__job_id__delete", "parameters": [{"name": "job_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Job Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Delete Internal Job Collaboration Internal Collaboration Job  Job Id  Delete"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}}, "components": {"schemas": {"ActiveUserInfo": {"properties": {"user_email": {"type": "string", "title": "User Email"}, "display_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Display Name"}, "context": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Context"}, "last_seen_at": {"type": "string", "format": "date-time", "title": "Last Seen At"}, "is_you": {"type": "boolean", "title": "Is You"}}, "type": "object", "required": ["user_email", "display_name", "context", "last_seen_at", "is_you"], "title": "ActiveUserInfo"}, "ActivityHeartbeat": {"properties": {"context": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Context"}, "display_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Display Name"}}, "type": "object", "title": "ActivityHeartbeat"}, "HTTPValidationError": {"properties": {"detail": {"items": {"$ref": "#/components/schemas/ValidationError"}, "type": "array", "title": "Detail"}}, "type": "object", "title": "HTTPValidationError"}, "ShareRequest": {"properties": {"share_with_email": {"type": "string", "title": "Share With Email"}, "resource_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Resource Name"}}, "type": "object", "required": ["share_with_email"], "title": "ShareRequest"}, "ShareResourcePayload": {"properties": {"resource_type": {"type": "string", "title": "Resource Type"}, "resource_id": {"type": "string", "title": "Resource Id"}, "shared_by_email": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Shared By Email", "default": ""}, "shared_by_keycloak_id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Shared By Keycloak Id", "default": ""}, "shared_with_email": {"type": "string", "title": "Shared With Email"}, "shared_with_keycloak_id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Shared With Keycloak Id", "default": ""}, "org_id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Org Id"}}, "type": "object", "required": ["resource_type", "resource_id", "shared_with_email"], "title": "ShareResourcePayload"}, "ShareResponse": {"properties": {"id": {"type": "string", "title": "Id"}, "resource_type": {"type": "string", "title": "Resource Type"}, "resource_id": {"type": "string", "title": "Resource Id"}, "shared_by_email": {"type": "string", "title": "Shared By Email"}, "shared_with_email": {"type": "string", "title": "Shared With Email"}, "created_at": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Created At"}}, "type": "object", "required": ["id", "resource_type", "resource_id", "shared_by_email", "shared_with_email"], "title": "ShareResponse"}, "ValidationError": {"properties": {"loc": {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}]}, "type": "array", "title": "Location"}, "msg": {"type": "string", "title": "Message"}, "type": {"type": "string", "title": "Error Type"}}, "type": "object", "required": ["loc", "msg", "type"], "title": "ValidationError"}}}};
+  Redoc.init(spec, {
+    scrollYOffset: 56,
+    hideDownloadButton: false,
+    theme: {
+      colors: {
+        primary: {
+          main: '#7c3aed'
+        }
+      }
+    }
+  }, document.getElementById('redoc-container'));
+
+  // Switch microservice on dropdown selection
+  document.getElementById('service-selector').addEventListener('change', function(e) {
+    window.location.href = e.target.value;
+  });
+
+  // Real-time active microservice heading tracker for Unified platform
+  const tagToService = {};
+  const isUnified = false;
+
+  function updateNavbarHeading() {
+    if (!isUnified) return;
+    const badge = document.getElementById('active-service-text');
+    if (!badge) return;
+
+    const hash = window.location.hash || '';
+    if (!hash || hash === '#' || hash === '#/') {
+      badge.innerHTML = 'Active Service: <strong>🌐 Unified Platform (All 14 Microservices)</strong>';
+      return;
+    }
+
+    // Extract tag from hash e.g. #/tag/JD-Flow or #/tag/JD-Flow/operation/xyz
+    const tagMatch = hash.match(/#[\/]tag[\/]([^/?]+)/);
+    if (tagMatch) {
+      const rawSlug = decodeURIComponent(tagMatch[1]);
+      let matchedService = null;
+      let matchedTag = rawSlug;
+
+      for (const [tag, service] of Object.entries(tagToService)) {
+        const slugHyphen = tag.replace(/\s+/g, '-');
+        const slugUnderscore = tag.replace(/\s+/g, '_');
+        if (rawSlug === tag || rawSlug === slugHyphen || rawSlug === slugUnderscore || rawSlug.toLowerCase() === tag.toLowerCase()) {
+          matchedService = service;
+          matchedTag = tag;
+          break;
+        }
+      }
+
+      if (matchedService) {
+        badge.innerHTML = `Active Service: <strong>${matchedService}</strong> &nbsp;›&nbsp; <span style="color: #f1f5f9; font-weight: 600;">${matchedTag}</span>`;
+        return;
+      }
+    }
+
+    badge.innerHTML = 'Active Service: <strong>🌐 Unified Platform (All 14 Microservices)</strong>';
+  }
+
+  if (isUnified) {
+    window.addEventListener('hashchange', updateNavbarHeading);
+    document.addEventListener('click', function() {
+      setTimeout(updateNavbarHeading, 120);
+    });
+    setTimeout(updateNavbarHeading, 300);
+  }
+</script>
+</body>
+</html>

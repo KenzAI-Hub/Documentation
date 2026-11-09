@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Microservice - ReDoc</title>
+<!-- needed for adaptive design -->
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+<link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png">
+<style>
+  body {
+    margin: 0;
+    padding-top: 56px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Modern Top Navigation Bar */
+  #recruify-top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #0f172a;
+    border-bottom: 1px solid #1e293b;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    z-index: 10000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow: hidden;
+  }
+
+  .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    height: 28px;
+  }
+
+  .brand-logo-img {
+    height: 24px;
+    max-height: 24px;
+    width: auto;
+    max-width: 130px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 22px;
+    background: #334155;
+    flex-shrink: 0;
+  }
+
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .service-badge .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 8px #38bdf8;
+    flex-shrink: 0;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .nav-label {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .service-select {
+    background: #1e293b;
+    color: #f1f5f9;
+    border: 1px solid #334155;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .service-select:hover, .service-select:focus {
+    border-color: #38bdf8;
+    background: #243248;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #334155;
+    color: #f8fafc;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.15s ease;
+  }
+
+  .nav-btn:hover {
+    background: #475569;
+  }
+</style>
+</head>
+<body>
+<header id="recruify-top-navbar">
+  <div class="nav-left">
+    <a href="../index.html" class="brand-logo" title="Recruify API Documentation">
+      <img src="../logo-light.svg" alt="Recruify" class="brand-logo-img" />
+    </a>
+    <div class="nav-divider"></div>
+    <div class="service-badge" id="active-service-badge">
+      <span class="pulse-dot"></span>
+      <span id="active-service-text">Active Service: <strong>🏢 Admin Microservice</strong></span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <label for="service-selector" class="nav-label">Switch Microservice:</label>
+    <select id="service-selector" class="service-select">
+      <option value="../index.html" >🌐 All Microservices (Unified)</option>
+      <option value="../admin/index.html" selected>🏢 Admin Microservice</option>
+      <option value="../analytics/index.html" >📊 Analytics Microservice</option>
+      <option value="../ats/index.html" >📋 ATS Microservice</option>
+      <option value="../auth/index.html" >🔐 Auth Microservice</option>
+      <option value="../campus_pool/index.html" >🎓 Campus Pool Microservice</option>
+      <option value="../collaboration/index.html" >👥 Collaboration Microservice</option>
+      <option value="../interviews/index.html" >🎥 Interviews Microservice</option>
+      <option value="../jobs/index.html" >💼 Jobs Microservice</option>
+      <option value="../llm_metadata/index.html" >🧠 LLM Metadata Microservice</option>
+      <option value="../notifications/index.html" >🔔 Notifications Microservice</option>
+      <option value="../organization/index.html" >🏛️ Organization Microservice</option>
+      <option value="../payment/index.html" >💳 Payment Microservice</option>
+      <option value="../raas/index.html" >🚀 RaaS Microservice</option>
+      <option value="../resumes/index.html" >📄 Resumes Microservice</option>
+    </select>
+    <a href="../user-guide.html" class="nav-btn" title="View Step-by-Step User & Operations Guide" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35); color: #10b981;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+      User Guide
+    </a>
+    <a href="../architecture.html" class="nav-btn" title="View Inter-Service Dependency Graph & Architecture Matrix" style="background: rgba(124, 58, 237, 0.12); border-color: rgba(124, 58, 237, 0.35); color: #7c3aed;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      Dependency Graph
+    </a>
+    <a href="../openapi.json" target="_blank" class="nav-btn" title="Download raw OpenAPI JSON specification">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      OpenAPI JSON
+    </a>
+  </div>
+</header>
+
+<div id="redoc-container"></div>
+<script src="../redoc.standalone.js"></script>
+<script>
+  const spec = {"openapi": "3.1.0", "info": {"title": "Recruify - Admin Microservice", "description": "Autonomous microservice API for the Admin domain", "version": "v3"}, "paths": {"/health": {"get": {"tags": ["Admin Microservice - Health"], "summary": "Health Check", "description": "Service health check with DB ping.", "operationId": "health_check_health_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/admin/organizations": {"post": {"tags": ["Admin"], "summary": "Platform Admin registers a new organization directly (Trial account)", "operationId": "register_organization_admin_organizations_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/OrganizationAdminCreate"}}}, "required": true}, "responses": {"201": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BusinessUserAdminView"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/business-users": {"get": {"tags": ["Admin"], "summary": "List All Business Users", "operationId": "list_all_business_users_admin_business_users_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"items": {"$ref": "#/components/schemas/BusinessUserAdminView"}, "type": "array", "title": "Response List All Business Users Admin Business Users Get"}}}}}}}, "/admin/business-users/{org_id}": {"get": {"tags": ["Admin"], "summary": "Get Business User Detail", "operationId": "get_business_user_detail_admin_business_users__org_id__get", "parameters": [{"name": "org_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Org Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BusinessUserAdminView"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Admin"], "summary": "Delete Business User Admin", "operationId": "delete_business_user_admin_admin_business_users__org_id__delete", "parameters": [{"name": "org_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Org Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Delete Business User Admin Admin Business Users  Org Id  Delete"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/business-users/{org_id}/subscription": {"put": {"tags": ["Admin"], "summary": "Update Subscription", "operationId": "update_subscription_admin_business_users__org_id__subscription_put", "parameters": [{"name": "org_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Org Id"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SubscriptionUpdateRequest"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BusinessUserAdminView"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/business-users/{org_id}/storage": {"get": {"tags": ["Admin"], "summary": "Get Business User Storage Admin", "operationId": "get_business_user_storage_admin_admin_business_users__org_id__storage_get", "parameters": [{"name": "org_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Org Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Get Business User Storage Admin Admin Business Users  Org Id  Storage Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/stats": {"get": {"tags": ["Admin"], "summary": "Get Platform Stats", "operationId": "get_platform_stats_admin_stats_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PlatformStats"}}}}}}}, "/admin/storage/telemetry": {"get": {"tags": ["Admin"], "summary": "Get Storage Telemetry Admin", "operationId": "get_storage_telemetry_admin_admin_storage_telemetry_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"additionalProperties": true, "type": "object", "title": "Response Get Storage Telemetry Admin Admin Storage Telemetry Get"}}}}}}}, "/admin/quota-usage": {"get": {"tags": ["Admin"], "summary": "Get Quota Usage", "operationId": "get_quota_usage_admin_quota_usage_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"items": {"additionalProperties": true, "type": "object"}, "type": "array", "title": "Response Get Quota Usage Admin Quota Usage Get"}}}}}}}, "/admin/business-users/{org_id}/members": {"get": {"tags": ["Admin"], "summary": "List Org Members Admin", "operationId": "list_org_members_admin_admin_business_users__org_id__members_get", "parameters": [{"name": "org_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Org Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"type": "object", "additionalProperties": true}, "title": "Response List Org Members Admin Admin Business Users  Org Id  Members Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/plan-config": {"get": {"tags": ["Admin"], "summary": "Get monthly AI interview limits for all plans", "operationId": "get_plan_config_admin_plan_config_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"items": {"additionalProperties": true, "type": "object"}, "type": "array", "title": "Response Get Plan Config Admin Plan Config Get"}}}}}}, "post": {"tags": ["Admin"], "summary": "Create a new subscription plan with limit", "operationId": "create_plan_config_admin_plan_config_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/PlanCreateRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"additionalProperties": true, "type": "object", "title": "Response Create Plan Config Admin Plan Config Post"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/plan-config/{plan}": {"put": {"tags": ["Admin"], "summary": "Update monthly AI interview limit for a plan", "operationId": "update_plan_config_admin_plan_config__plan__put", "parameters": [{"name": "plan", "in": "path", "required": true, "schema": {"type": "string", "title": "Plan"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PlanLimitUpdateRequest"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Update Plan Config Admin Plan Config  Plan  Put"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Admin"], "summary": "Delete a custom subscription plan", "operationId": "delete_plan_config_admin_plan_config__plan__delete", "parameters": [{"name": "plan", "in": "path", "required": true, "schema": {"type": "string", "title": "Plan"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Delete Plan Config Admin Plan Config  Plan  Delete"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/embedding-config": {"get": {"tags": ["Admin"], "summary": "Get current embedding model configuration (API key masked)", "operationId": "get_embedding_config_admin_embedding_config_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/EmbeddingConfigResponse"}}}}}}, "put": {"tags": ["Admin"], "summary": "Update embedding model configuration and hot-reload in-process Settings", "operationId": "update_embedding_config_admin_embedding_config_put", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/EmbeddingConfigRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/EmbeddingConfigResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/embedding-config/test": {"post": {"tags": ["Admin"], "summary": "Test connectivity to the vector embedding endpoint and verify API key and model", "operationId": "test_embedding_config_admin_embedding_config_test_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/EmbeddingTestRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/EmbeddingTestResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/storage-config": {"get": {"tags": ["Admin"], "summary": "Get current storage configuration (secret keys masked)", "operationId": "get_storage_config_admin_storage_config_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StorageConfigResponse"}}}}}}, "put": {"tags": ["Admin"], "summary": "Update storage configuration and hot-reload in-process storage provider", "operationId": "update_storage_config_admin_storage_config_put", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/StorageConfigRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StorageConfigResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/storage-config/test": {"post": {"tags": ["Admin"], "summary": "Test connectivity to MinIO, AWS S3, or Azure Blob Storage", "operationId": "test_storage_config_admin_storage_config_test_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/StorageTestRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StorageTestResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/business-users/": {"get": {"tags": ["Business Users", "Business Users"], "summary": "List Business Users", "operationId": "list_business_users_business_users__get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"items": {"$ref": "#/components/schemas/BusinessUserResponse"}, "type": "array", "title": "Response List Business Users Business Users  Get"}}}}}}, "post": {"tags": ["Business Users", "Business Users"], "summary": "Create Business User", "operationId": "create_business_user_business_users__post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/BusinessUserCreate"}}}, "required": true}, "responses": {"201": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BusinessUserResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/business-users/{user_id}": {"get": {"tags": ["Business Users", "Business Users"], "summary": "Get Business User", "operationId": "get_business_user_business_users__user_id__get", "parameters": [{"name": "user_id", "in": "path", "required": true, "schema": {"type": "string", "title": "User Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BusinessUserResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "put": {"tags": ["Business Users", "Business Users"], "summary": "Update Business User", "operationId": "update_business_user_business_users__user_id__put", "parameters": [{"name": "user_id", "in": "path", "required": true, "schema": {"type": "string", "title": "User Id"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BusinessUserUpdate"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/BusinessUserResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Business Users", "Business Users"], "summary": "Delete Business User", "operationId": "delete_business_user_business_users__user_id__delete", "parameters": [{"name": "user_id", "in": "path", "required": true, "schema": {"type": "string", "title": "User Id"}}], "responses": {"204": {"description": "Successful Response"}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/candidate-users/": {"get": {"tags": ["Candidate Users", "Candidate Users"], "summary": "List Candidate Users", "operationId": "list_candidate_users_candidate_users__get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"items": {"$ref": "#/components/schemas/CandidateUserResponse"}, "type": "array", "title": "Response List Candidate Users Candidate Users  Get"}}}}}}, "post": {"tags": ["Candidate Users", "Candidate Users"], "summary": "Create Candidate User", "operationId": "create_candidate_user_candidate_users__post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/CandidateUserCreate"}}}, "required": true}, "responses": {"201": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CandidateUserResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/candidate-users/{user_id}": {"get": {"tags": ["Candidate Users", "Candidate Users"], "summary": "Get Candidate User", "operationId": "get_candidate_user_candidate_users__user_id__get", "parameters": [{"name": "user_id", "in": "path", "required": true, "schema": {"type": "string", "title": "User Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CandidateUserResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "put": {"tags": ["Candidate Users", "Candidate Users"], "summary": "Update Candidate User", "operationId": "update_candidate_user_candidate_users__user_id__put", "parameters": [{"name": "user_id", "in": "path", "required": true, "schema": {"type": "string", "title": "User Id"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CandidateUserUpdate"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CandidateUserResponse"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Candidate Users", "Candidate Users"], "summary": "Delete Candidate User", "operationId": "delete_candidate_user_candidate_users__user_id__delete", "parameters": [{"name": "user_id", "in": "path", "required": true, "schema": {"type": "string", "title": "User Id"}}], "responses": {"204": {"description": "Successful Response"}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/internal/admin/storage/upload": {"post": {"tags": ["Internal - Admin Storage"], "summary": "Internal Storage Upload", "description": "Store an uploaded file into the Admin-configured active storage provider\n(MinIO, AWS S3, or Azure Blob).", "operationId": "internal_storage_upload_internal_admin_storage_upload_post", "requestBody": {"content": {"multipart/form-data": {"schema": {"$ref": "#/components/schemas/Body_internal_storage_upload_internal_admin_storage_upload_post"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"additionalProperties": true, "type": "object", "title": "Response Internal Storage Upload Internal Admin Storage Upload Post"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/internal/admin/storage/delete": {"delete": {"tags": ["Internal - Admin Storage"], "summary": "Internal Storage Delete", "description": "Delete an object from the active storage provider.", "operationId": "internal_storage_delete_internal_admin_storage_delete_delete", "parameters": [{"name": "object_key", "in": "query", "required": true, "schema": {"type": "string", "title": "Object Key"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Internal Storage Delete Internal Admin Storage Delete Delete"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/internal/admin/storage/media/{object_key}": {"get": {"tags": ["Internal - Admin Storage"], "summary": "Stream Storage Media", "description": "Stream media (avatars, resumes, docs) from the active storage provider.\nAccessible from frontend via `/admin/storage/media/{object_key}`.", "operationId": "stream_storage_media_internal_admin_storage_media__object_key__get", "parameters": [{"name": "object_key", "in": "path", "required": true, "schema": {"type": "string", "title": "Object Key"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/admin/storage/media/{object_key}": {"get": {"tags": ["Admin Storage Media"], "summary": "Stream Storage Media", "description": "Stream media (avatars, resumes, docs) from the active storage provider.\nAccessible from frontend via `/admin/storage/media/{object_key}`.", "operationId": "stream_storage_media_admin_storage_media__object_key__get", "parameters": [{"name": "object_key", "in": "path", "required": true, "schema": {"type": "string", "title": "Object Key"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}}, "components": {"schemas": {"Body_internal_storage_upload_internal_admin_storage_upload_post": {"properties": {"file": {"type": "string", "format": "binary", "title": "File"}, "folder": {"type": "string", "title": "Folder", "default": "uploads"}, "filename": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Filename"}}, "type": "object", "required": ["file"], "title": "Body_internal_storage_upload_internal_admin_storage_upload_post"}, "BusinessUserAdminView": {"properties": {"id": {"type": "string", "title": "Id"}, "email": {"type": "string", "title": "Email"}, "organization_name": {"type": "string", "title": "Organization Name"}, "org_domain": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Org Domain"}, "subscription_plan": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Subscription Plan"}, "subscription_start_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription Start Date"}, "subscription_end_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription End Date"}, "keycloak_user_id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Keycloak User Id"}, "created_at": {"type": "string", "format": "date-time", "title": "Created At"}, "updated_at": {"type": "string", "format": "date-time", "title": "Updated At"}, "member_count": {"type": "integer", "title": "Member Count", "default": 0}, "logo_url": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Logo Url"}}, "type": "object", "required": ["id", "email", "organization_name", "created_at", "updated_at"], "title": "BusinessUserAdminView"}, "BusinessUserCreate": {"properties": {"email": {"type": "string", "title": "Email"}, "organization_name": {"type": "string", "title": "Organization Name"}, "subscription_plan": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Subscription Plan"}, "subscription_end_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription End Date"}, "logo_url": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Logo Url"}}, "type": "object", "required": ["email", "organization_name"], "title": "BusinessUserCreate"}, "BusinessUserResponse": {"properties": {"email": {"type": "string", "title": "Email"}, "organization_name": {"type": "string", "title": "Organization Name"}, "subscription_plan": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Subscription Plan"}, "subscription_end_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription End Date"}, "logo_url": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Logo Url"}, "id": {"type": "string", "title": "Id"}, "keycloak_user_id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Keycloak User Id"}, "created_at": {"type": "string", "format": "date-time", "title": "Created At"}, "updated_at": {"type": "string", "format": "date-time", "title": "Updated At"}}, "type": "object", "required": ["email", "organization_name", "id", "created_at", "updated_at"], "title": "BusinessUserResponse"}, "BusinessUserUpdate": {"properties": {"email": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Email"}, "organization_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Organization Name"}, "subscription_plan": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Subscription Plan"}, "subscription_end_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription End Date"}, "logo_url": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Logo Url"}}, "type": "object", "title": "BusinessUserUpdate"}, "CandidateUserCreate": {"properties": {"email": {"type": "string", "title": "Email"}, "first_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "First Name"}, "last_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Last Name"}}, "type": "object", "required": ["email"], "title": "CandidateUserCreate"}, "CandidateUserResponse": {"properties": {"email": {"type": "string", "title": "Email"}, "first_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "First Name"}, "last_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Last Name"}, "id": {"type": "string", "title": "Id"}, "created_at": {"type": "string", "format": "date-time", "title": "Created At"}}, "type": "object", "required": ["email", "id", "created_at"], "title": "CandidateUserResponse"}, "CandidateUserUpdate": {"properties": {"email": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Email"}, "first_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "First Name"}, "last_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Last Name"}}, "type": "object", "title": "CandidateUserUpdate"}, "EmbeddingConfigRequest": {"properties": {"embedding_api_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Embedding Api Key"}, "embedding_base_url": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Embedding Base Url"}, "embed_model": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Embed Model"}, "embed_dim": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Embed Dim"}}, "type": "object", "title": "EmbeddingConfigRequest", "description": "Fields the admin can update. Omit a field to leave it unchanged."}, "EmbeddingConfigResponse": {"properties": {"embedding_base_url": {"type": "string", "title": "Embedding Base Url"}, "embed_model": {"type": "string", "title": "Embed Model"}, "embed_dim": {"type": "integer", "title": "Embed Dim"}, "api_key_set": {"type": "boolean", "title": "Api Key Set"}}, "type": "object", "required": ["embedding_base_url", "embed_model", "embed_dim", "api_key_set"], "title": "EmbeddingConfigResponse", "description": "Read-safe view of the current embedding config (API key is masked)."}, "EmbeddingTestRequest": {"properties": {"embedding_api_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Embedding Api Key"}, "embedding_base_url": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Embedding Base Url"}, "embed_model": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Embed Model"}, "embed_dim": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Embed Dim"}}, "type": "object", "title": "EmbeddingTestRequest"}, "EmbeddingTestResponse": {"properties": {"success": {"type": "boolean", "title": "Success"}, "model": {"type": "string", "title": "Model"}, "dim": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Dim"}, "latency_ms": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Latency Ms"}, "message": {"type": "string", "title": "Message"}, "error": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Error"}}, "type": "object", "required": ["success", "model", "message"], "title": "EmbeddingTestResponse"}, "HTTPValidationError": {"properties": {"detail": {"items": {"$ref": "#/components/schemas/ValidationError"}, "type": "array", "title": "Detail"}}, "type": "object", "title": "HTTPValidationError"}, "OrganizationAdminCreate": {"properties": {"organization_name": {"type": "string", "title": "Organization Name"}, "email": {"type": "string", "title": "Email"}, "password": {"type": "string", "title": "Password"}, "subscription_plan": {"type": "string", "title": "Subscription Plan", "default": "trial"}, "subscription_start_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription Start Date"}, "subscription_end_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription End Date"}, "trial_days": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Trial Days"}}, "type": "object", "required": ["organization_name", "email", "password"], "title": "OrganizationAdminCreate"}, "PlanCreateRequest": {"properties": {"plan": {"type": "string", "title": "Plan"}, "monthly_limit": {"type": "integer", "title": "Monthly Limit", "default": 100}, "tag": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Tag"}}, "type": "object", "required": ["plan"], "title": "PlanCreateRequest"}, "PlanLimitUpdateRequest": {"properties": {"monthly_limit": {"type": "integer", "title": "Monthly Limit"}}, "type": "object", "required": ["monthly_limit"], "title": "PlanLimitUpdateRequest"}, "PlatformStats": {"properties": {"total_organizations": {"type": "integer", "title": "Total Organizations"}, "total_org_members": {"type": "integer", "title": "Total Org Members"}, "total_candidates": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Total Candidates", "default": 0}, "total_jobs": {"type": "integer", "title": "Total Jobs"}, "total_interviews": {"type": "integer", "title": "Total Interviews"}, "plans": {"additionalProperties": true, "type": "object", "title": "Plans"}, "storage_telemetry": {"anyOf": [{"additionalProperties": true, "type": "object"}, {"type": "null"}], "title": "Storage Telemetry"}}, "type": "object", "required": ["total_organizations", "total_org_members", "total_jobs", "total_interviews", "plans"], "title": "PlatformStats"}, "StorageConfigRequest": {"properties": {"storage_provider": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Storage Provider", "default": "minio"}, "storage_retention_days": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Storage Retention Days", "default": 30}, "minio_endpoint": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Endpoint"}, "minio_access_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Access Key"}, "minio_secret_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Secret Key"}, "minio_bucket_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Bucket Name"}, "minio_secure": {"anyOf": [{"type": "boolean"}, {"type": "null"}], "title": "Minio Secure"}, "s3_bucket": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Bucket"}, "s3_region": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Region"}, "s3_access_key_id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Access Key Id"}, "s3_secret_access_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Secret Access Key"}, "azure_connection_string": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Azure Connection String"}, "azure_container_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Azure Container Name"}}, "type": "object", "title": "StorageConfigRequest"}, "StorageConfigResponse": {"properties": {"storage_provider": {"type": "string", "title": "Storage Provider"}, "storage_retention_days": {"type": "integer", "title": "Storage Retention Days"}, "minio_endpoint": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Endpoint"}, "minio_access_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Access Key"}, "minio_bucket_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Bucket Name"}, "minio_secure": {"type": "boolean", "title": "Minio Secure", "default": false}, "minio_secret_key_set": {"type": "boolean", "title": "Minio Secret Key Set", "default": false}, "s3_bucket": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Bucket"}, "s3_region": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Region"}, "s3_access_key_id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Access Key Id"}, "s3_secret_key_set": {"type": "boolean", "title": "S3 Secret Key Set", "default": false}, "azure_container_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Azure Container Name"}, "azure_connection_string_set": {"type": "boolean", "title": "Azure Connection String Set", "default": false}}, "type": "object", "required": ["storage_provider", "storage_retention_days"], "title": "StorageConfigResponse"}, "StorageTestRequest": {"properties": {"storage_provider": {"type": "string", "title": "Storage Provider"}, "minio_endpoint": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Endpoint"}, "minio_access_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Access Key"}, "minio_secret_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Secret Key"}, "minio_bucket_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Minio Bucket Name"}, "minio_secure": {"anyOf": [{"type": "boolean"}, {"type": "null"}], "title": "Minio Secure"}, "s3_bucket": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Bucket"}, "s3_region": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Region"}, "s3_access_key_id": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Access Key Id"}, "s3_secret_access_key": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "S3 Secret Access Key"}, "azure_connection_string": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Azure Connection String"}, "azure_container_name": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Azure Container Name"}}, "type": "object", "required": ["storage_provider"], "title": "StorageTestRequest"}, "StorageTestResponse": {"properties": {"success": {"type": "boolean", "title": "Success"}, "provider": {"type": "string", "title": "Provider"}, "message": {"type": "string", "title": "Message"}, "latency_ms": {"anyOf": [{"type": "number"}, {"type": "null"}], "title": "Latency Ms"}, "bucket": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Bucket"}}, "type": "object", "required": ["success", "provider", "message"], "title": "StorageTestResponse"}, "SubscriptionUpdateRequest": {"properties": {"subscription_plan": {"type": "string", "title": "Subscription Plan"}, "subscription_start_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription Start Date"}, "subscription_end_date": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "Subscription End Date"}}, "type": "object", "required": ["subscription_plan"], "title": "SubscriptionUpdateRequest"}, "ValidationError": {"properties": {"loc": {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}]}, "type": "array", "title": "Location"}, "msg": {"type": "string", "title": "Message"}, "type": {"type": "string", "title": "Error Type"}}, "type": "object", "required": ["loc", "msg", "type"], "title": "ValidationError"}}}};
+  Redoc.init(spec, {
+    scrollYOffset: 56,
+    hideDownloadButton: false,
+    theme: {
+      colors: {
+        primary: {
+          main: '#7c3aed'
+        }
+      }
+    }
+  }, document.getElementById('redoc-container'));
+
+  // Switch microservice on dropdown selection
+  document.getElementById('service-selector').addEventListener('change', function(e) {
+    window.location.href = e.target.value;
+  });
+
+  // Real-time active microservice heading tracker for Unified platform
+  const tagToService = {};
+  const isUnified = false;
+
+  function updateNavbarHeading() {
+    if (!isUnified) return;
+    const badge = document.getElementById('active-service-text');
+    if (!badge) return;
+
+    const hash = window.location.hash || '';
+    if (!hash || hash === '#' || hash === '#/') {
+      badge.innerHTML = 'Active Service: <strong>🌐 Unified Platform (All 14 Microservices)</strong>';
+      return;
+    }
+
+    // Extract tag from hash e.g. #/tag/JD-Flow or #/tag/JD-Flow/operation/xyz
+    const tagMatch = hash.match(/#[\/]tag[\/]([^/?]+)/);
+    if (tagMatch) {
+      const rawSlug = decodeURIComponent(tagMatch[1]);
+      let matchedService = null;
+      let matchedTag = rawSlug;
+
+      for (const [tag, service] of Object.entries(tagToService)) {
+        const slugHyphen = tag.replace(/\s+/g, '-');
+        const slugUnderscore = tag.replace(/\s+/g, '_');
+        if (rawSlug === tag || rawSlug === slugHyphen || rawSlug === slugUnderscore || rawSlug.toLowerCase() === tag.toLowerCase()) {
+          matchedService = service;
+          matchedTag = tag;
+          break;
+        }
+      }
+
+      if (matchedService) {
+        badge.innerHTML = `Active Service: <strong>${matchedService}</strong> &nbsp;›&nbsp; <span style="color: #f1f5f9; font-weight: 600;">${matchedTag}</span>`;
+        return;
+      }
+    }
+
+    badge.innerHTML = 'Active Service: <strong>🌐 Unified Platform (All 14 Microservices)</strong>';
+  }
+
+  if (isUnified) {
+    window.addEventListener('hashchange', updateNavbarHeading);
+    document.addEventListener('click', function() {
+      setTimeout(updateNavbarHeading, 120);
+    });
+    setTimeout(updateNavbarHeading, 300);
+  }
+</script>
+</body>
+</html>

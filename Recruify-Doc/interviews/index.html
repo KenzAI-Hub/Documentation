@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Interviews Microservice - ReDoc</title>
+<!-- needed for adaptive design -->
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+<link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png">
+<style>
+  body {
+    margin: 0;
+    padding-top: 56px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Modern Top Navigation Bar */
+  #recruify-top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #0f172a;
+    border-bottom: 1px solid #1e293b;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    z-index: 10000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow: hidden;
+  }
+
+  .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    height: 28px;
+  }
+
+  .brand-logo-img {
+    height: 24px;
+    max-height: 24px;
+    width: auto;
+    max-width: 130px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 22px;
+    background: #334155;
+    flex-shrink: 0;
+  }
+
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .service-badge .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 8px #38bdf8;
+    flex-shrink: 0;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .nav-label {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .service-select {
+    background: #1e293b;
+    color: #f1f5f9;
+    border: 1px solid #334155;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .service-select:hover, .service-select:focus {
+    border-color: #38bdf8;
+    background: #243248;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #334155;
+    color: #f8fafc;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.15s ease;
+  }
+
+  .nav-btn:hover {
+    background: #475569;
+  }
+</style>
+</head>
+<body>
+<header id="recruify-top-navbar">
+  <div class="nav-left">
+    <a href="../index.html" class="brand-logo" title="Recruify API Documentation">
+      <img src="../logo-light.svg" alt="Recruify" class="brand-logo-img" />
+    </a>
+    <div class="nav-divider"></div>
+    <div class="service-badge" id="active-service-badge">
+      <span class="pulse-dot"></span>
+      <span id="active-service-text">Active Service: <strong>🎥 Interviews Microservice</strong></span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <label for="service-selector" class="nav-label">Switch Microservice:</label>
+    <select id="service-selector" class="service-select">
+      <option value="../index.html" >🌐 All Microservices (Unified)</option>
+      <option value="../admin/index.html" >🏢 Admin Microservice</option>
+      <option value="../analytics/index.html" >📊 Analytics Microservice</option>
+      <option value="../ats/index.html" >📋 ATS Microservice</option>
+      <option value="../auth/index.html" >🔐 Auth Microservice</option>
+      <option value="../campus_pool/index.html" >🎓 Campus Pool Microservice</option>
+      <option value="../collaboration/index.html" >👥 Collaboration Microservice</option>
+      <option value="../interviews/index.html" selected>🎥 Interviews Microservice</option>
+      <option value="../jobs/index.html" >💼 Jobs Microservice</option>
+      <option value="../llm_metadata/index.html" >🧠 LLM Metadata Microservice</option>
+      <option value="../notifications/index.html" >🔔 Notifications Microservice</option>
+      <option value="../organization/index.html" >🏛️ Organization Microservice</option>
+      <option value="../payment/index.html" >💳 Payment Microservice</option>
+      <option value="../raas/index.html" >🚀 RaaS Microservice</option>
+      <option value="../resumes/index.html" >📄 Resumes Microservice</option>
+    </select>
+    <a href="../user-guide.html" class="nav-btn" title="View Step-by-Step User & Operations Guide" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35); color: #10b981;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+      User Guide
+    </a>
+    <a href="../architecture.html" class="nav-btn" title="View Inter-Service Dependency Graph & Architecture Matrix" style="background: rgba(124, 58, 237, 0.12); border-color: rgba(124, 58, 237, 0.35); color: #7c3aed;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      Dependency Graph
+    </a>
+    <a href="../openapi.json" target="_blank" class="nav-btn" title="Download raw OpenAPI JSON specification">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      OpenAPI JSON
+    </a>
+  </div>
+</header>
+
+<div id="redoc-container"></div>
+<script src="../redoc.standalone.js"></script>
+<script>
+  const spec = {"openapi": "3.1.0", "info": {"title": "Recruify - Interviews Microservice", "description": "Autonomous microservice API for the Interviews domain", "version": "v3"}, "paths": {"/health": {"get": {"tags": ["Interviews Microservice - Health"], "summary": "Health Check", "description": "Service health check with DB ping.", "operationId": "health_check_health_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/": {"get": {"tags": ["Ai Interviewer"], "summary": "Get Ui", "operationId": "get_ui__get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/voices": {"get": {"tags": ["Ai Interviewer"], "summary": "List Voices", "operationId": "list_voices_voices_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/interview-services/health": {"get": {"tags": ["Ai Interviewer", "Ai Interviewer"], "summary": "Interview Services Health", "operationId": "interview_services_health_interview_services_health_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/interview/vad/health": {"get": {"tags": ["Ai Interviewer", "Ai Interviewer"], "summary": "Check Vad Container Health", "description": "Checks if Docker Smart Turn VAD container (pipecat-vad-gpu on port 8010) is online.\nZero local fallback.", "operationId": "check_vad_container_health_interview_vad_health_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/config": {"get": {"tags": ["Ai Interviewer"], "summary": "Get Config", "operationId": "get_config_config_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/interview/start": {"post": {"tags": ["Ai Interviewer"], "summary": "Start Interview", "operationId": "start_interview_interview_start_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/StartInterviewRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{session_id}/livekit-token": {"post": {"tags": ["Ai Interviewer"], "summary": "Get Livekit Token", "description": "Generates a cryptographically signed LiveKit AccessToken JWT granting\nthe candidate or interviewer permission to join the WebRTC media room.", "operationId": "get_livekit_token_interview__session_id__livekit_token_post", "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Session Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{interview_id}/start_from_ats": {"post": {"tags": ["Ai Interviewer"], "summary": "Start Interview From Ats", "operationId": "start_interview_from_ats_interview__interview_id__start_from_ats_post", "parameters": [{"name": "interview_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Interview Id"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/StartFromAtsRequest"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{session_id}/history": {"get": {"tags": ["Ai Interviewer"], "summary": "Get History", "operationId": "get_history_interview__session_id__history_get", "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Session Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{session_id}": {"delete": {"tags": ["Ai Interviewer"], "summary": "End Interview Http", "operationId": "end_interview_http_interview__session_id__delete", "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Session Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{session_id}/report": {"post": {"tags": ["Ai Interviewer"], "summary": "Start Report Generation", "operationId": "start_report_generation_interview__session_id__report_post", "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Session Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{session_id}/report/status": {"get": {"tags": ["Ai Interviewer"], "summary": "Report Status", "operationId": "report_status_interview__session_id__report_status_get", "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Session Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{session_id}/report/download": {"get": {"tags": ["Ai Interviewer"], "summary": "Download Report", "operationId": "download_report_interview__session_id__report_download_get", "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Session Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{interview_id}/recordings/upload": {"post": {"tags": ["Ai Interviewer"], "summary": "Upload Interview Recording", "description": "Upload an interview recording segment or attempt (\"kishton mein\").\nSaves to MinIO / S3 / Azure and persists metadata with 30-day retention.", "operationId": "upload_interview_recording_interview__interview_id__recordings_upload_post", "parameters": [{"name": "interview_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Interview Id"}}], "requestBody": {"required": true, "content": {"multipart/form-data": {"schema": {"$ref": "#/components/schemas/Body_upload_interview_recording_interview__interview_id__recordings_upload_post"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/{interview_id}/recordings": {"get": {"tags": ["Ai Interviewer"], "summary": "List Interview Recordings", "description": "List all recording segments for an interview with stream & download links.", "operationId": "list_interview_recordings_interview__interview_id__recordings_get", "parameters": [{"name": "interview_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Interview Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}, "delete": {"tags": ["Ai Interviewer"], "summary": "Delete Recordings Endpoint", "description": "Delete all recording segments and storage objects for an interview.", "operationId": "delete_recordings_endpoint_interview__interview_id__recordings_delete", "parameters": [{"name": "interview_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Interview Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/recordings/{recording_id}/stream": {"get": {"tags": ["Ai Interviewer"], "summary": "Stream Recording Endpoint", "description": "Stream recording with HTTP 206 Partial Content Range support for timeline seeking.", "operationId": "stream_recording_endpoint_interview_recordings__recording_id__stream_get", "parameters": [{"name": "recording_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Recording Id"}}, {"name": "range", "in": "header", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Range"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/recordings/{recording_id}/download": {"get": {"tags": ["Ai Interviewer"], "summary": "Download Recording Endpoint", "description": "Download the raw recording file with Content-Disposition attachment.", "operationId": "download_recording_endpoint_interview_recordings__recording_id__download_get", "parameters": [{"name": "recording_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Recording Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/storage/telemetry": {"get": {"tags": ["Ai Interviewer"], "summary": "Get Storage Telemetry Endpoint", "description": "Return aggregated recording media metrics and storage distribution for platform overview.", "operationId": "get_storage_telemetry_endpoint_interview_storage_telemetry_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/interview/human/start": {"post": {"tags": ["Human Interviewer"], "summary": "Start Human Interview", "operationId": "start_human_interview_interview_human_start_post", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/StartHumanInterviewRequest"}}}, "required": true}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/human/{interview_id}/start_from_ats": {"post": {"tags": ["Human Interviewer"], "summary": "Start Human Interview From Ats", "operationId": "start_human_interview_from_ats_interview_human__interview_id__start_from_ats_post", "parameters": [{"name": "interview_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Interview Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/human/{session_id}": {"get": {"tags": ["Human Interviewer"], "summary": "Get Human Interview", "operationId": "get_human_interview_interview_human__session_id__get", "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Session Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interview/human/{session_id}/feedback": {"post": {"tags": ["Human Interviewer"], "summary": "Submit Human Feedback", "operationId": "submit_human_feedback_interview_human__session_id__feedback_post", "parameters": [{"name": "session_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Session Id"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FeedbackRequest"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/interviews/active-presence": {"get": {"tags": ["Human Interviewer"], "summary": "Get Active Presence", "description": "Returns active WebRTC connection status for sessions in real-time.", "operationId": "get_active_presence_interviews_active_presence_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"additionalProperties": true, "type": "object", "title": "Response Get Active Presence Interviews Active Presence Get"}}}}}}}, "/interview/active-presence": {"get": {"tags": ["Human Interviewer"], "summary": "Get Active Presence", "description": "Returns active WebRTC connection status for sessions in real-time.", "operationId": "get_active_presence_interview_active_presence_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"additionalProperties": true, "type": "object", "title": "Response Get Active Presence Interview Active Presence Get"}}}}}}}}, "components": {"schemas": {"Body_upload_interview_recording_interview__interview_id__recordings_upload_post": {"properties": {"file": {"type": "string", "format": "binary", "title": "File", "description": "Interview recording audio/video file"}, "attempt_no": {"type": "integer", "title": "Attempt No", "default": 1}, "part_no": {"type": "integer", "title": "Part No", "default": 1}, "duration_seconds": {"anyOf": [{"type": "number"}, {"type": "null"}], "title": "Duration Seconds"}}, "type": "object", "required": ["file"], "title": "Body_upload_interview_recording_interview__interview_id__recordings_upload_post"}, "FeedbackRequest": {"properties": {"outcome": {"type": "string", "title": "Outcome"}, "candidate_feedback": {"type": "string", "title": "Candidate Feedback"}, "internal_report": {"type": "string", "title": "Internal Report"}, "new_scheduled_at": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}], "title": "New Scheduled At"}, "new_interview_type": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "New Interview Type"}, "new_max_questions": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "New Max Questions"}, "ratings": {"anyOf": [{"additionalProperties": true, "type": "object"}, {"type": "null"}], "title": "Ratings"}, "average_score": {"anyOf": [{"type": "number"}, {"type": "null"}], "title": "Average Score"}}, "type": "object", "required": ["outcome", "candidate_feedback", "internal_report"], "title": "FeedbackRequest"}, "HTTPValidationError": {"properties": {"detail": {"items": {"$ref": "#/components/schemas/ValidationError"}, "type": "array", "title": "Detail"}}, "type": "object", "title": "HTTPValidationError"}, "StartFromAtsRequest": {"properties": {"voice": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Voice"}, "max_questions": {"type": "integer", "title": "Max Questions", "default": 10}, "language": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Language", "default": "en"}}, "type": "object", "title": "StartFromAtsRequest"}, "StartHumanInterviewRequest": {"properties": {"resume": {"type": "string", "title": "Resume"}, "jd": {"type": "string", "title": "Jd"}, "additional_details": {"type": "string", "title": "Additional Details", "default": ""}}, "type": "object", "required": ["resume", "jd"], "title": "StartHumanInterviewRequest"}, "StartInterviewRequest": {"properties": {"resume": {"type": "string", "title": "Resume"}, "jd": {"type": "string", "title": "Jd"}, "voice": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Voice"}, "additional_details": {"type": "string", "title": "Additional Details", "default": ""}, "max_questions": {"type": "integer", "title": "Max Questions", "default": 10}, "language": {"anyOf": [{"type": "string"}, {"type": "null"}], "title": "Language", "default": "en"}}, "type": "object", "required": ["resume", "jd"], "title": "StartInterviewRequest"}, "ValidationError": {"properties": {"loc": {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}]}, "type": "array", "title": "Location"}, "msg": {"type": "string", "title": "Message"}, "type": {"type": "string", "title": "Error Type"}}, "type": "object", "required": ["loc", "msg", "type"], "title": "ValidationError"}}}};
+  Redoc.init(spec, {
+    scrollYOffset: 56,
+    hideDownloadButton: false,
+    theme: {
+      colors: {
+        primary: {
+          main: '#7c3aed'
+        }
+      }
+    }
+  }, document.getElementById('redoc-container'));
+
+  // Switch microservice on dropdown selection
+  document.getElementById('service-selector').addEventListener('change', function(e) {
+    window.location.href = e.target.value;
+  });
+
+  // Real-time active microservice heading tracker for Unified platform
+  const tagToService = {};
+  const isUnified = false;
+
+  function updateNavbarHeading() {
+    if (!isUnified) return;
+    const badge = document.getElementById('active-service-text');
+    if (!badge) return;
+
+    const hash = window.location.hash || '';
+    if (!hash || hash === '#' || hash === '#/') {
+      badge.innerHTML = 'Active Service: <strong>🌐 Unified Platform (All 14 Microservices)</strong>';
+      return;
+    }
+
+    // Extract tag from hash e.g. #/tag/JD-Flow or #/tag/JD-Flow/operation/xyz
+    const tagMatch = hash.match(/#[\/]tag[\/]([^/?]+)/);
+    if (tagMatch) {
+      const rawSlug = decodeURIComponent(tagMatch[1]);
+      let matchedService = null;
+      let matchedTag = rawSlug;
+
+      for (const [tag, service] of Object.entries(tagToService)) {
+        const slugHyphen = tag.replace(/\s+/g, '-');
+        const slugUnderscore = tag.replace(/\s+/g, '_');
+        if (rawSlug === tag || rawSlug === slugHyphen || rawSlug === slugUnderscore || rawSlug.toLowerCase() === tag.toLowerCase()) {
+          matchedService = service;
+          matchedTag = tag;
+          break;
+        }
+      }
+
+      if (matchedService) {
+        badge.innerHTML = `Active Service: <strong>${matchedService}</strong> &nbsp;›&nbsp; <span style="color: #f1f5f9; font-weight: 600;">${matchedTag}</span>`;
+        return;
+      }
+    }
+
+    badge.innerHTML = 'Active Service: <strong>🌐 Unified Platform (All 14 Microservices)</strong>';
+  }
+
+  if (isUnified) {
+    window.addEventListener('hashchange', updateNavbarHeading);
+    document.addEventListener('click', function() {
+      setTimeout(updateNavbarHeading, 120);
+    });
+    setTimeout(updateNavbarHeading, 300);
+  }
+</script>
+</body>
+</html>

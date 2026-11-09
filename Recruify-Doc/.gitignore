@@ -1,0 +1,9 @@
+# Backup files
+*.bak*
+*.tmp
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+

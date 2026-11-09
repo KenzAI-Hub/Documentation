@@ -1,0 +1,457 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Recruify - Campus Pool Microservice",
+    "description": "Autonomous microservice API for the Campus Pool domain",
+    "version": "v3"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Campus Pool Microservice - Health"
+        ],
+        "summary": "Health Check",
+        "description": "Service health check with DB ping.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campus-pool/{job_id}": {
+      "get": {
+        "tags": [
+          "Campus Pool"
+        ],
+        "summary": "Get campus pool config and candidate roster",
+        "operationId": "get_campus_pool_campus_pool__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Campus Pool"
+        ],
+        "summary": "Enable campus pool, set window, and share with members",
+        "operationId": "configure_campus_pool_campus_pool__job_id__post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PoolConfigRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campus-pool/{job_id}/reinstate/{candidate_email}": {
+      "post": {
+        "tags": [
+          "Campus Pool"
+        ],
+        "summary": "Reinstate a disqualified candidate",
+        "operationId": "reinstate_candidate_campus_pool__job_id__reinstate__candidate_email__post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campus-pool/{job_id}/release/{candidate_email}": {
+      "post": {
+        "tags": [
+          "Campus Pool"
+        ],
+        "summary": "Release candidate from active call or interview lock",
+        "operationId": "release_candidate_campus_pool__job_id__release__candidate_email__post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campus-pool/{job_id}/reset-attempts/{candidate_email}": {
+      "post": {
+        "tags": [
+          "Campus Pool"
+        ],
+        "summary": "Reset candidate call attempts to 0",
+        "operationId": "reset_candidate_attempts_campus_pool__job_id__reset_attempts__candidate_email__post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campus-pool/{job_id}/overlaps": {
+      "get": {
+        "tags": [
+          "Campus Pool"
+        ],
+        "summary": "Detect scheduling conflicts per member",
+        "operationId": "get_overlaps_campus_pool__job_id__overlaps_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "End"
+            }
+          },
+          {
+            "name": "members",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Members"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Get Overlaps Campus Pool  Job Id  Overlaps Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "PoolConfigRequest": {
+        "properties": {
+          "pool_start": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pool Start"
+          },
+          "pool_end": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pool End"
+          },
+          "windows": {
+            "items": {
+              "$ref": "#/components/schemas/PoolWindow"
+            },
+            "type": "array",
+            "title": "Windows",
+            "default": []
+          },
+          "member_emails": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Member Emails",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "PoolConfigRequest"
+      },
+      "PoolWindow": {
+        "properties": {
+          "pool_start": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Pool Start"
+          },
+          "pool_end": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Pool End"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pool_start",
+          "pool_end"
+        ],
+        "title": "PoolWindow"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

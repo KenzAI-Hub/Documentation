@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Analytics Microservice - ReDoc</title>
+<!-- needed for adaptive design -->
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+<link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png">
+<style>
+  body {
+    margin: 0;
+    padding-top: 56px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Modern Top Navigation Bar */
+  #recruify-top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #0f172a;
+    border-bottom: 1px solid #1e293b;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    z-index: 10000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow: hidden;
+  }
+
+  .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    height: 28px;
+  }
+
+  .brand-logo-img {
+    height: 24px;
+    max-height: 24px;
+    width: auto;
+    max-width: 130px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 22px;
+    background: #334155;
+    flex-shrink: 0;
+  }
+
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .service-badge .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 8px #38bdf8;
+    flex-shrink: 0;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .nav-label {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .service-select {
+    background: #1e293b;
+    color: #f1f5f9;
+    border: 1px solid #334155;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .service-select:hover, .service-select:focus {
+    border-color: #38bdf8;
+    background: #243248;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #334155;
+    color: #f8fafc;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.15s ease;
+  }
+
+  .nav-btn:hover {
+    background: #475569;
+  }
+</style>
+</head>
+<body>
+<header id="recruify-top-navbar">
+  <div class="nav-left">
+    <a href="../index.html" class="brand-logo" title="Recruify API Documentation">
+      <img src="../logo-light.svg" alt="Recruify" class="brand-logo-img" />
+    </a>
+    <div class="nav-divider"></div>
+    <div class="service-badge" id="active-service-badge">
+      <span class="pulse-dot"></span>
+      <span id="active-service-text">Active Service: <strong>📊 Analytics Microservice</strong></span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <label for="service-selector" class="nav-label">Switch Microservice:</label>
+    <select id="service-selector" class="service-select">
+      <option value="../index.html" >🌐 All Microservices (Unified)</option>
+      <option value="../admin/index.html" >🏢 Admin Microservice</option>
+      <option value="../analytics/index.html" selected>📊 Analytics Microservice</option>
+      <option value="../ats/index.html" >📋 ATS Microservice</option>
+      <option value="../auth/index.html" >🔐 Auth Microservice</option>
+      <option value="../campus_pool/index.html" >🎓 Campus Pool Microservice</option>
+      <option value="../collaboration/index.html" >👥 Collaboration Microservice</option>
+      <option value="../interviews/index.html" >🎥 Interviews Microservice</option>
+      <option value="../jobs/index.html" >💼 Jobs Microservice</option>
+      <option value="../llm_metadata/index.html" >🧠 LLM Metadata Microservice</option>
+      <option value="../notifications/index.html" >🔔 Notifications Microservice</option>
+      <option value="../organization/index.html" >🏛️ Organization Microservice</option>
+      <option value="../payment/index.html" >💳 Payment Microservice</option>
+      <option value="../raas/index.html" >🚀 RaaS Microservice</option>
+      <option value="../resumes/index.html" >📄 Resumes Microservice</option>
+    </select>
+    <a href="../user-guide.html" class="nav-btn" title="View Step-by-Step User & Operations Guide" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35); color: #10b981;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+      User Guide
+    </a>
+    <a href="../architecture.html" class="nav-btn" title="View Inter-Service Dependency Graph & Architecture Matrix" style="background: rgba(124, 58, 237, 0.12); border-color: rgba(124, 58, 237, 0.35); color: #7c3aed;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      Dependency Graph
+    </a>
+    <a href="../openapi.json" target="_blank" class="nav-btn" title="Download raw OpenAPI JSON specification">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      OpenAPI JSON
+    </a>
+  </div>
+</header>
+
+<div id="redoc-container"></div>
+<script src="../redoc.standalone.js"></script>
+<script>
+  const spec = {"openapi": "3.1.0", "info": {"title": "Recruify - Analytics Microservice", "description": "Autonomous microservice API for the Analytics domain", "version": "v3"}, "paths": {"/health": {"get": {"tags": ["Analytics Microservice - Health"], "summary": "Health Check", "description": "Service health check with DB ping.", "operationId": "health_check_health_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}, "/analytics/jobs": {"get": {"tags": ["Analytics"], "summary": "List Analytics Jobs", "description": "List all accessible recruitment jobs with interview counts.", "operationId": "list_analytics_jobs_analytics_jobs_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"items": {"additionalProperties": true, "type": "object"}, "type": "array", "title": "Response List Analytics Jobs Analytics Jobs Get"}}}}}}}, "/analytics/job/{job_id}": {"get": {"tags": ["Analytics"], "summary": "Get Job Analytics", "description": "Calculate recruitment funnel metrics, candidate outcomes, and team stats.", "operationId": "get_job_analytics_analytics_job__job_id__get", "parameters": [{"name": "job_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Job Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Get Job Analytics Analytics Job  Job Id  Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/analytics/job/{job_id}/outcome-candidates": {"get": {"tags": ["Analytics"], "summary": "Get Outcome Candidates", "description": "List candidates for a job filtered by interview outcome and interview type.", "operationId": "get_outcome_candidates_analytics_job__job_id__outcome_candidates_get", "parameters": [{"name": "job_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Job Id"}}, {"name": "outcome", "in": "query", "required": true, "schema": {"type": "string", "description": "PASS | FAIL | CONDITIONAL | pending", "title": "Outcome"}, "description": "PASS | FAIL | CONDITIONAL | pending"}, {"name": "type", "in": "query", "required": false, "schema": {"anyOf": [{"type": "string"}, {"type": "null"}], "description": "ai | human — filter by interview type", "title": "Type"}, "description": "ai | human — filter by interview type"}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "array", "items": {"type": "object", "additionalProperties": true}, "title": "Response Get Outcome Candidates Analytics Job  Job Id  Outcome Candidates Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/analytics/job/{job_id}/interview/{interview_id}/report": {"get": {"tags": ["Analytics"], "summary": "Get Interview Report", "description": "Fetch complete interview report and proctoring metadata.", "operationId": "get_interview_report_analytics_job__job_id__interview__interview_id__report_get", "parameters": [{"name": "job_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Job Id"}}, {"name": "interview_id", "in": "path", "required": true, "schema": {"type": "string", "title": "Interview Id"}}], "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"type": "object", "additionalProperties": true, "title": "Response Get Interview Report Analytics Job  Job Id  Interview  Interview Id  Report Get"}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}}, "components": {"schemas": {"HTTPValidationError": {"properties": {"detail": {"items": {"$ref": "#/components/schemas/ValidationError"}, "type": "array", "title": "Detail"}}, "type": "object", "title": "HTTPValidationError"}, "ValidationError": {"properties": {"loc": {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}]}, "type": "array", "title": "Location"}, "msg": {"type": "string", "title": "Message"}, "type": {"type": "string", "title": "Error Type"}}, "type": "object", "required": ["loc", "msg", "type"], "title": "ValidationError"}}}};
+  Redoc.init(spec, {
+    scrollYOffset: 56,
+    hideDownloadButton: false,
+    theme: {
+      colors: {
+        primary: {
+          main: '#7c3aed'
+        }
+      }
+    }
+  }, document.getElementById('redoc-container'));
+
+  // Switch microservice on dropdown selection
+  document.getElementById('service-selector').addEventListener('change', function(e) {
+    window.location.href = e.target.value;
+  });
+
+  // Real-time active microservice heading tracker for Unified platform
+  const tagToService = {};
+  const isUnified = false;
+
+  function updateNavbarHeading() {
+    if (!isUnified) return;
+    const badge = document.getElementById('active-service-text');
+    if (!badge) return;
+
+    const hash = window.location.hash || '';
+    if (!hash || hash === '#' || hash === '#/') {
+      badge.innerHTML = 'Active Service: <strong>🌐 Unified Platform (All 14 Microservices)</strong>';
+      return;
+    }
+
+    // Extract tag from hash e.g. #/tag/JD-Flow or #/tag/JD-Flow/operation/xyz
+    const tagMatch = hash.match(/#[\/]tag[\/]([^/?]+)/);
+    if (tagMatch) {
+      const rawSlug = decodeURIComponent(tagMatch[1]);
+      let matchedService = null;
+      let matchedTag = rawSlug;
+
+      for (const [tag, service] of Object.entries(tagToService)) {
+        const slugHyphen = tag.replace(/\s+/g, '-');
+        const slugUnderscore = tag.replace(/\s+/g, '_');
+        if (rawSlug === tag || rawSlug === slugHyphen || rawSlug === slugUnderscore || rawSlug.toLowerCase() === tag.toLowerCase()) {
+          matchedService = service;
+          matchedTag = tag;
+          break;
+        }
+      }
+
+      if (matchedService) {
+        badge.innerHTML = `Active Service: <strong>${matchedService}</strong> &nbsp;›&nbsp; <span style="color: #f1f5f9; font-weight: 600;">${matchedTag}</span>`;
+        return;
+      }
+    }
+
+    badge.innerHTML = 'Active Service: <strong>🌐 Unified Platform (All 14 Microservices)</strong>';
+  }
+
+  if (isUnified) {
+    window.addEventListener('hashchange', updateNavbarHeading);
+    document.addEventListener('click', function() {
+      setTimeout(updateNavbarHeading, 120);
+    });
+    setTimeout(updateNavbarHeading, 300);
+  }
+</script>
+</body>
+</html>

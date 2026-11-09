@@ -1,0 +1,1670 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Recruify - Recruiter as a Service (RaaS) Microservice",
+    "description": "Autonomous microservice API for Freelance Recruiter Operations & Sourcing",
+    "version": "v1.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "RaaS Microservice - Health"
+        ],
+        "summary": "Health Check",
+        "description": "Service health check with DB ping.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/dashboard": {
+      "get": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Get Dashboard",
+        "description": "Retrieve full recruiter dashboard overview including KPIs and pending requests.",
+        "operationId": "get_dashboard_raas_dashboard_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardOverviewSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/profile": {
+      "get": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Get Profile",
+        "description": "Get current recruiter profile.",
+        "operationId": "get_profile_raas_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecruiterProfileSchema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Update Profile",
+        "description": "Update current recruiter profile.",
+        "operationId": "update_profile_raas_profile_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecruiterProfileUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecruiterProfileSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/profile/avatar": {
+      "post": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Upload Avatar",
+        "description": "Upload recruiter profile picture to MinIO object storage.",
+        "operationId": "upload_avatar_raas_profile_avatar_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_avatar_raas_profile_avatar_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/profile/avatar/{user_id}": {
+      "get": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Get Avatar",
+        "description": "Stream recruiter profile picture from active platform storage (MinIO/Azure/S3).",
+        "operationId": "get_avatar_raas_profile_avatar__user_id__get",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/availability": {
+      "get": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Get Availability",
+        "description": "Get recruiter availability & matching preferences.",
+        "operationId": "get_availability_raas_availability_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecruiterAvailabilitySchema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Update Availability",
+        "description": "Update recruiter availability & weekly hours.",
+        "operationId": "update_availability_raas_availability_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecruiterAvailabilityUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecruiterAvailabilitySchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/settings": {
+      "get": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Get Settings",
+        "description": "Get recruiter settings & payout destinations.",
+        "operationId": "get_settings_raas_settings_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecruiterSettingsSchema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Update Settings",
+        "description": "Update recruiter settings & payout details.",
+        "operationId": "update_settings_raas_settings_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecruiterSettingsUpdateSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecruiterSettingsSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/requests": {
+      "get": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "List Business Requests",
+        "description": "List business requests for recruiter (optional status filter: PENDING, ACCEPTED, DECLINED).",
+        "operationId": "list_business_requests_raas_requests_get",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BusinessRequestSchema"
+                  },
+                  "title": "Response List Business Requests Raas Requests Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/requests/{request_id}/action": {
+      "post": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Act On Business Request",
+        "description": "Accept or decline a pending business request.",
+        "operationId": "act_on_business_request_raas_requests__request_id__action_post",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusinessRequestActionSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessRequestSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/raas/register": {
+      "post": {
+        "tags": [
+          "Recruiter as a Service"
+        ],
+        "summary": "Register Freelance Recruiter",
+        "description": "Public registration endpoint for freelance recruiters.",
+        "operationId": "register_freelance_recruiter_raas_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRecruiterSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecruiterProfileSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/raas/recruiters": {
+      "get": {
+        "tags": [
+          "Internal RaaS"
+        ],
+        "summary": "List Available Recruiters",
+        "description": "Internal query to list active verified freelance recruiters.",
+        "operationId": "list_available_recruiters_internal_raas_recruiters_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RecruiterProfileSchema"
+                  },
+                  "type": "array",
+                  "title": "Response List Available Recruiters Internal Raas Recruiters Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/raas/assign-job": {
+      "post": {
+        "tags": [
+          "Internal RaaS"
+        ],
+        "summary": "Assign Job To Recruiter",
+        "description": "Internal endpoint for Job / Admin service to route an assignment to a freelance recruiter.",
+        "operationId": "assign_job_to_recruiter_internal_raas_assign_job_post",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            }
+          },
+          {
+            "name": "job_title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Title"
+            }
+          },
+          {
+            "name": "company_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Company Name"
+            }
+          },
+          {
+            "name": "payout_fee",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "title": "Payout Fee"
+            }
+          },
+          {
+            "name": "openings_count",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Openings Count"
+            }
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Bengaluru",
+              "title": "Location"
+            }
+          },
+          {
+            "name": "experience_req",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "3-5 yrs",
+              "title": "Experience Req"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessRequestSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_upload_avatar_raas_profile_avatar_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_avatar_raas_profile_avatar_post"
+      },
+      "BusinessRequestActionSchema": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "title": "Action",
+            "description": "'accept' or 'decline'"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action"
+        ],
+        "title": "BusinessRequestActionSchema"
+      },
+      "BusinessRequestSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "openings_count": {
+            "type": "integer",
+            "title": "Openings Count",
+            "default": 1
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name"
+          },
+          "company_logo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo"
+          },
+          "location": {
+            "type": "string",
+            "title": "Location",
+            "default": "Bengaluru"
+          },
+          "experience_req": {
+            "type": "string",
+            "title": "Experience Req",
+            "default": "4-6 yrs"
+          },
+          "payout_fee": {
+            "type": "number",
+            "title": "Payout Fee",
+            "default": 35000.0
+          },
+          "payout_fee_formatted": {
+            "type": "string",
+            "title": "Payout Fee Formatted",
+            "default": "₹35,000"
+          },
+          "received_time_text": {
+            "type": "string",
+            "title": "Received Time Text",
+            "default": "2h ago"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "PENDING"
+          },
+          "role_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role Type",
+            "default": "Product Design (IC3)"
+          },
+          "employment_nature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Employment Nature",
+            "default": "Full-time (Permanent)"
+          },
+          "target_joining": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Joining",
+            "default": "Immediate / Max 30 Days"
+          },
+          "pre_screen_rounds": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pre Screen Rounds",
+            "default": "AI Voice Screen + Portfolio Review"
+          },
+          "about_company": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "About Company",
+            "default": "Acme Technologies is a high-growth SaaS enterprise developing the next generation of visual collaboration tools for remote product and engineering squads."
+          },
+          "requirements": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requirements",
+            "default": [
+              "Proven product design experience (4+ years) shipping core features of highly interactive B2B SaaS platforms.",
+              "Exceptional command over visual design foundations, advanced typography, and information design hierarchy.",
+              "Elite Figma mastery — including advanced component architectures, complex auto-layout configurations, and variables.",
+              "Deep knowledge of modern design system workflows and seamless translation of design elements to frontend developers.",
+              "Strong interaction design focus, detailed wireframing capabilities, and robust functional prototyping skills."
+            ]
+          },
+          "turnaround_days": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turnaround Days",
+            "default": "14 Days Max"
+          },
+          "sourcing_requirement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sourcing Requirement",
+            "default": "5 Shortlisted Candidates"
+          },
+          "replacement_policy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Replacement Policy",
+            "default": "30 Days Guarantee"
+          },
+          "other_recruiters_count": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Other Recruiters Count",
+            "default": "3 Assigned Partners"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "job_title",
+          "company_name"
+        ],
+        "title": "BusinessRequestSchema"
+      },
+      "DashboardOverviewSchema": {
+        "properties": {
+          "greeting_name": {
+            "type": "string",
+            "title": "Greeting Name",
+            "default": "Alex"
+          },
+          "active_jobs_summary": {
+            "type": "string",
+            "title": "Active Jobs Summary",
+            "default": "3 Active Jobs"
+          },
+          "candidates_summary": {
+            "type": "string",
+            "title": "Candidates Summary",
+            "default": "8 Candidates"
+          },
+          "pending_amount_formatted": {
+            "type": "string",
+            "title": "Pending Amount Formatted",
+            "default": "₹42,000 Pending"
+          },
+          "total_balance_formatted": {
+            "type": "string",
+            "title": "Total Balance Formatted",
+            "default": "₹1,10,500"
+          },
+          "is_active_sourcing": {
+            "type": "boolean",
+            "title": "Is Active Sourcing",
+            "default": true
+          },
+          "kpi": {
+            "$ref": "#/components/schemas/KPICardsSchema"
+          },
+          "pending_requests": {
+            "items": {
+              "$ref": "#/components/schemas/BusinessRequestSchema"
+            },
+            "type": "array",
+            "title": "Pending Requests",
+            "default": []
+          },
+          "profile": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecruiterProfileSchema"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "kpi"
+        ],
+        "title": "DashboardOverviewSchema"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "KPICardsSchema": {
+        "properties": {
+          "new_requests_count": {
+            "type": "integer",
+            "title": "New Requests Count",
+            "default": 5
+          },
+          "new_requests_subtext": {
+            "type": "string",
+            "title": "New Requests Subtext",
+            "default": "+2 received today"
+          },
+          "active_jobs_count": {
+            "type": "integer",
+            "title": "Active Jobs Count",
+            "default": 3
+          },
+          "active_jobs_subtext": {
+            "type": "string",
+            "title": "Active Jobs Subtext",
+            "default": "1 nearing closing"
+          },
+          "candidates_submitted_count": {
+            "type": "integer",
+            "title": "Candidates Submitted Count",
+            "default": 24
+          },
+          "candidates_submitted_subtext": {
+            "type": "string",
+            "title": "Candidates Submitted Subtext",
+            "default": "+8 this week"
+          },
+          "month_earnings": {
+            "type": "number",
+            "title": "Month Earnings",
+            "default": 68500.0
+          },
+          "month_earnings_formatted": {
+            "type": "string",
+            "title": "Month Earnings Formatted",
+            "default": "₹68,500"
+          },
+          "month_earnings_subtext": {
+            "type": "string",
+            "title": "Month Earnings Subtext",
+            "default": "₹15k payout pending"
+          }
+        },
+        "type": "object",
+        "title": "KPICardsSchema"
+      },
+      "RecruiterAvailabilitySchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "available_for_new_assignments": {
+            "type": "boolean",
+            "title": "Available For New Assignments",
+            "default": true
+          },
+          "max_concurrent_assignments": {
+            "type": "string",
+            "title": "Max Concurrent Assignments",
+            "default": "5 Jobs Max"
+          },
+          "preferred_job_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Preferred Job Types",
+            "default": []
+          },
+          "candidate_experience_levels": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Candidate Experience Levels",
+            "default": []
+          },
+          "target_industries": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Target Industries",
+            "default": []
+          },
+          "weekly_sourcing_hours": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Weekly Sourcing Hours",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id"
+        ],
+        "title": "RecruiterAvailabilitySchema"
+      },
+      "RecruiterAvailabilityUpdateSchema": {
+        "properties": {
+          "available_for_new_assignments": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Available For New Assignments"
+          },
+          "max_concurrent_assignments": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Concurrent Assignments"
+          },
+          "preferred_job_types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preferred Job Types"
+          },
+          "candidate_experience_levels": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Experience Levels"
+          },
+          "target_industries": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Industries"
+          },
+          "weekly_sourcing_hours": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weekly Sourcing Hours"
+          }
+        },
+        "type": "object",
+        "title": "RecruiterAvailabilityUpdateSchema"
+      },
+      "RecruiterProfileSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "full_name": {
+            "type": "string",
+            "title": "Full Name"
+          },
+          "headline": {
+            "type": "string",
+            "title": "Headline"
+          },
+          "bio": {
+            "type": "string",
+            "title": "Bio"
+          },
+          "avatar_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar Url"
+          },
+          "is_verified": {
+            "type": "boolean",
+            "title": "Is Verified",
+            "default": true
+          },
+          "expertise_focus": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Expertise Focus",
+            "default": []
+          },
+          "hiring_regions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Hiring Regions",
+            "default": []
+          },
+          "professional_experience": {
+            "type": "string",
+            "title": "Professional Experience",
+            "default": "6 Years"
+          },
+          "match_turnaround": {
+            "type": "string",
+            "title": "Match Turnaround",
+            "default": "3 Days avg"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email",
+            "default": ""
+          },
+          "phone": {
+            "type": "string",
+            "title": "Phone",
+            "default": ""
+          },
+          "linkedin_url": {
+            "type": "string",
+            "title": "Linkedin Url",
+            "default": ""
+          },
+          "jobs_completed": {
+            "type": "integer",
+            "title": "Jobs Completed",
+            "default": 42
+          },
+          "successful_hires": {
+            "type": "integer",
+            "title": "Successful Hires",
+            "default": 68
+          },
+          "avg_shortlist_time": {
+            "type": "string",
+            "title": "Avg Shortlist Time",
+            "default": "3.2 days"
+          },
+          "companies_engaged": {
+            "type": "integer",
+            "title": "Companies Engaged",
+            "default": 27
+          },
+          "acceptance_rate": {
+            "type": "integer",
+            "title": "Acceptance Rate",
+            "default": 89
+          },
+          "client_satisfaction": {
+            "type": "number",
+            "title": "Client Satisfaction",
+            "default": 4.8
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "full_name",
+          "headline",
+          "bio"
+        ],
+        "title": "RecruiterProfileSchema"
+      },
+      "RecruiterProfileUpdateSchema": {
+        "properties": {
+          "full_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Full Name"
+          },
+          "headline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headline"
+          },
+          "bio": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bio"
+          },
+          "avatar_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar Url"
+          },
+          "expertise_focus": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expertise Focus"
+          },
+          "hiring_regions": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hiring Regions"
+          },
+          "professional_experience": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Professional Experience"
+          },
+          "match_turnaround": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Match Turnaround"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "linkedin_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Linkedin Url"
+          }
+        },
+        "type": "object",
+        "title": "RecruiterProfileUpdateSchema"
+      },
+      "RecruiterSettingsSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "email_notifications": {
+            "type": "boolean",
+            "title": "Email Notifications",
+            "default": true
+          },
+          "push_notifications": {
+            "type": "boolean",
+            "title": "Push Notifications",
+            "default": true
+          },
+          "sms_reminders": {
+            "type": "boolean",
+            "title": "Sms Reminders",
+            "default": false
+          },
+          "alert_new_requests": {
+            "type": "boolean",
+            "title": "Alert New Requests",
+            "default": true
+          },
+          "alert_candidate_updates": {
+            "type": "boolean",
+            "title": "Alert Candidate Updates",
+            "default": true
+          },
+          "alert_payment_clear": {
+            "type": "boolean",
+            "title": "Alert Payment Clear",
+            "default": true
+          },
+          "alert_saas_chats": {
+            "type": "boolean",
+            "title": "Alert Saas Chats",
+            "default": false
+          },
+          "two_factor_enabled": {
+            "type": "boolean",
+            "title": "Two Factor Enabled",
+            "default": true
+          },
+          "primary_bank_name": {
+            "type": "string",
+            "title": "Primary Bank Name",
+            "default": "HDFC Bank ending in •••• 9840"
+          },
+          "upi_id": {
+            "type": "string",
+            "title": "Upi Id",
+            "default": "alex.rivera@okaxis"
+          },
+          "display_language": {
+            "type": "string",
+            "title": "Display Language",
+            "default": "English (India)"
+          },
+          "local_timezone": {
+            "type": "string",
+            "title": "Local Timezone",
+            "default": "(IST) UTC +5:30"
+          },
+          "active_currency": {
+            "type": "string",
+            "title": "Active Currency",
+            "default": "Indian Rupee — INR (₹)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id"
+        ],
+        "title": "RecruiterSettingsSchema"
+      },
+      "RecruiterSettingsUpdateSchema": {
+        "properties": {
+          "email_notifications": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email Notifications"
+          },
+          "push_notifications": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Push Notifications"
+          },
+          "sms_reminders": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sms Reminders"
+          },
+          "alert_new_requests": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert New Requests"
+          },
+          "alert_candidate_updates": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Candidate Updates"
+          },
+          "alert_payment_clear": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Payment Clear"
+          },
+          "alert_saas_chats": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Saas Chats"
+          },
+          "two_factor_enabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Two Factor Enabled"
+          },
+          "primary_bank_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Bank Name"
+          },
+          "upi_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Upi Id"
+          },
+          "display_language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Language"
+          },
+          "local_timezone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Local Timezone"
+          },
+          "active_currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Active Currency"
+          }
+        },
+        "type": "object",
+        "title": "RecruiterSettingsUpdateSchema"
+      },
+      "RegisterRecruiterSchema": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "full_name": {
+            "type": "string",
+            "title": "Full Name"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "headline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headline",
+            "default": "Freelance Technical Recruiter"
+          },
+          "expertise_focus": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expertise Focus",
+            "default": [
+              "Engineering",
+              "Product Design"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "full_name"
+        ],
+        "title": "RegisterRecruiterSchema"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

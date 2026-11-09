@@ -1,0 +1,887 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Recruify - Resumes Microservice",
+    "description": "Autonomous microservice API for the Resumes domain",
+    "version": "v3"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Resumes Microservice - Health"
+        ],
+        "summary": "Health Check",
+        "description": "Service health check with DB ping.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resumes/{table_id}/upload": {
+      "post": {
+        "tags": [
+          "Resume Parser"
+        ],
+        "summary": "Upload Resumes",
+        "operationId": "upload_resumes_resumes__table_id__upload_post",
+        "parameters": [
+          {
+            "name": "table_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "String id used to derive the Postgres table name",
+              "title": "Table Id"
+            },
+            "description": "String id used to derive the Postgres table name"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_resumes_resumes__table_id__upload_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadTaskResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resumes/upload/status/{task_id}": {
+      "get": {
+        "tags": [
+          "Resume Parser"
+        ],
+        "summary": "Get Upload Status",
+        "operationId": "get_upload_status_resumes_upload_status__task_id__get",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskStatusResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resumes/{table_id}/search": {
+      "post": {
+        "tags": [
+          "Resume Parser"
+        ],
+        "summary": "Search Resumes",
+        "operationId": "search_resumes_resumes__table_id__search_post",
+        "parameters": [
+          {
+            "name": "table_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "String id used to derive the Postgres table name",
+              "title": "Table Id"
+            },
+            "description": "String id used to derive the Postgres table name"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resumes/{table_id}/{resume_id}": {
+      "get": {
+        "tags": [
+          "Resume Parser"
+        ],
+        "summary": "Get Resume By Id",
+        "operationId": "get_resume_by_id_resumes__table_id___resume_id__get",
+        "parameters": [
+          {
+            "name": "table_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "String id used to derive the Postgres table name",
+              "title": "Table Id"
+            },
+            "description": "String id used to derive the Postgres table name"
+          },
+          {
+            "name": "resume_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The unique UUID of the resume to fetch",
+              "title": "Resume Id"
+            },
+            "description": "The unique UUID of the resume to fetch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FullResumeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/resumes/": {
+      "get": {
+        "tags": [
+          "Internal - Resumes"
+        ],
+        "summary": "Get Internal Resumes",
+        "description": "Fetch parsed resume candidate metadata for multiple resume IDs.",
+        "operationId": "get_internal_resumes_internal_resumes__get",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Comma-separated resume IDs",
+              "title": "Ids"
+            },
+            "description": "Comma-separated resume IDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Get Internal Resumes Internal Resumes  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/resumes/metrics/applicant-counts": {
+      "get": {
+        "tags": [
+          "Internal - Resumes"
+        ],
+        "summary": "Get Internal Applicant Counts",
+        "description": "Return total resume applicants count per job for analytics.",
+        "operationId": "get_internal_applicant_counts_internal_resumes_metrics_applicant_counts_get",
+        "parameters": [
+          {
+            "name": "job_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Comma-separated job IDs",
+              "title": "Job Ids"
+            },
+            "description": "Comma-separated job IDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Internal Applicant Counts Internal Resumes Metrics Applicant Counts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/resumes/reload-config": {
+      "post": {
+        "tags": [
+          "Internal - Resumes"
+        ],
+        "summary": "Reload Resumes Config",
+        "description": "Hot-reload embedding configuration from platform_settings table.",
+        "operationId": "reload_resumes_config_internal_resumes_reload_config_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Reload Resumes Config Internal Resumes Reload Config Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/resumes/job/{job_id}": {
+      "get": {
+        "tags": [
+          "Internal - Resumes"
+        ],
+        "summary": "Get Internal Resumes By Job",
+        "description": "Fetch all resumes associated with a job.",
+        "operationId": "get_internal_resumes_by_job_internal_resumes_job__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Get Internal Resumes By Job Internal Resumes Job  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/resumes/{job_id}/{resume_id}/full": {
+      "get": {
+        "tags": [
+          "Internal - Resumes"
+        ],
+        "summary": "Get Internal Resume Full",
+        "description": "Fetch full parsed resume text for interviews, with fallback to ResumeScore table.",
+        "operationId": "get_internal_resume_full_internal_resumes__job_id___resume_id__full_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "resume_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Resume Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Internal Resume Full Internal Resumes  Job Id   Resume Id  Full Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/resumes/{resume_id}": {
+      "get": {
+        "tags": [
+          "Internal - Resumes"
+        ],
+        "summary": "Get Internal Resume",
+        "description": "Fetch parsed resume candidate score & contact metadata.",
+        "operationId": "get_internal_resume_internal_resumes__resume_id__get",
+        "parameters": [
+          {
+            "name": "resume_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Resume Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Internal Resume Internal Resumes  Resume Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_upload_resumes_resumes__table_id__upload_post": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "type": "array",
+            "title": "Files",
+            "description": "Select one or more resume files to upload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "Body_upload_resumes_resumes__table_id__upload_post"
+      },
+      "FullResumeResponse": {
+        "properties": {
+          "resume_id": {
+            "type": "string",
+            "title": "Resume Id"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "emails": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Emails"
+          },
+          "phones": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Phones"
+          },
+          "names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Names",
+            "default": []
+          },
+          "full_text": {
+            "type": "string",
+            "title": "Full Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "resume_id",
+          "filename",
+          "emails",
+          "phones",
+          "full_text"
+        ],
+        "title": "FullResumeResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ResumeResult": {
+        "properties": {
+          "resume_id": {
+            "type": "string",
+            "title": "Resume Id"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "emails": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Emails"
+          },
+          "phones": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Phones"
+          },
+          "names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Names",
+            "default": []
+          },
+          "text_snippet": {
+            "type": "string",
+            "title": "Text Snippet"
+          }
+        },
+        "type": "object",
+        "required": [
+          "resume_id",
+          "filename",
+          "score",
+          "emails",
+          "phones",
+          "text_snippet"
+        ],
+        "title": "ResumeResult"
+      },
+      "ResumeUploadResult": {
+        "properties": {
+          "resume_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resume Id"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "emails": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Emails",
+            "default": []
+          },
+          "phones": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Phones",
+            "default": []
+          },
+          "names": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Names",
+            "default": []
+          },
+          "char_count": {
+            "type": "integer",
+            "title": "Char Count",
+            "default": 0
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "ok"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename"
+        ],
+        "title": "ResumeUploadResult"
+      },
+      "SearchRequest": {
+        "properties": {
+          "jd_text": {
+            "type": "string",
+            "title": "Jd Text"
+          },
+          "top_k": {
+            "type": "integer",
+            "title": "Top K",
+            "default": 5
+          }
+        },
+        "type": "object",
+        "required": [
+          "jd_text"
+        ],
+        "title": "SearchRequest"
+      },
+      "SearchResponse": {
+        "properties": {
+          "table_id": {
+            "type": "string",
+            "title": "Table Id"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/ResumeResult"
+            },
+            "type": "array",
+            "title": "Results"
+          }
+        },
+        "type": "object",
+        "required": [
+          "table_id",
+          "results"
+        ],
+        "title": "SearchResponse"
+      },
+      "TaskStatusResponse": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "progress": {
+            "type": "integer",
+            "title": "Progress"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "uploaded": {
+            "type": "integer",
+            "title": "Uploaded"
+          },
+          "failed": {
+            "type": "integer",
+            "title": "Failed"
+          },
+          "skipped": {
+            "type": "integer",
+            "title": "Skipped",
+            "default": 0
+          },
+          "skipped_filenames": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Skipped Filenames",
+            "default": []
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/ResumeUploadResult"
+            },
+            "type": "array",
+            "title": "Results",
+            "default": []
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "status",
+          "progress",
+          "total",
+          "uploaded",
+          "failed"
+        ],
+        "title": "TaskStatusResponse"
+      },
+      "UploadTaskResponse": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "status"
+        ],
+        "title": "UploadTaskResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

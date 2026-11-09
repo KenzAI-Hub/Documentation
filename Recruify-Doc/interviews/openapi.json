@@ -1,0 +1,1198 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Recruify - Interviews Microservice",
+    "description": "Autonomous microservice API for the Interviews domain",
+    "version": "v3"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Interviews Microservice - Health"
+        ],
+        "summary": "Health Check",
+        "description": "Service health check with DB ping.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Get Ui",
+        "operationId": "get_ui__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voices": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "List Voices",
+        "operationId": "list_voices_voices_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview-services/health": {
+      "get": {
+        "tags": [
+          "Ai Interviewer",
+          "Ai Interviewer"
+        ],
+        "summary": "Interview Services Health",
+        "operationId": "interview_services_health_interview_services_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/vad/health": {
+      "get": {
+        "tags": [
+          "Ai Interviewer",
+          "Ai Interviewer"
+        ],
+        "summary": "Check Vad Container Health",
+        "description": "Checks if Docker Smart Turn VAD container (pipecat-vad-gpu on port 8010) is online.\nZero local fallback.",
+        "operationId": "check_vad_container_health_interview_vad_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/config": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Get Config",
+        "operationId": "get_config_config_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/start": {
+      "post": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Start Interview",
+        "operationId": "start_interview_interview_start_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartInterviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{session_id}/livekit-token": {
+      "post": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Get Livekit Token",
+        "description": "Generates a cryptographically signed LiveKit AccessToken JWT granting\nthe candidate or interviewer permission to join the WebRTC media room.",
+        "operationId": "get_livekit_token_interview__session_id__livekit_token_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{interview_id}/start_from_ats": {
+      "post": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Start Interview From Ats",
+        "operationId": "start_interview_from_ats_interview__interview_id__start_from_ats_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartFromAtsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{session_id}/history": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Get History",
+        "operationId": "get_history_interview__session_id__history_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{session_id}": {
+      "delete": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "End Interview Http",
+        "operationId": "end_interview_http_interview__session_id__delete",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{session_id}/report": {
+      "post": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Start Report Generation",
+        "operationId": "start_report_generation_interview__session_id__report_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{session_id}/report/status": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Report Status",
+        "operationId": "report_status_interview__session_id__report_status_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{session_id}/report/download": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Download Report",
+        "operationId": "download_report_interview__session_id__report_download_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{interview_id}/recordings/upload": {
+      "post": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Upload Interview Recording",
+        "description": "Upload an interview recording segment or attempt (\"kishton mein\").\nSaves to MinIO / S3 / Azure and persists metadata with 30-day retention.",
+        "operationId": "upload_interview_recording_interview__interview_id__recordings_upload_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_interview_recording_interview__interview_id__recordings_upload_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{interview_id}/recordings": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "List Interview Recordings",
+        "description": "List all recording segments for an interview with stream & download links.",
+        "operationId": "list_interview_recordings_interview__interview_id__recordings_get",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Delete Recordings Endpoint",
+        "description": "Delete all recording segments and storage objects for an interview.",
+        "operationId": "delete_recordings_endpoint_interview__interview_id__recordings_delete",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/recordings/{recording_id}/stream": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Stream Recording Endpoint",
+        "description": "Stream recording with HTTP 206 Partial Content Range support for timeline seeking.",
+        "operationId": "stream_recording_endpoint_interview_recordings__recording_id__stream_get",
+        "parameters": [
+          {
+            "name": "recording_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Recording Id"
+            }
+          },
+          {
+            "name": "range",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Range"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/recordings/{recording_id}/download": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Download Recording Endpoint",
+        "description": "Download the raw recording file with Content-Disposition attachment.",
+        "operationId": "download_recording_endpoint_interview_recordings__recording_id__download_get",
+        "parameters": [
+          {
+            "name": "recording_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Recording Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/storage/telemetry": {
+      "get": {
+        "tags": [
+          "Ai Interviewer"
+        ],
+        "summary": "Get Storage Telemetry Endpoint",
+        "description": "Return aggregated recording media metrics and storage distribution for platform overview.",
+        "operationId": "get_storage_telemetry_endpoint_interview_storage_telemetry_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/human/start": {
+      "post": {
+        "tags": [
+          "Human Interviewer"
+        ],
+        "summary": "Start Human Interview",
+        "operationId": "start_human_interview_interview_human_start_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartHumanInterviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/human/{interview_id}/start_from_ats": {
+      "post": {
+        "tags": [
+          "Human Interviewer"
+        ],
+        "summary": "Start Human Interview From Ats",
+        "operationId": "start_human_interview_from_ats_interview_human__interview_id__start_from_ats_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/human/{session_id}": {
+      "get": {
+        "tags": [
+          "Human Interviewer"
+        ],
+        "summary": "Get Human Interview",
+        "operationId": "get_human_interview_interview_human__session_id__get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/human/{session_id}/feedback": {
+      "post": {
+        "tags": [
+          "Human Interviewer"
+        ],
+        "summary": "Submit Human Feedback",
+        "operationId": "submit_human_feedback_interview_human__session_id__feedback_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interviews/active-presence": {
+      "get": {
+        "tags": [
+          "Human Interviewer"
+        ],
+        "summary": "Get Active Presence",
+        "description": "Returns active WebRTC connection status for sessions in real-time.",
+        "operationId": "get_active_presence_interviews_active_presence_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Active Presence Interviews Active Presence Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/active-presence": {
+      "get": {
+        "tags": [
+          "Human Interviewer"
+        ],
+        "summary": "Get Active Presence",
+        "description": "Returns active WebRTC connection status for sessions in real-time.",
+        "operationId": "get_active_presence_interview_active_presence_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Active Presence Interview Active Presence Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_upload_interview_recording_interview__interview_id__recordings_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File",
+            "description": "Interview recording audio/video file"
+          },
+          "attempt_no": {
+            "type": "integer",
+            "title": "Attempt No",
+            "default": 1
+          },
+          "part_no": {
+            "type": "integer",
+            "title": "Part No",
+            "default": 1
+          },
+          "duration_seconds": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Seconds"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_interview_recording_interview__interview_id__recordings_upload_post"
+      },
+      "FeedbackRequest": {
+        "properties": {
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "candidate_feedback": {
+            "type": "string",
+            "title": "Candidate Feedback"
+          },
+          "internal_report": {
+            "type": "string",
+            "title": "Internal Report"
+          },
+          "new_scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Scheduled At"
+          },
+          "new_interview_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Interview Type"
+          },
+          "new_max_questions": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Max Questions"
+          },
+          "ratings": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ratings"
+          },
+          "average_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Average Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "outcome",
+          "candidate_feedback",
+          "internal_report"
+        ],
+        "title": "FeedbackRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "StartFromAtsRequest": {
+        "properties": {
+          "voice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Voice"
+          },
+          "max_questions": {
+            "type": "integer",
+            "title": "Max Questions",
+            "default": 10
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language",
+            "default": "en"
+          }
+        },
+        "type": "object",
+        "title": "StartFromAtsRequest"
+      },
+      "StartHumanInterviewRequest": {
+        "properties": {
+          "resume": {
+            "type": "string",
+            "title": "Resume"
+          },
+          "jd": {
+            "type": "string",
+            "title": "Jd"
+          },
+          "additional_details": {
+            "type": "string",
+            "title": "Additional Details",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "resume",
+          "jd"
+        ],
+        "title": "StartHumanInterviewRequest"
+      },
+      "StartInterviewRequest": {
+        "properties": {
+          "resume": {
+            "type": "string",
+            "title": "Resume"
+          },
+          "jd": {
+            "type": "string",
+            "title": "Jd"
+          },
+          "voice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Voice"
+          },
+          "additional_details": {
+            "type": "string",
+            "title": "Additional Details",
+            "default": ""
+          },
+          "max_questions": {
+            "type": "integer",
+            "title": "Max Questions",
+            "default": 10
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language",
+            "default": "en"
+          }
+        },
+        "type": "object",
+        "required": [
+          "resume",
+          "jd"
+        ],
+        "title": "StartInterviewRequest"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

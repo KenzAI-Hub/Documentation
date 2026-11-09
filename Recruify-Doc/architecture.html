@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+    <html lang="en" data-theme="light">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Recruify · Microservices Architecture & Realtime Media Matrix</title>
+  <link rel="icon" type="image/svg+xml" href="logo-re-dark.svg">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+      <style>
+        /* Executive White/Grey Theme (Default) + Recruify Royal Purple Tokens */
+        :root {
+          --bg-base: #f8fafc;
+          --bg-canvas: #fbfbfc;
+          --bg-surface: #ffffff;
+          --bg-surface-elevated: #ffffff;
+          --bg-card: #ffffff;
+          --border-subtle: #e2e8f0;
+          --border-strong: #cbd5e1;
+          --text-primary: #0f172a;
+          --text-secondary: #475569;
+          --text-muted: #64748b;
+          
+          --purple-primary: #7C3AED;
+          --purple-hover: #6D28D9;
+          --purple-electric: #5B3DF5;
+          --purple-gradient: linear-gradient(135deg, #5B3DF5 0%, #7C3AED 100%);
+          --purple-soft: rgba(124, 58, 237, 0.08);
+          --purple-border: rgba(124, 58, 237, 0.25);
+          
+          --edge-idle: #94a3b8;
+          --edge-active: #7c3aed;
+          --grid-dot: #cbd5e1;
+          
+          --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+          --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+          --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+          --shadow-purple: 0 8px 24px rgba(124, 58, 237, 0.22);
+        }
+    
+        [data-theme="dark"] {
+          --bg-base: #090d16;
+          --bg-canvas: #0b0f19;
+          --bg-surface: #111827;
+          --bg-surface-elevated: #162032;
+          --bg-card: #131c2e;
+          --border-subtle: #1e293b;
+          --border-strong: #334155;
+          --text-primary: #f8fafc;
+          --text-secondary: #94a3b8;
+          --text-muted: #64748b;
+          
+          --edge-idle: #334155;
+          --edge-active: #8b5cf6;
+          --grid-dot: #1e293b;
+          
+          --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+          --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
+          --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.6);
+          --shadow-purple: 0 8px 28px rgba(139, 92, 246, 0.35);
+        }
+    
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+    
+        body {
+          font-family: 'Outfit', 'Cairo', 'Inter', -apple-system, sans-serif;
+          background: var(--bg-base);
+          color: var(--text-primary);
+          overflow: hidden;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          user-select: none;
+          -webkit-font-smoothing: antialiased;
+          transition: background-color 0.25s ease, color 0.25s ease;
+        }
+    
+        /* Top Executive Navigation Bar */
+        header.top-nav {
+          height: 60px;
+          background: var(--bg-surface);
+          border-bottom: 1px solid var(--border-subtle);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 24px;
+          z-index: 100;
+          box-shadow: var(--shadow-sm);
+          transition: background-color 0.25s ease, border-color 0.25s ease;
+          flex-shrink: 0;
+        }
+    
+        .brand-section {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+        }
+    
+        .brand-logo {
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          height: 28px;
+        }
+
+        .brand-logo-img {
+          height: 26px;
+          max-height: 26px;
+          width: auto;
+          max-width: 140px;
+          object-fit: contain;
+          display: block;
+        }
+
+        .brand-logo-dark {
+          display: block !important;
+        }
+
+        .brand-logo-light {
+          display: none !important;
+        }
+
+        [data-theme="dark"] .brand-logo-dark {
+          display: none !important;
+        }
+
+        [data-theme="dark"] .brand-logo-light {
+          display: block !important;
+        }
+    
+        .brand-badge {
+          font-size: 11.5px;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 20px;
+          background: var(--purple-soft);
+          border: 1px solid var(--purple-border);
+          color: var(--purple-primary);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+    
+        .brand-badge .pulse {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--purple-primary);
+          animation: pulse-ring 2s infinite ease-out;
+        }
+    
+        @keyframes pulse-ring {
+          0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.6); }
+          70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(124, 58, 237, 0); }
+          100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+        }
+    
+        .nav-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+    
+        .nav-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 7px 14px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 600;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          border: 1px solid var(--border-subtle);
+          background: var(--bg-surface-elevated);
+          color: var(--text-secondary);
+        }
+    
+        .nav-btn:hover {
+          border-color: var(--purple-primary);
+          color: var(--purple-primary);
+          background: var(--purple-soft);
+        }
+    
+        .nav-btn.primary {
+          background: var(--purple-gradient);
+          border-color: transparent;
+          color: white;
+          box-shadow: 0 2px 10px rgba(91, 61, 245, 0.3);
+        }
+    
+        .nav-btn.primary:hover {
+          box-shadow: 0 4px 16px rgba(91, 61, 245, 0.45);
+          transform: translateY(-1px);
+        }
+    
+        .theme-toggle-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 7px 13px;
+          border-radius: 8px;
+          font-size: 12.5px;
+          font-weight: 600;
+          cursor: pointer;
+          border: 1px solid var(--border-subtle);
+          background: var(--bg-surface-elevated);
+          color: var(--text-secondary);
+          transition: all 0.2s ease;
+        }
+    
+        .theme-toggle-btn:hover {
+          border-color: var(--purple-primary);
+          color: var(--purple-primary);
+          background: var(--purple-soft);
+        }
+    
+        /* Workspace Layout: Canvas + Right Navigator Panel */
+        .workspace-layout {
+          flex: 1;
+          display: flex;
+          position: relative;
+          overflow: hidden;
+        }
+    
+        /* Main Canvas Area */
+        #canvas-container {
+          flex: 1;
+          position: relative;
+          overflow: hidden;
+          cursor: grab;
+          background: var(--bg-canvas);
+        }
+    
+        #canvas-container.grabbing {
+          cursor: grabbing;
+        }
+    
+        svg#graph-svg {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+    
+        /* Graph SVG Elements */
+        .grid-dots {
+          fill: var(--grid-dot);
+        }
+    
+        .tier-boundary {
+          fill: none;
+          stroke: var(--border-subtle);
+          stroke-dasharray: 4 4;
+          stroke-width: 1;
+        }
+    
+        .tier-header-label {
+          font-size: 11px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          fill: var(--text-muted);
+        }
+    
+        /* Edge Styles */
+        .edge-group {
+          cursor: pointer;
+        }
+    
+        .edge-hit-area {
+          stroke: transparent;
+          stroke-width: 18;
+          fill: none;
+          pointer-events: stroke;
+        }
+    
+        .edge-path {
+          stroke: var(--edge-idle);
+          stroke-width: 1.8;
+          fill: none;
+          transition: stroke 0.2s ease, stroke-width 0.2s ease;
+          stroke-linecap: round;
+        }
+    
+        .edge-group:hover .edge-path,
+        .edge-group.active .edge-path {
+          stroke: var(--edge-active) !important;
+          stroke-width: 3.2 !important;
+          filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.6));
+        }
+    
+        .edge-group.dimmed {
+          opacity: 0.12;
+          pointer-events: none;
+        }
+    
+        /* Node Card Styles */
+        .node-group {
+          cursor: pointer;
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+        }
+    
+        .node-group:hover {
+          transform: translateY(-2px);
+        }
+    
+        .node-card-bg {
+          fill: var(--bg-surface);
+          stroke: var(--border-subtle);
+          stroke-width: 1.2;
+          rx: 12px;
+          filter: drop-shadow(var(--shadow-sm));
+          transition: all 0.2s ease;
+        }
+    
+        .node-group:hover .node-card-bg,
+        .node-group.selected .node-card-bg {
+          stroke: var(--purple-primary);
+          stroke-width: 2;
+          filter: drop-shadow(var(--shadow-purple));
+        }
+    
+        .node-group.dimmed {
+          opacity: 0.2;
+          pointer-events: none;
+        }
+    
+        /* ======================================================== */
+        /* DEDICATED RIGHT-HAND NAVIGATOR PANEL (ONLY NAVIGATOR) */
+        /* ======================================================== */
+        aside.right-nav-panel {
+          width: 350px;
+          background: var(--bg-surface);
+          border-left: 1px solid var(--border-subtle);
+          box-shadow: -4px 0 20px rgba(0, 0, 0, 0.04);
+          display: flex;
+          flex-direction: column;
+          z-index: 80;
+          flex-shrink: 0;
+          transition: background-color 0.25s ease, border-color 0.25s ease;
+        }
+    
+        /* Clean Navigator Header */
+        .panel-header {
+          padding: 16px 18px 14px 18px;
+          border-bottom: 1px solid var(--border-subtle);
+          background: var(--bg-canvas);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+    
+        .panel-header-title {
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          font-size: 15px;
+          font-weight: 800;
+          color: var(--text-primary);
+          letter-spacing: -0.01em;
+        }
+    
+        .panel-header-icon {
+          font-size: 18px;
+        }
+    
+        .panel-status-pill {
+          font-size: 11px;
+          font-weight: 700;
+          padding: 3px 8px;
+          border-radius: 12px;
+          background: var(--purple-soft);
+          border: 1px solid var(--purple-border);
+          color: var(--purple-primary);
+        }
+    
+        /* Navigator Scrollable Body */
+        .panel-scroll-content {
+          flex: 1;
+          overflow-y: auto;
+          padding: 16px 18px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+    
+        /* Search Box */
+        .panel-search-box {
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          background: var(--bg-canvas);
+          border: 1px solid var(--border-subtle);
+          padding: 8px 12px;
+          border-radius: 10px;
+          font-size: 13px;
+          color: var(--text-primary);
+          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+    
+        .panel-search-box:focus-within {
+          border-color: var(--purple-primary);
+          box-shadow: 0 0 0 3px var(--purple-soft);
+        }
+    
+        .panel-search-box input {
+          border: none;
+          outline: none;
+          background: transparent;
+          color: inherit;
+          font-size: 13px;
+          width: 100%;
+          font-family: inherit;
+        }
+    
+        /* Canvas Viewport Controls */
+        .viewport-controls-card {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 9px 12px;
+          background: var(--bg-canvas);
+          border: 1px solid var(--border-subtle);
+          border-radius: 10px;
+        }
+    
+        .viewport-label {
+          font-size: 12px;
+          font-weight: 700;
+          color: var(--text-secondary);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+    
+        .viewport-btn-group {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+    
+        .vp-btn {
+          padding: 5px 9px;
+          border-radius: 6px;
+          border: 1px solid var(--border-subtle);
+          background: var(--bg-surface);
+          color: var(--text-secondary);
+          cursor: pointer;
+          font-weight: 700;
+          font-size: 12px;
+          transition: all 0.15s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+    
+        .vp-btn:hover {
+          color: var(--purple-primary);
+          border-color: var(--purple-primary);
+          background: var(--purple-soft);
+        }
+    
+        /* Section Headers */
+        .section-title-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 8px;
+        }
+    
+        .panel-section-title {
+          font-size: 11px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          color: var(--text-muted);
+        }
+    
+        /* Vertical Filter List */
+        .tier-filter-list {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+    
+        .tier-filter-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 9px 12px;
+          border-radius: 9px;
+          border: 1px solid var(--border-subtle);
+          background: var(--bg-canvas);
+          color: var(--text-secondary);
+          font-size: 12.5px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+    
+        .tier-filter-item:hover {
+          border-color: var(--purple-primary);
+          color: var(--purple-primary);
+          background: var(--purple-soft);
+        }
+    
+        .tier-filter-item.active {
+          background: var(--purple-gradient);
+          color: #ffffff;
+          border-color: transparent;
+          box-shadow: 0 2px 10px rgba(91, 61, 245, 0.3);
+        }
+    
+        .tier-filter-left {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+    
+        .tier-count-chip {
+          font-size: 10.5px;
+          font-weight: 700;
+          padding: 2px 7px;
+          border-radius: 12px;
+          background: var(--purple-soft);
+          color: var(--purple-primary);
+          border: 1px solid var(--purple-border);
+        }
+    
+        .tier-filter-item.active .tier-count-chip {
+          background: rgba(255, 255, 255, 0.25);
+          color: #ffffff;
+          border-color: transparent;
+        }
+    
+        /* Service Quick Directory Section */
+        .directory-container {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          min-height: 260px;
+        }
+    
+        .service-directory-list {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          overflow-y: auto;
+          max-height: 380px;
+          padding-right: 2px;
+        }
+    
+        .service-directory-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8px 10px;
+          border-radius: 8px;
+          border: 1px solid var(--border-subtle);
+          background: var(--bg-canvas);
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+    
+        .service-directory-item:hover,
+        .service-directory-item.active {
+          border-color: var(--purple-primary);
+          background: var(--purple-soft);
+          transform: translateX(2px);
+        }
+    
+        .service-dir-left {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+    
+        .service-dir-icon {
+          font-size: 16px;
+        }
+    
+        .service-dir-name {
+          font-size: 12px;
+          font-weight: 700;
+          color: var(--text-primary);
+        }
+    
+        .service-dir-port {
+          font-size: 10.5px;
+          font-family: 'JetBrains Mono', monospace;
+          color: var(--text-muted);
+        }
+    
+        .service-dir-right {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+    
+        .service-doc-icon-btn {
+          color: var(--text-muted);
+          padding: 3px 5px;
+          border-radius: 4px;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          transition: all 0.15s ease;
+        }
+    
+        .service-doc-icon-btn:hover {
+          color: var(--purple-primary);
+          background: rgba(124, 58, 237, 0.15);
+        }
+    
+        /* Hover Tooltip Card */
+        #edge-tooltip {
+          position: absolute;
+          z-index: 200;
+          pointer-events: none;
+          background: var(--bg-surface);
+          border: 1px solid var(--purple-border);
+          border-radius: 12px;
+          padding: 14px 16px;
+          max-width: 340px;
+          box-shadow: var(--shadow-lg);
+          display: none;
+          font-size: 12px;
+          line-height: 1.45;
+          backdrop-filter: blur(20px);
+        }
+    
+        .tooltip-title {
+          font-size: 13.5px;
+          font-weight: 700;
+          color: var(--text-primary);
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          margin-bottom: 6px;
+        }
+    
+        .tooltip-badge {
+          font-size: 10px;
+          font-weight: 700;
+          padding: 2px 7px;
+          border-radius: 5px;
+          background: var(--purple-soft);
+          color: var(--purple-primary);
+          border: 1px solid var(--purple-border);
+          display: inline-block;
+        }
+    
+        .tooltip-desc {
+          color: var(--text-secondary);
+          margin-bottom: 10px;
+          font-size: 12px;
+        }
+    
+        .tooltip-row {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          margin-top: 6px;
+          padding-top: 6px;
+          border-top: 1px solid var(--border-subtle);
+        }
+    
+        .tooltip-label {
+          font-size: 10px;
+          text-transform: uppercase;
+          font-weight: 700;
+          color: var(--text-muted);
+          letter-spacing: 0.05em;
+        }
+    
+        .tooltip-val {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          color: var(--purple-primary);
+          word-break: break-all;
+        }
+    
+        /* Bottom Status & Legend Footer */
+        footer.bottom-bar {
+          position: absolute;
+          bottom: 16px;
+          left: 24px;
+          z-index: 50;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          background: var(--bg-surface);
+          border: 1px solid var(--border-subtle);
+          padding: 8px 16px;
+          border-radius: 10px;
+          font-size: 11.5px;
+          color: var(--text-secondary);
+          box-shadow: var(--shadow-sm);
+        }
+    
+        .legend-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+    
+        .legend-dot {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+        }
+      </style>
+    </head>
+    <body>
+    
+      <!-- Top Executive Navigation Bar -->
+      <header class="top-nav">
+        <div class="brand-section">
+          <a href="index.html" class="brand-logo" title="Back to Unified API Portal">
+            <img src="logo-dark.svg" alt="Recruify" class="brand-logo-img brand-logo-dark" />
+            <img src="logo-light.svg" alt="Recruify" class="brand-logo-img brand-logo-light" />
+          </a>
+          <div class="brand-badge">
+            <span class="pulse"></span>
+            <span>Microservices Architecture & Realtime Media Matrix</span>
+          </div>
+        </div>
+    
+        <div class="nav-actions">
+          <button id="theme-toggle" class="theme-toggle-btn" title="Toggle White/Grey and Dark theme">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-text">Dark Mode</span>
+          </button>
+          <a href="user-guide.html" class="nav-btn" title="View Step-by-Step User & Operations Guide">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+            User Guide
+          </a>
+          <a href="index.html" class="nav-btn primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            ReDoc API Portal
+          </a>
+        </div>
+      </header>
+    
+      <!-- Workspace Container (Canvas + Right Dedicated Navigator Panel) -->
+      <div class="workspace-layout">
+    
+        <!-- Interactive Canvas Container -->
+        <div id="canvas-container">
+          <svg id="graph-svg">
+            <defs>
+              <!-- Marker for Default Edges -->
+              <marker id="arrow-default" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="var(--edge-idle)"/>
+              </marker>
+    
+              <!-- Marker for Hovered / Active Edges -->
+              <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#7c3aed"/>
+              </marker>
+    
+              <!-- Canvas Background Dots Pattern -->
+              <pattern id="canvas-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1.2" class="grid-dots"/>
+              </pattern>
+            </defs>
+    
+            <!-- Pan & Zoom Content Group -->
+            <g id="viewport-group">
+              <!-- Grid Pattern Backdrop -->
+              <rect x="-3000" y="-3000" width="8000" height="8000" fill="url(#canvas-grid)" />
+    
+              <!-- Tier Separation Bands -->
+              <g id="tier-bands">
+                <!-- Tier 1: Gateway -->
+                <line x1="80" y1="135" x2="1600" y2="135" class="tier-boundary" />
+                <text x="90" y="30" class="tier-header-label">Tier 1 · API Gateway & Reverse Proxy</text>
+    
+                <!-- Tier 2: Core Identity -->
+                <line x1="80" y1="315" x2="1600" y2="315" class="tier-boundary" />
+                <text x="90" y="165" class="tier-header-label">Tier 2 · Core Identity & Governance</text>
+    
+                <!-- Tier 3: Core Recruitment -->
+                <line x1="80" y1="515" x2="1600" y2="515" class="tier-boundary" />
+                <text x="90" y="365" class="tier-header-label">Tier 3 · Recruitment & Talent Sourcing</text>
+    
+                <!-- Tier 4: Media & Voice -->
+                <line x1="80" y1="715" x2="1600" y2="715" class="tier-boundary" />
+                <text x="90" y="565" class="tier-header-label">Tier 4 · Real-Time Media, LiveKit & Conversational AI Voice Engine</text>
+    
+                <!-- Tier 5: Infra & Messaging -->
+                <text x="90" y="765" class="tier-header-label">Tier 5 · Real-Time Presence & Notification Dispatchers</text>
+              </g>
+    
+              <!-- Dynamic Edges SVG Layer -->
+              <g id="edges-layer"></g>
+    
+              <!-- Dynamic Nodes SVG Layer -->
+              <g id="nodes-layer"></g>
+            </g>
+          </svg>
+        </div>
+    
+        <!-- DEDICATED RIGHT-HAND NAVIGATOR PANEL (ONLY NAVIGATOR) -->
+        <aside class="right-nav-panel">
+          <!-- Navigator Header -->
+          <div class="panel-header">
+            <div class="panel-header-title">
+              <span class="panel-header-icon">🧭</span>
+              <span>Navigator</span>
+            </div>
+            <span class="panel-status-pill">18 Microservices</span>
+          </div>
+    
+          <!-- Navigator Content -->
+          <div class="panel-scroll-content">
+            <!-- Live Search -->
+            <div class="panel-search-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="service-search" placeholder="Search service, endpoint, VAD...">
+            </div>
+    
+            <!-- Viewport Zoom & Fit Controls -->
+            <div class="viewport-controls-card">
+              <span class="viewport-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                Canvas View
+              </span>
+              <div class="viewport-btn-group">
+                <button class="vp-btn" id="btn-zoom-in" title="Zoom In">+</button>
+                <button class="vp-btn" id="btn-zoom-out" title="Zoom Out">−</button>
+                <button class="vp-btn" id="btn-zoom-reset" title="Fit & Center Canvas">↺ Center</button>
+              </div>
+            </div>
+    
+            <!-- Tier Filters Matrix -->
+            <div>
+              <div class="section-title-row">
+                <span class="panel-section-title">Filter by Subsystem</span>
+                <span id="active-filter-label" class="tier-count-chip">All Active</span>
+              </div>
+              <div class="tier-filter-list">
+                <div class="tier-filter-item active" data-filter="all">
+                  <div class="tier-filter-left">
+                    <span>🌐</span> All Microservices
+                  </div>
+                  <span class="tier-count-chip">18</span>
+                </div>
+                <div class="tier-filter-item" data-filter="core">
+                  <div class="tier-filter-left">
+                    <span>🔐</span> Core & Governance
+                  </div>
+                  <span class="tier-count-chip">5</span>
+                </div>
+                <div class="tier-filter-item" data-filter="recruitment">
+                  <div class="tier-filter-left">
+                    <span>💼</span> Recruitment Pipeline
+                  </div>
+                  <span class="tier-count-chip">5</span>
+                </div>
+                <div class="tier-filter-item" data-filter="media">
+                  <div class="tier-filter-left">
+                    <span>🎥</span> Media & AI Voice
+                  </div>
+                  <span class="tier-count-chip">5</span>
+                </div>
+                <div class="tier-filter-item" data-filter="infra">
+                  <div class="tier-filter-left">
+                    <span>🔔</span> Messaging & Realtime
+                  </div>
+                  <span class="tier-count-chip">2</span>
+                </div>
+              </div>
+            </div>
+    
+            <!-- Platform Microservices Directory -->
+            <div class="directory-container">
+              <div class="section-title-row">
+                <span class="panel-section-title">Microservices Directory</span>
+                <span style="font-size:11px;color:var(--text-muted);">Click to highlight</span>
+              </div>
+              <div class="service-directory-list" id="services-quick-list"></div>
+            </div>
+          </div>
+        </aside>
+    
+      </div>
+    
+      <!-- Interactive Hover Edge Tooltip -->
+      <div id="edge-tooltip">
+        <div class="tooltip-title">
+          <span id="tt-icon">🔗</span>
+          <span id="tt-title">Inter-Service Link</span>
+        </div>
+        <div class="tooltip-badge" id="tt-badge">Internal REST</div>
+        <div class="tooltip-desc" id="tt-desc">Purpose description</div>
+        <div class="tooltip-row">
+          <span class="tooltip-label">Trigger Event</span>
+          <span id="tt-trigger" style="color:var(--text-primary); font-size:11px;">Event trigger</span>
+        </div>
+        <div class="tooltip-row">
+          <span class="tooltip-label">Endpoints Handled</span>
+          <div id="tt-endpoints" class="tooltip-val"></div>
+        </div>
+      </div>
+    
+      <!-- Bottom Legend Footer -->
+      <footer class="bottom-bar">
+        <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> Gateway</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#7c3aed;"></span> Core & Governance</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#0ea5e9;"></span> Recruitment Pipeline</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#5b3df5;"></span> LiveKit & Voice VAD Pipeline</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> Messaging & Realtime</div>
+      </footer>
+    
+      <script>
+        const nodes = [{"id": "traefik", "name": "Traefik Gateway", "icon": "🚦", "port": "8000", "container": "recruify-traefik", "tier": "gateway", "category": "API Gateway", "color": "#f59e0b", "x": 740, "y": 40, "desc": "Unified reverse proxy & API gateway entrypoint for web and mobile clients, routing path-prefix traffic to autonomous microservice containers.", "doc_url": "index.html"}, {"id": "auth", "name": "Auth Microservice", "icon": "🔐", "port": "8101", "container": "recruify-auth", "tier": "core", "category": "Identity & Security", "color": "#7c3aed", "x": 140, "y": 180, "desc": "User registration, authentication, JWT tokens, RBAC, Keycloak identity directory & OpenFGA fine-grained authorization engine.", "doc_url": "auth/index.html"}, {"id": "admin", "name": "Admin Microservice", "icon": "🏢", "port": "8102", "container": "recruify-admin", "tier": "core", "category": "Platform Governance", "color": "#7c3aed", "x": 440, "y": 180, "desc": "Platform administration, storage provider configuration (MinIO, S3, Azure), system telemetry, and plan quota management.", "doc_url": "admin/index.html"}, {"id": "organization", "name": "Organization Microservice", "icon": "🏛️", "port": "8103", "container": "recruify-org", "tier": "core", "category": "Organization", "color": "#7c3aed", "x": 740, "y": 180, "desc": "Company workspaces, branch hierarchies, department structures, employee roles, and team onboarding invitations.", "doc_url": "organization/index.html"}, {"id": "payment", "name": "Payment Microservice", "icon": "💳", "port": "8104", "container": "recruify-payment", "tier": "core", "category": "Billing", "color": "#7c3aed", "x": 1040, "y": 180, "desc": "Stripe checkout billing sessions, subscription plan upgrades, invoice history, and billing entitlement sync.", "doc_url": "payment/index.html"}, {"id": "analytics", "name": "Analytics Microservice", "icon": "📊", "port": "8110", "container": "recruify-analytics", "tier": "core", "category": "Talent Intelligence", "color": "#7c3aed", "x": 1340, "y": 180, "desc": "Recruitment pipeline velocity, funnel metrics, proctoring score distributions, candidate assessment benchmarks, and audit logs.", "doc_url": "analytics/index.html"}, {"id": "jobs", "name": "Jobs Microservice", "icon": "💼", "port": "8105", "container": "recruify-jobs", "tier": "recruitment", "category": "Core Recruitment", "color": "#0ea5e9", "x": 140, "y": 380, "desc": "Job requisitions, AI JD workflow generator, public job boards, candidate applications, and interviewer scheduling calendars.", "doc_url": "jobs/index.html"}, {"id": "resumes", "name": "Resumes Microservice", "icon": "📄", "port": "8106", "container": "recruify-resumes", "tier": "recruitment", "category": "Core Recruitment", "color": "#0ea5e9", "x": 440, "y": 380, "desc": "AI resume parsing, structured skill extraction, candidate vector embeddings, and semantic candidate matching.", "doc_url": "resumes/index.html"}, {"id": "ats", "name": "ATS Microservice", "icon": "📋", "port": "8107", "container": "recruify-ats", "tier": "recruitment", "category": "Core Recruitment", "color": "#0ea5e9", "x": 740, "y": 380, "desc": "Applicant tracking system, candidate pipeline progression, candidate dossiers, proctoring submissions, and retake workflows.", "doc_url": "ats/index.html"}, {"id": "campus_pool", "name": "Campus Pool Microservice", "icon": "🎓", "port": "8109", "container": "recruify-campus-pool", "tier": "recruitment", "category": "Talent Sourcing", "color": "#0ea5e9", "x": 1040, "y": 380, "desc": "University placement drives, college talent pools, shared student database, and bulk campus hiring campaigns.", "doc_url": "campus_pool/index.html"}, {"id": "raas", "name": "RaaS Microservice", "icon": "🚀", "port": "8114", "container": "recruify-raas", "tier": "recruitment", "category": "Talent Sourcing", "color": "#0ea5e9", "x": 1340, "y": 380, "desc": "Recruiter as a Service freelance marketplace, bounty job matching, milestone submission tracking, and recruiter payouts.", "doc_url": "raas/index.html"}, {"id": "interviews", "name": "Interviews Microservice", "icon": "🎥", "port": "8108", "container": "recruify-interviews", "tier": "media", "category": "AI Interview Engine", "color": "#5b3df5", "x": 140, "y": 580, "desc": "AI & Human interview coordinator, cryptographically signed LiveKit token generator, proctoring integrity analyzer, and candidate evaluation reports.", "doc_url": "interviews/index.html"}, {"id": "livekit", "name": "LiveKit Media Server", "icon": "📡", "port": "7880", "container": "recruify-livekit", "tier": "media", "category": "WebRTC Media SFU", "color": "#5b3df5", "x": 440, "y": 580, "desc": "High-performance WebRTC SFU media server handling low-latency video/audio pub/sub rooms, participant tracks, and recording egress.", "doc_url": "interviews/index.html"}, {"id": "livekit_agent", "name": "LiveKit Agent Worker", "icon": "🤖", "port": "Agent Worker", "container": "livekit-agent", "tier": "media", "category": "Conversational Agent", "color": "#5b3df5", "x": 740, "y": 580, "desc": "Autonomous conversational AI worker entering LiveKit rooms, running speech-to-text, LLM turns, and proctoring telemetry.", "doc_url": "interviews/index.html"}, {"id": "smart_turn", "name": "Smart-Turn v3.2 / VAD", "icon": "⚡", "port": "8010", "container": "smart-turn-v3", "tier": "media", "category": "Neural VAD Engine", "color": "#5b3df5", "x": 1040, "y": 580, "desc": "Ultra-low-latency ONNX acoustic neural turn detection service streaming 16kHz PCM audio over WebSocket for conversational turn-taking.", "doc_url": "interviews/index.html"}, {"id": "llm_metadata", "name": "LLM Metadata Microservice", "icon": "🧠", "port": "8113", "container": "recruify-llm-metadata", "tier": "media", "category": "AI & Voice Synthesis", "color": "#5b3df5", "x": 1340, "y": 580, "desc": "Centralized LLM provider routing, prompt templates, function tools, and TTS voice generation (ElevenLabs / Coqui TTS).", "doc_url": "llm_metadata/index.html"}, {"id": "collaboration", "name": "Collaboration Microservice", "icon": "👥", "port": "8111", "container": "recruify-collab", "tier": "infra", "category": "Real-time Presence", "color": "#f59e0b", "x": 440, "y": 780, "desc": "Live recruiter presence, shared whiteboard cursors, candidate interview notes synchronization, and panel discussions.", "doc_url": "collaboration/index.html"}, {"id": "notifications", "name": "Notifications Microservice", "icon": "🔔", "port": "8112", "container": "recruify-notifications", "tier": "infra", "category": "Event Messaging", "color": "#f59e0b", "x": 1040, "y": 780, "desc": "Transactional email dispatcher (Resend API), in-app notifications, candidate invitation links, and interview deadline reminders.", "doc_url": "notifications/index.html"}];
+        const edges = [{"id": "e_tr_auth", "source": "traefik", "target": "auth", "label": "Route Auth Traffic", "purpose": "Routes login, registration, Keycloak tokens, and session renewal requests from client browsers to Auth service.", "endpoints": ["POST /api/v1/auth/login", "POST /api/v1/auth/register", "GET /api/v1/auth/me"], "protocol": "HTTP/1.1 & HTTP/2 Reverse Proxy", "trigger": "User visits login page or logs into recruiter portal"}, {"id": "e_tr_admin", "source": "traefik", "target": "admin", "label": "Route Admin Traffic", "purpose": "Routes super-admin tenant configuration, cloud storage, and platform telemetry requests.", "endpoints": ["GET /admin/tenants", "POST /admin/storage/config", "GET /admin/health"], "protocol": "HTTP/1.1 & HTTP/2 Reverse Proxy", "trigger": "Super-admin accesses admin console"}, {"id": "e_tr_jobs", "source": "traefik", "target": "jobs", "label": "Route Job Board Traffic", "purpose": "Routes public candidate career portal requests and recruiter job requisition dashboards.", "endpoints": ["GET /jobs/public", "POST /jobs", "GET /jobs/{id}"], "protocol": "HTTP/1.1 & HTTP/2 Reverse Proxy", "trigger": "Candidate views job board or recruiter creates job requisition"}, {"id": "e_tr_ats", "source": "traefik", "target": "ats", "label": "Route ATS Pipeline Traffic", "purpose": "Routes recruiter applicant tracking pipeline, candidate card movements, and stage transitions.", "endpoints": ["GET /ats/jobs/{id}/candidates", "PATCH /ats/candidates/{id}/stage"], "protocol": "HTTP/1.1 & HTTP/2 Reverse Proxy", "trigger": "Recruiter moves candidate between ATS stages"}, {"id": "e_tr_interviews", "source": "traefik", "target": "interviews", "label": "Route Interview Room Setup", "purpose": "Routes candidate interview room entry, token requests, and session status queries.", "endpoints": ["POST /interviews/{id}/join", "GET /interviews/{id}/status"], "protocol": "HTTP/1.1 & HTTP/2 Reverse Proxy", "trigger": "Candidate clicks interview magic link to start AI interview"}, {"id": "e_tr_livekit", "source": "traefik", "target": "livekit", "label": "Route LiveKit SFU & WebSocket", "purpose": "Proxies WebRTC signaling, WebSocket sessions, and HTTP Twirp management traffic to LiveKit Media Server.", "endpoints": ["WSS /rtc", "GET /livekit/health"], "protocol": "WebSocket & WebRTC Signaling", "trigger": "Candidate connects microphone/camera media stream"}, {"id": "e_admin_auth", "source": "admin", "target": "auth", "label": "Super-admin Verification", "purpose": "Admin service validates platform super-admin privileges and manages Keycloak master realm permissions.", "endpoints": ["POST /internal/auth/verify-token", "GET /internal/auth/roles/super-admin"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Super-admin modifies global platform settings"}, {"id": "e_org_auth", "source": "organization", "target": "auth", "label": "Sync Roles & Workspaces", "purpose": "Organization synchronizes company workspaces, user roles, and OpenFGA relations with Auth.", "endpoints": ["POST /internal/auth/fga/check", "POST /internal/auth/users/assign-role"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Organization admin assigns team member permissions"}, {"id": "e_payment_auth", "source": "payment", "target": "auth", "label": "Check Plan Entitlements", "purpose": "Payment service checks company admin identity and updates subscription tiers in Auth tokens.", "endpoints": ["GET /internal/auth/users/{user_id}/org", "POST /internal/auth/claims/subscription"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Stripe webhook receives successful subscription payment"}, {"id": "e_analytics_auth", "source": "analytics", "target": "auth", "label": "Audit Logs & User Metadata", "purpose": "Analytics pulls user login events, session durations, and tenant user counts for security auditing.", "endpoints": ["GET /internal/auth/audit-logs", "GET /internal/auth/tenants/metrics"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Platform audit report generation"}, {"id": "e_jobs_auth", "source": "jobs", "target": "auth", "label": "Verify Recruiter JWT & FGA", "purpose": "Jobs validates that the caller has job:create and job:edit permissions in OpenFGA.", "endpoints": ["POST /internal/auth/verify-token", "POST /internal/auth/fga/check"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Recruiter creates or edits a job opening"}, {"id": "e_ats_auth", "source": "ats", "target": "auth", "label": "Validate Candidate Action Roles", "purpose": "ATS confirms recruiter permissions before rejecting, advancing, or hiring a candidate.", "endpoints": ["POST /internal/auth/fga/check"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Recruiter updates candidate stage or bulk-rejects applicants"}, {"id": "e_interviews_auth", "source": "interviews", "target": "auth", "label": "Candidate Magic Token Validation", "purpose": "Interviews validates cryptographically signed candidate interview access tokens before granting room access.", "endpoints": ["POST /internal/auth/verify-candidate-token"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Candidate opens the AI interview link"}, {"id": "e_ats_admin", "source": "ats", "target": "admin", "label": "Validate Candidate Storage Quota", "purpose": "ATS checks tenant media storage quotas (for candidate proctoring video & audio archives) before scheduling.", "endpoints": ["GET /internal/admin/tenants/{tenant_id}/quotas"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Interview scheduled with video proctoring enabled"}, {"id": "e_admin_resumes", "source": "admin", "target": "resumes", "label": "Configure Storage Buckets", "purpose": "Admin pushes S3/MinIO bucket configurations and encryption keys down to Resumes service for resume PDF storage.", "endpoints": ["POST /internal/resumes/storage-sync"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Admin configures S3/MinIO credentials in platform dashboard"}, {"id": "e_jobs_ats", "source": "jobs", "target": "ats", "label": "Initialize ATS Pipeline", "purpose": "When a job requisition is published, Jobs notifies ATS to initialize hiring stages, screening criteria, and candidate slots.", "endpoints": ["POST /internal/ats/pipelines/init"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Recruiter publishes new job requisition"}, {"id": "e_ats_jobs", "source": "ats", "target": "jobs", "label": "Fetch Job Requisition Metadata", "purpose": "ATS fetches job title, required skills, interview deadlines, and hiring manager calendars.", "endpoints": ["GET /internal/jobs/{job_id}"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Candidate dossier opened or automated interview invitation sent"}, {"id": "e_resumes_jobs", "source": "resumes", "target": "jobs", "label": "Fetch JD for Semantic Match", "purpose": "Resumes service retrieves the full Job Description text to compute semantic skill match scores via vector embeddings.", "endpoints": ["GET /internal/jobs/{job_id}/skills-matrix"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Candidate submits resume for parsing"}, {"id": "e_ats_resumes", "source": "ats", "target": "resumes", "label": "Fetch Parsed Candidate Dossier", "purpose": "ATS retrieves parsed candidate data (skills, experience, education, score) to populate candidate profile.", "endpoints": ["GET /internal/resumes/{resume_id}/parsed-data"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Recruiter inspects applicant profile in ATS"}, {"id": "e_campus_ats", "source": "campus_pool", "target": "ats", "label": "Batch Candidate Pool Ingestion", "purpose": "Campus Pool batch-imports selected college drive candidates into ATS candidate pools for organizational selection.", "endpoints": ["POST /ats/{job_id}/select"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "University placement drive completion"}, {"id": "e_raas_jobs", "source": "raas", "target": "jobs", "label": "Claim Bounty Jobs", "purpose": "RaaS assigns freelance recruiters to eligible open company requisitions and manages job bounty agreements.", "endpoints": ["GET /internal/jobs/{job_id}", "PATCH /internal/jobs/{job_id}"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Freelance recruiter accepts a bounty job"}, {"id": "e_raas_ats", "source": "raas", "target": "ats", "label": "Track Recruiter Submissions", "purpose": "RaaS tracks the pipeline progress of candidates sourced by freelance recruiters to verify successful hire milestones.", "endpoints": ["GET /internal/ats/candidates?recruiter_id={id}"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Candidate progresses to interview or offer stage"}, {"id": "e_interviews_livekit", "source": "interviews", "target": "livekit", "label": "Create Room & Mint JWTs", "purpose": "Interviews creates isolated WebRTC rooms and mints signed participant tokens via LiveKit Twirp RPC.", "endpoints": ["POST /twirp/livekit.RoomService/CreateRoom", "POST /twirp/livekit.RoomService/SendData"], "protocol": "Twirp RPC & HTTP/JSON", "trigger": "Candidate initiates interview session"}, {"id": "e_livekit_agent", "source": "livekit", "target": "livekit_agent", "label": "Dispatch AI Worker to Room", "purpose": "LiveKit media server dispatches an event webhook to the autonomous LiveKit Agent worker to join room as interviewer.", "endpoints": ["POST /agent/dispatch", "LiveKit Room WebRTC Connection"], "protocol": "WebRTC Media Ingestion & Event Hooks", "trigger": "Candidate media stream becomes active in room"}, {"id": "e_agent_smart_turn", "source": "livekit_agent", "target": "smart_turn", "label": "Neural Acoustic Turn Detection", "purpose": "LiveKit Agent streams 16kHz PCM candidate audio chunks over persistent WebSocket to Smart-Turn v3.2 for sub-100ms end-of-turn classification.", "endpoints": ["ws://host.docker.internal:8010/ws/vad"], "protocol": "Persistent WebSocket (Binary 16kHz PCM Audio)", "trigger": "Candidate speaks during interview"}, {"id": "e_agent_llm", "source": "livekit_agent", "target": "llm_metadata", "label": "LLM Turns & TTS Voice Synthesis", "purpose": "LiveKit Agent queries LLM Metadata for interview question prompting, candidate answer grading, and streaming TTS audio (ElevenLabs/Coqui).", "endpoints": ["POST /internal/llm/generate-turn", "POST /internal/llm/tts/stream"], "protocol": "Internal REST & Streaming Audio Buffer", "trigger": "End of candidate speech turn detected by Smart-Turn VAD"}, {"id": "e_agent_interviews", "source": "livekit_agent", "target": "interviews", "label": "Telemetry & Proctoring Events", "purpose": "LiveKit Agent reports candidate transcript, proctoring violations (face loss, background speech), and completed interview audio archives.", "endpoints": ["POST /internal/interviews/sessions/{id}/telemetry", "POST /internal/interviews/sessions/{id}/complete"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Candidate finishes interview or proctoring incident occurs"}, {"id": "e_interviews_ats", "source": "interviews", "target": "ats", "label": "Push Scorecard & Recording", "purpose": "Interviews submits full AI evaluation scorecard, transcript, and proctoring trust index to ATS candidate dossier.", "endpoints": ["POST /internal/ats/candidates/{candidate_id}/evaluations"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "AI candidate evaluation completed"}, {"id": "e_interviews_jobs", "source": "interviews", "target": "jobs", "label": "Fetch Evaluation Rubric", "purpose": "Interviews fetches job questions, seniority level, and technical evaluation criteria defined for the job.", "endpoints": ["GET /internal/jobs/{job_id}/rubric"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Candidate enters interview room"}, {"id": "e_jobs_llm", "source": "jobs", "target": "llm_metadata", "label": "Generate AI Job Description", "purpose": "Jobs requests LLM Metadata to synthesize job responsibilities, required skills, and interview questions based on prompt briefs.", "endpoints": ["POST /internal/llm/generate-jd"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Recruiter uses 'Generate JD with AI' in Jobs portal"}, {"id": "e_collab_ats", "source": "collaboration", "target": "ats", "label": "Sync Live Recruiter Notes", "purpose": "Collaboration loads candidate notes, co-evaluator scorecards, and live presence during panel interview reviews.", "endpoints": ["GET /internal/ats/candidates/{candidate_id}"], "protocol": "Internal REST + WebSockets", "trigger": "Recruiters co-evaluating a candidate simultaneously"}, {"id": "e_analytics_ats", "source": "analytics", "target": "ats", "label": "Recruitment Funnel Data", "purpose": "Analytics pulls candidate pipeline stages, time-in-stage metrics, and pass/fail outcome distributions.", "endpoints": ["GET /internal/ats/metrics/summary", "GET /internal/ats/metrics/interview-counts"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Analytics dashboard generation"}, {"id": "e_analytics_interviews", "source": "analytics", "target": "interviews", "label": "Interview Quality & Proctoring", "purpose": "Analytics evaluates proctoring reports (tab switches, face detection, background noise) and candidate scoring benchmarks.", "endpoints": ["GET /analytics/job/{job_id}/interview/{id}/report"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Executive audit and proctoring compliance review"}, {"id": "e_auth_notif", "source": "auth", "target": "notifications", "label": "OTP & Auth Emails", "purpose": "Auth requests Notifications service to dispatch 6-digit registration OTPs and password reset verification links via Resend.", "endpoints": ["POST /internal/notifications/email/send", "POST /internal/notifications/dispatch"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Recruiter registration or forgot-password OTP request"}, {"id": "e_ats_notif", "source": "ats", "target": "notifications", "label": "Interview Invites & Reminders", "purpose": "ATS triggers personalized AI interview invitation emails with magic links and sends automated 24h deadline reminder emails.", "endpoints": ["POST /internal/notifications/email/ai-interview", "POST /internal/notifications/in-app"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Interview scheduled or deadline approaching"}, {"id": "e_interviews_notif", "source": "interviews", "target": "notifications", "label": "Candidate Report Alerts", "purpose": "Interviews dispatches completion notifications to recruiters with instant report links and proctoring summaries.", "endpoints": ["POST /internal/notifications/dispatch"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Candidate finishes AI interview session"}, {"id": "e_org_notif", "source": "organization", "target": "notifications", "label": "Team Member Invitations", "purpose": "Organization service triggers invitation emails with secure onboarding tokens when company employees are added.", "endpoints": ["POST /internal/notifications/dispatch"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Admin invites team member to organization"}, {"id": "e_campus_notif", "source": "campus_pool", "target": "notifications", "label": "Campus Drive Broadcasts", "purpose": "Campus Pool sends bulk placement drive notifications, assessment links, and interview schedules to registered college students.", "endpoints": ["POST /internal/notifications/email/campus-pool"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Campus recruitment drive launch"}, {"id": "e_raas_notif", "source": "raas", "target": "notifications", "label": "Bounty Alerts & Payouts", "purpose": "RaaS sends alerts to freelance recruiters when new bounty jobs are published and confirms milestone commission payments.", "endpoints": ["POST /internal/notifications/dispatch"], "protocol": "Internal REST (HTTP/JSON)", "trigger": "Bounty job published or commission released"}];
+    
+        const nodeMap = {};
+        nodes.forEach(n => { nodeMap[n.id] = n; });
+    
+        const NODE_WIDTH = 200;
+        const NODE_HEIGHT = 80;
+    
+        const edgesLayer = document.getElementById('edges-layer');
+        const nodesLayer = document.getElementById('nodes-layer');
+        const tooltip = document.getElementById('edge-tooltip');
+        const svg = document.getElementById('graph-svg');
+        const container = document.getElementById('canvas-container');
+        const quickList = document.getElementById('services-quick-list');
+    
+        // Theme Management (Light / Dark)
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+    
+        function applyTheme(theme) {
+          document.documentElement.setAttribute('data-theme', theme);
+          localStorage.setItem('recruify_theme', theme);
+          if (theme === 'dark') {
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'Light Mode';
+          } else {
+            themeIcon.textContent = '🌙';
+            themeText.textContent = 'Dark Mode';
+          }
+        }
+    
+        const savedTheme = localStorage.getItem('recruify_theme') || 'light';
+        applyTheme(savedTheme);
+    
+        themeToggle.addEventListener('click', () => {
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+          applyTheme(currentTheme === 'light' ? 'dark' : 'light');
+        });
+    
+        // Populate Quick Directory List (Dedicated Navigator)
+        nodes.forEach(node => {
+          const item = document.createElement('div');
+          item.classList.add('service-directory-item');
+          item.dataset.id = node.id;
+          item.dataset.tier = node.tier;
+    
+          item.innerHTML = `
+            <div class="service-dir-left">
+              <span class="service-dir-icon">${node.icon}</span>
+              <div>
+                <div class="service-dir-name">${node.name.replace(' Microservice', '')}</div>
+                <div class="service-dir-port">:${node.port}</div>
+              </div>
+            </div>
+            <div class="service-dir-right">
+              <span class="tier-count-chip">${node.category}</span>
+              <a href="${node.doc_url}" class="service-doc-icon-btn" title="Open ReDoc API spec for ${node.name}">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </div>
+          `;
+    
+          item.addEventListener('mouseenter', () => {
+            highlightNode(node.id);
+          });
+    
+          item.addEventListener('mouseleave', () => {
+            if (!selectedNodeId) resetHighlights();
+            else highlightNode(selectedNodeId);
+          });
+    
+          item.addEventListener('click', (e) => {
+            if (e.target.closest('.service-doc-icon-btn')) return;
+            selectService(node);
+          });
+    
+          quickList.appendChild(item);
+        });
+    
+        function selectService(node) {
+          selectedNodeId = node.id;
+          highlightNode(node.id);
+          focusNodeOnCanvas(node);
+    
+          document.querySelectorAll('.service-directory-item').forEach(sdi => {
+            if (sdi.dataset.id === node.id) {
+              sdi.classList.add('active');
+              sdi.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+              sdi.classList.remove('active');
+            }
+          });
+        }
+    
+        // Flawless, non-overlapping Bezier Curve routing
+        function calculateBezierPath(src, tgt) {
+          const src_cx = src.x + NODE_WIDTH / 2;
+          const src_cy = src.y + NODE_HEIGHT / 2;
+          const tgt_cx = tgt.x + NODE_WIDTH / 2;
+          const tgt_cy = tgt.y + NODE_HEIGHT / 2;
+    
+          const dx = tgt_cx - src_cx;
+          const dy = tgt_cy - src_cy;
+    
+          // Case A: Same Horizontal Tier (|dy| < 50)
+          if (Math.abs(dy) < 50) {
+            if (dx > 0) {
+              if (dx <= 320) {
+                // Adjacent forward in same row
+                const startX = src.x + NODE_WIDTH;
+                const startY = src_cy;
+                const endX = tgt.x;
+                const endY = tgt_cy;
+                const gap = endX - startX;
+                return `M ${startX} ${startY} C ${startX + gap * 0.45} ${startY}, ${endX - gap * 0.45} ${endY}, ${endX} ${endY}`;
+              } else {
+                // Non-adjacent forward: Loop gracefully UNDER intervening nodes
+                const startX = src_cx;
+                const startY = src.y + NODE_HEIGHT;
+                const endX = tgt_cx;
+                const endY = tgt.y + NODE_HEIGHT;
+                const archY = src.y + NODE_HEIGHT + 35 + (dx / 300.0) * 10;
+                return `M ${startX} ${startY} C ${startX} ${archY}, ${endX} ${archY}, ${endX} ${endY}`;
+              }
+            } else {
+              // Backward in same row: Loop gracefully OVER top with scaled arch height
+              const startX = src_cx;
+              const startY = src.y;
+              const endX = tgt_cx;
+              const endY = tgt.y;
+              const dist = Math.abs(dx);
+              const archY = src.y - (35 + (dist / 300.0) * 22);
+              return `M ${startX} ${startY} C ${startX} ${archY}, ${endX} ${archY}, ${endX} ${endY}`;
+            }
+          }
+    
+          // Case B: Downstream (tgt is below src, dy >= 50)
+          if (dy >= 50) {
+            const startX = src_cx;
+            const startY = src.y + NODE_HEIGHT;
+            const endX = tgt_cx;
+            const endY = tgt.y;
+            const gapY = endY - startY;
+            const cp1X = startX;
+            const cp1Y = startY + gapY * 0.45;
+            const cp2X = endX;
+            const cp2Y = endY - gapY * 0.45;
+            return `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
+          }
+    
+          // Case C: Upstream (tgt is above src, dy <= -50)
+          const startX = src_cx;
+          const startY = src.y;
+          const endX = tgt_cx;
+          const endY = tgt.y + NODE_HEIGHT;
+          const gapY = startY - endY;
+          const cp1X = startX;
+          const cp1Y = startY - gapY * 0.45;
+          const cp2X = endX;
+          const cp2Y = endY + gapY * 0.45;
+          return `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
+        }
+    
+        // Render Edges
+        edges.forEach(edge => {
+          const src = nodeMap[edge.source];
+          const tgt = nodeMap[edge.target];
+          if (!src || !tgt) return;
+    
+          const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          g.classList.add('edge-group');
+          g.dataset.id = edge.id;
+          g.dataset.source = edge.source;
+          g.dataset.target = edge.target;
+    
+          const d = calculateBezierPath(src, tgt);
+    
+          // Invisible hit area for effortless hover
+          const hitPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          hitPath.classList.add('edge-hit-area');
+          hitPath.setAttribute('d', d);
+    
+          // Visible styled path
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.classList.add('edge-path');
+          path.setAttribute('d', d);
+          path.setAttribute('marker-end', 'url(#arrow-default)');
+    
+          g.appendChild(hitPath);
+          g.appendChild(path);
+    
+          // Edge Hover Handlers
+          g.addEventListener('mouseenter', (e) => {
+            highlightEdge(edge, g);
+            showTooltip(e, edge, src, tgt);
+          });
+    
+          g.addEventListener('mousemove', (e) => {
+            positionTooltip(e);
+          });
+    
+          g.addEventListener('mouseleave', () => {
+            if (!selectedNodeId) resetHighlights();
+            else highlightNode(selectedNodeId);
+            hideTooltip();
+          });
+    
+          edgesLayer.appendChild(g);
+        });
+    
+        // Render Nodes
+        nodes.forEach(node => {
+          const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          g.classList.add('node-group');
+          g.dataset.id = node.id;
+          g.dataset.tier = node.tier;
+    
+          const outgoing = edges.filter(e => e.source === node.id).length;
+          const incoming = edges.filter(e => e.target === node.id).length;
+    
+          g.innerHTML = `
+            <rect class="node-card-bg" x="${node.x}" y="${node.y}" width="${NODE_WIDTH}" height="${NODE_HEIGHT}" />
+    
+            <!-- Accent pill indicator -->
+            <line x1="${node.x + 1}" y1="${node.y + 6}" x2="${node.x + 1}" y2="${node.y + NODE_HEIGHT - 6}" stroke="${node.color}" stroke-width="4.5" stroke-linecap="round"/>
+    
+            <!-- Icon & Title -->
+            <text x="${node.x + 16}" y="${node.y + 26}" font-size="16">${node.icon}</text>
+            <text x="${node.x + 42}" y="${node.y + 24}" font-size="12.5" font-weight="700" fill="currentColor" letter-spacing="-0.01em">${node.name.replace(' Microservice', '')}</text>
+    
+            <!-- Category Pill -->
+            <rect x="${node.x + 16}" y="${node.y + 36}" width="${node.category.length * 6.5 + 14}" height="17" rx="5" fill="rgba(124, 58, 237, 0.08)" />
+            <text x="${node.x + 23}" y="${node.y + 48.5}" font-size="9.5" font-weight="700" fill="${node.color}">${node.category}</text>
+    
+            <!-- Port Badge & Connections count -->
+            <text x="${node.x + 16}" y="${node.y + 68}" font-size="10.5" font-family="monospace" font-weight="600" fill="var(--text-muted)">:${node.port}</text>
+            <text x="${node.x + NODE_WIDTH - 16}" y="${node.y + 68}" text-anchor="end" font-size="10" font-weight="700" fill="var(--text-secondary)">${outgoing} out · ${incoming} in</text>
+          `;
+    
+          g.addEventListener('mouseenter', () => {
+            if (!selectedNodeId) highlightNode(node.id);
+          });
+    
+          g.addEventListener('mouseleave', () => {
+            if (!selectedNodeId) resetHighlights();
+          });
+    
+          g.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectService(node);
+          });
+    
+          g.addEventListener('dblclick', () => {
+            window.location.href = node.doc_url;
+          });
+    
+          nodesLayer.appendChild(g);
+        });
+    
+        // Tooltip Helpers
+        function showTooltip(e, edge, src, tgt) {
+          document.getElementById('tt-icon').textContent = '🔗';
+          document.getElementById('tt-title').textContent = `${src.name.replace(' Microservice', '')} → ${tgt.name.replace(' Microservice', '')}`;
+          document.getElementById('tt-badge').textContent = edge.protocol;
+          document.getElementById('tt-desc').textContent = edge.purpose;
+          document.getElementById('tt-trigger').textContent = edge.trigger;
+    
+          const epContainer = document.getElementById('tt-endpoints');
+          epContainer.innerHTML = '';
+          edge.endpoints.forEach(ep => {
+            const d = document.createElement('div');
+            d.textContent = ep;
+            epContainer.appendChild(d);
+          });
+    
+          tooltip.style.display = 'block';
+          positionTooltip(e);
+        }
+    
+        function positionTooltip(e) {
+          const pad = 18;
+          let x = e.clientX + pad;
+          let y = e.clientY + pad;
+    
+          const rect = tooltip.getBoundingClientRect();
+          if (x + rect.width > window.innerWidth - 360) {
+            x = e.clientX - rect.width - pad;
+          }
+          if (y + rect.height > window.innerHeight - 20) {
+            y = e.clientY - rect.height - pad;
+          }
+    
+          tooltip.style.left = `${x}px`;
+          tooltip.style.top = `${y}px`;
+        }
+    
+        function hideTooltip() {
+          tooltip.style.display = 'none';
+        }
+    
+        // Node & Edge Highlighting
+        let selectedNodeId = null;
+    
+        function highlightEdge(edge, edgeGroup) {
+          document.querySelectorAll('.node-group').forEach(ng => {
+            if (ng.dataset.id === edge.source || ng.dataset.id === edge.target) {
+              ng.classList.remove('dimmed');
+            } else {
+              ng.classList.add('dimmed');
+            }
+          });
+    
+          document.querySelectorAll('.edge-group').forEach(eg => {
+            if (eg === edgeGroup) {
+              eg.classList.remove('dimmed');
+              eg.classList.add('active');
+              const p = eg.querySelector('.edge-path');
+              if (p) p.setAttribute('marker-end', 'url(#arrow-active)');
+            } else {
+              eg.classList.add('dimmed');
+              eg.classList.remove('active');
+            }
+          });
+        }
+    
+        function highlightNode(nodeId) {
+          const connectedNodeIds = new Set([nodeId]);
+          const connectedEdgeIds = new Set();
+    
+          edges.forEach(e => {
+            if (e.source === nodeId || e.target === nodeId) {
+              connectedEdgeIds.add(e.id);
+              connectedNodeIds.add(e.source);
+              connectedNodeIds.add(e.target);
+            }
+          });
+    
+          document.querySelectorAll('.node-group').forEach(ng => {
+            if (connectedNodeIds.has(ng.dataset.id)) {
+              ng.classList.remove('dimmed');
+              if (ng.dataset.id === nodeId) ng.classList.add('selected');
+              else ng.classList.remove('selected');
+            } else {
+              ng.classList.add('dimmed');
+              ng.classList.remove('selected');
+            }
+          });
+    
+          document.querySelectorAll('.edge-group').forEach(eg => {
+            if (connectedEdgeIds.has(eg.dataset.id)) {
+              eg.classList.remove('dimmed');
+              eg.classList.add('active');
+              const p = eg.querySelector('.edge-path');
+              if (p) p.setAttribute('marker-end', 'url(#arrow-active)');
+            } else {
+              eg.classList.add('dimmed');
+              eg.classList.remove('active');
+            }
+          });
+        }
+    
+        function resetHighlights() {
+          selectedNodeId = null;
+          document.querySelectorAll('.node-group').forEach(ng => ng.classList.remove('dimmed', 'selected'));
+          document.querySelectorAll('.edge-group').forEach(eg => {
+            eg.classList.remove('dimmed', 'active');
+            const p = eg.querySelector('.edge-path');
+            if (p) p.setAttribute('marker-end', 'url(#arrow-default)');
+          });
+          document.querySelectorAll('.service-directory-item').forEach(sdi => sdi.classList.remove('active'));
+        }
+    
+        // Pan & Zoom Engine with Automatic Centering
+        const viewport = document.getElementById('viewport-group');
+        let scale = 0.85;
+        let panX = 60;
+        let panY = 40;
+        let isPanning = false;
+        let startX = 0, startY = 0;
+    
+        function updateTransform() {
+          viewport.setAttribute('transform', `translate(${panX}, ${panY}) scale(${scale})`);
+        }
+    
+        function fitAndCenterView() {
+          const rect = container.getBoundingClientRect();
+          const availableW = rect.width - 60;
+          const availableH = rect.height - 60;
+          const gridW = 1480;
+          const gridH = 860;
+    
+          scale = Math.min(availableW / gridW, availableH / gridH, 1.0);
+          scale = Math.max(scale, 0.45);
+    
+          // Center of 5-column grid is roughly (840, 450)
+          panX = (rect.width / 2) - (840 * scale);
+          panY = (rect.height / 2) - (450 * scale) + 10;
+          updateTransform();
+          resetHighlights();
+        }
+    
+        function focusNodeOnCanvas(node) {
+          const rect = container.getBoundingClientRect();
+          const nodeCenterX = node.x + NODE_WIDTH / 2;
+          const nodeCenterY = node.y + NODE_HEIGHT / 2;
+    
+          panX = (rect.width / 2) - (nodeCenterX * scale);
+          panY = (rect.height / 2) - (nodeCenterY * scale);
+          updateTransform();
+        }
+    
+        // Initial center on load
+        window.addEventListener('load', fitAndCenterView);
+        window.addEventListener('resize', fitAndCenterView);
+        setTimeout(fitAndCenterView, 50);
+    
+        container.addEventListener('mousedown', (e) => {
+          if (e.target.closest('.node-group') || e.target.closest('.edge-group')) return;
+          isPanning = true;
+          container.classList.add('grabbing');
+          startX = e.clientX - panX;
+          startY = e.clientY - panY;
+        });
+    
+        window.addEventListener('mousemove', (e) => {
+          if (!isPanning) return;
+          panX = e.clientX - startX;
+          panY = e.clientY - startY;
+          updateTransform();
+        });
+    
+        window.addEventListener('mouseup', () => {
+          isPanning = false;
+          container.classList.remove('grabbing');
+        });
+    
+        container.addEventListener('click', (e) => {
+          if (!e.target.closest('.node-group') && !e.target.closest('.edge-group')) {
+            resetHighlights();
+          }
+        });
+    
+        container.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          const zoomFactor = 1.08;
+          const mouseX = e.clientX - container.getBoundingClientRect().left;
+          const mouseY = e.clientY - container.getBoundingClientRect().top;
+    
+          let newScale = e.deltaY < 0 ? scale * zoomFactor : scale / zoomFactor;
+          newScale = Math.min(Math.max(newScale, 0.35), 2.5);
+    
+          panX = mouseX - (mouseX - panX) * (newScale / scale);
+          panY = mouseY - (mouseY - panY) * (newScale / scale);
+          scale = newScale;
+          updateTransform();
+        }, { passive: false });
+    
+        document.getElementById('btn-zoom-in').addEventListener('click', () => {
+          scale = Math.min(scale * 1.2, 2.5);
+          updateTransform();
+        });
+    
+        document.getElementById('btn-zoom-out').addEventListener('click', () => {
+          scale = Math.max(scale / 1.2, 0.35);
+          updateTransform();
+        });
+    
+        document.getElementById('btn-zoom-reset').addEventListener('click', fitAndCenterView);
+    
+        // Tier Filter Logic (Clean, no dangling edges!)
+        document.querySelectorAll('.tier-filter-item').forEach(item => {
+          item.addEventListener('click', () => {
+            document.querySelectorAll('.tier-filter-item').forEach(b => b.classList.remove('active'));
+            item.classList.add('active');
+            const filter = item.dataset.filter;
+    
+            document.getElementById('active-filter-label').textContent = filter === 'all' ? 'All Active' : `${filter.toUpperCase()} Active`;
+    
+            // Filter nodes
+            document.querySelectorAll('.node-group').forEach(ng => {
+              if (filter === 'all' || ng.dataset.tier === filter) {
+                ng.style.display = 'block';
+              } else {
+                ng.style.display = 'none';
+              }
+            });
+    
+            // Filter edges: An edge is ONLY visible if BOTH its source AND target nodes are visible!
+            document.querySelectorAll('.edge-group').forEach(eg => {
+              const srcNode = nodeMap[eg.dataset.source];
+              const tgtNode = nodeMap[eg.dataset.target];
+              if (!srcNode || !tgtNode) {
+                eg.style.display = 'none';
+                return;
+              }
+              const isSrcVisible = (filter === 'all' || srcNode.tier === filter);
+              const isTgtVisible = (filter === 'all' || tgtNode.tier === filter);
+              if (isSrcVisible && isTgtVisible) {
+                eg.style.display = 'block';
+              } else {
+                eg.style.display = 'none';
+              }
+            });
+    
+            // Filter directory list items as well
+            document.querySelectorAll('.service-directory-item').forEach(sdi => {
+              if (filter === 'all' || sdi.dataset.tier === filter) {
+                sdi.style.display = 'flex';
+              } else {
+                sdi.style.display = 'none';
+              }
+            });
+    
+            resetHighlights();
+          });
+        });
+    
+        // Search Engine
+        document.getElementById('service-search').addEventListener('input', (e) => {
+          const q = e.target.value.toLowerCase().trim();
+          if (!q) {
+            resetHighlights();
+            document.querySelectorAll('.service-directory-item').forEach(sdi => sdi.style.display = 'flex');
+            return;
+          }
+    
+          const matchedNodes = new Set();
+          nodes.forEach(n => {
+            if (n.name.toLowerCase().includes(q) || n.desc.toLowerCase().includes(q) || n.container.toLowerCase().includes(q) || n.port.includes(q) || n.category.toLowerCase().includes(q)) {
+              matchedNodes.add(n.id);
+            }
+          });
+    
+          edges.forEach(ed => {
+            if (ed.purpose.toLowerCase().includes(q) || ed.endpoints.some(ep => ep.toLowerCase().includes(q))) {
+              matchedNodes.add(ed.source);
+              matchedNodes.add(ed.target);
+            }
+          });
+    
+          document.querySelectorAll('.node-group').forEach(ng => {
+            if (matchedNodes.has(ng.dataset.id)) {
+              ng.classList.remove('dimmed');
+            } else {
+              ng.classList.add('dimmed');
+            }
+          });
+    
+          // Filter directory list
+          document.querySelectorAll('.service-directory-item').forEach(sdi => {
+            if (matchedNodes.has(sdi.dataset.id)) {
+              sdi.style.display = 'flex';
+            } else {
+              sdi.style.display = 'none';
+            }
+          });
+        });
+      </script>
+    </body>
+    </html>
+    

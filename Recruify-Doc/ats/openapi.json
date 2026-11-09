@@ -1,0 +1,5293 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Recruify - ATS Microservice",
+    "description": "Autonomous microservice API for the ATS domain",
+    "version": "v3"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "ATS Microservice - Health"
+        ],
+        "summary": "Health Check",
+        "description": "Service health check with DB ping.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/{job_id}/select": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Select Candidates",
+        "operationId": "select_candidates_ats__job_id__select_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidateSelectionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SelectedCandidateResponse"
+                  },
+                  "title": "Response Select Candidates Ats  Job Id  Select Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/{job_id}/selected": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get Selected Candidates Endpoint",
+        "operationId": "get_selected_candidates_endpoint_ats__job_id__selected_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SelectedCandidateResponse"
+                  },
+                  "title": "Response Get Selected Candidates Endpoint Ats  Job Id  Selected Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/selected/{candidate_id}": {
+      "delete": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Delete Selected Candidate Endpoint",
+        "operationId": "delete_selected_candidate_endpoint_ats_selected__candidate_id__delete",
+        "parameters": [
+          {
+            "name": "candidate_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Create Interview Endpoint",
+        "operationId": "create_interview_endpoint_ats_interviews_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterviewResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}": {
+      "put": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Update Interview Endpoint",
+        "operationId": "update_interview_endpoint_ats_interviews__interview_id__put",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterviewResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Delete Interview Endpoint",
+        "operationId": "delete_interview_endpoint_ats_interviews__interview_id__delete",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/extend": {
+      "put": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Extend Interview Deadline",
+        "operationId": "extend_interview_deadline_ats_interviews__interview_id__extend_put",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Days"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ExtendDeadlineRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/retake-reset": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Dev Mode: Reset completed interview for retake, deleting generated report and related data",
+        "operationId": "reset_interview_for_retake_endpoint_ats_interviews__interview_id__retake_reset_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/reconduct": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Reconduct a completed interview: wipes previous recordings, report, and proctoring data, resetting status for candidate retake.",
+        "operationId": "reconduct_interview_endpoint_ats_interviews__interview_id__reconduct_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ReconductRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/ai-interviews/cancel-all": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Cancel All Ai Interviews Endpoint",
+        "operationId": "cancel_all_ai_interviews_endpoint_ats_jobs__job_id__ai_interviews_cancel_all_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/ai-interviews/return-overdue-to-pool": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Return Overdue Ai Interviews Endpoint",
+        "operationId": "return_overdue_ai_interviews_endpoint_ats_jobs__job_id__ai_interviews_return_overdue_to_pool_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/business/{business_user_id}/ai-interviews": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get Business Ai Interviews Endpoint",
+        "operationId": "get_business_ai_interviews_endpoint_ats_business__business_user_id__ai_interviews_get",
+        "parameters": [
+          {
+            "name": "business_user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Business User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/{job_id}/interviews": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get Interviews For Job Endpoint",
+        "operationId": "get_interviews_for_job_endpoint_ats__job_id__interviews_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InterviewResponse"
+                  },
+                  "title": "Response Get Interviews For Job Endpoint Ats  Job Id  Interviews Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/profile": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get Candidate Profile Endpoint",
+        "description": "Retrieve candidate profile and preferences from PostgreSQL.",
+        "operationId": "get_candidate_profile_endpoint_ats_candidate__candidate_email__profile_get",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Update Candidate Profile Endpoint",
+        "description": "Update candidate profile and preferences in PostgreSQL.",
+        "operationId": "update_candidate_profile_endpoint_ats_candidate__candidate_email__profile_put",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/photo": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Upload Candidate Photo Endpoint",
+        "description": "Upload candidate photo to Admin-configured Storage (MinIO, S3, Azure)\nvia decoupled HTTP StorageClient.",
+        "operationId": "upload_candidate_photo_endpoint_ats_candidate__candidate_email__photo_post",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_candidate_photo_endpoint_ats_candidate__candidate_email__photo_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/resume": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Upload Candidate Resume Endpoint",
+        "description": "Upload candidate resume document to Admin-configured Storage (MinIO, S3, Azure)\nvia decoupled HTTP StorageClient.",
+        "operationId": "upload_candidate_resume_endpoint_ats_candidate__candidate_email__resume_post",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_candidate_resume_endpoint_ats_candidate__candidate_email__resume_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/saved-jobs": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get Candidate Saved Jobs Endpoint",
+        "description": "Retrieve list of saved job IDs for this candidate from PostgreSQL.",
+        "operationId": "get_candidate_saved_jobs_endpoint_ats_candidate__candidate_email__saved_jobs_get",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/saved-jobs/{job_id}": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Save Candidate Job Endpoint",
+        "description": "Bookmark a job in PostgreSQL.",
+        "operationId": "save_candidate_job_endpoint_ats_candidate__candidate_email__saved_jobs__job_id__post",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          },
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Unsave Candidate Job Endpoint",
+        "description": "Remove a bookmarked job from PostgreSQL.",
+        "operationId": "unsave_candidate_job_endpoint_ats_candidate__candidate_email__saved_jobs__job_id__delete",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          },
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/interviews": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get Interviews For Candidate Endpoint",
+        "operationId": "get_interviews_for_candidate_endpoint_ats_candidate__candidate_email__interviews_get",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/interviews/{interview_id}/remind": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Send Candidate Interview Reminder Endpoint",
+        "operationId": "send_candidate_interview_reminder_endpoint_ats_candidate__candidate_email__interviews__interview_id__remind_post",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          },
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/interviews/{interview_id}/proctoring": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Submit Proctoring Data Endpoint",
+        "operationId": "submit_proctoring_data_endpoint_ats_candidate__candidate_email__interviews__interview_id__proctoring_post",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          },
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProctoringSubmission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/interviews/{interview_id}/complete": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Complete Interview Endpoint",
+        "operationId": "complete_interview_endpoint_ats_candidate__candidate_email__interviews__interview_id__complete_post",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          },
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/candidate/{candidate_email}/interviews/{interview_id}/retake": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Retake Interview Endpoint",
+        "operationId": "retake_interview_endpoint_ats_candidate__candidate_email__interviews__interview_id__retake_post",
+        "parameters": [
+          {
+            "name": "candidate_email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Email"
+            }
+          },
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/business/{business_user_id}/interviews": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get Business Interviews Endpoint",
+        "operationId": "get_business_interviews_endpoint_ats_business__business_user_id__interviews_get",
+        "parameters": [
+          {
+            "name": "business_user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Business User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/{job_id}/plan-interviews": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Plan Interviews Endpoint",
+        "operationId": "plan_interviews_endpoint_ats__job_id__plan_interviews_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanInterviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/{job_id}/assign-self": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Assign a specific candidate's human interview to the calling user",
+        "operationId": "assign_self_endpoint_ats__job_id__assign_self_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignSelfRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/{job_id}/interview-plan": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get interview plan overview for the scheduler UI",
+        "operationId": "get_interview_plan_endpoint_ats__job_id__interview_plan_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/{job_id}/human-pool": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get human interviews pool for a job",
+        "operationId": "get_human_pool_endpoint_ats__job_id__human_pool_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/claim": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Claim a human interview",
+        "operationId": "claim_interview_endpoint_ats_interviews__interview_id__claim_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Release a claimed interview back to pool",
+        "operationId": "release_claimed_interview_endpoint_ats_interviews__interview_id__claim_delete",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/schedule": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Schedule a claimed human interview",
+        "operationId": "schedule_interview_endpoint_ats_interviews__interview_id__schedule_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleHumanRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/transfer-candidates": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "List members this interview can be transferred to",
+        "operationId": "get_transfer_candidates_endpoint_ats_interviews__interview_id__transfer_candidates_get",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/transfer-request": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Request to transfer an interview to another team member",
+        "operationId": "request_interview_transfer_endpoint_ats_interviews__interview_id__transfer_request_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/transfer-requests/{request_id}/accept": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Accept an interview transfer request",
+        "operationId": "accept_transfer_request_endpoint_ats_transfer_requests__request_id__accept_post",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/transfer-requests/{request_id}/decline": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Decline an interview transfer request",
+        "operationId": "decline_transfer_request_endpoint_ats_transfer_requests__request_id__decline_post",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/transfer-requests/batch-status": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Batch lookup for interview transfer request statuses",
+        "operationId": "get_transfer_requests_batch_status_endpoint_ats_transfer_requests_batch_status_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferRequestBatchStatus"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}": {
+      "put": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Update Job Endpoint",
+        "operationId": "update_job_endpoint_ats_jobs__job_id__put",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update Job Endpoint Ats Jobs  Job Id  Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/decision": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Submit recruiter decision (Pass / Fail) for an interview",
+        "operationId": "decide_interview_endpoint_ats_interviews__interview_id__decision_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewDecisionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/skip": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Skip a candidate interview in Human/AI kit",
+        "operationId": "skip_interview_endpoint_ats_interviews__interview_id__skip_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/unskip": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Unskip a candidate interview in Human/AI kit",
+        "operationId": "unskip_interview_endpoint_ats_interviews__interview_id__unskip_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/bulk-decision": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Submit bulk recruiter decisions (Pass / Fail) for multiple interviews",
+        "operationId": "bulk_decide_interviews_endpoint_ats_interviews_bulk_decision_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkInterviewDecisionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/interviews/{interview_id}/send-email": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Manually dispatch or re-send email to candidate",
+        "operationId": "send_interview_email_endpoint_ats_interviews__interview_id__send_email_post",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/SendInterviewEmailRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/stages": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get workflow pipeline stages overview and candidate counts per stage",
+        "operationId": "get_job_stages_endpoint_ats_jobs__job_id__stages_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/stages/{stage_id}/candidates": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get ranked candidates for a specific stage with composite scores & qualification",
+        "operationId": "get_stage_candidates_endpoint_ats_jobs__job_id__stages__stage_id__candidates_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "stage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Stage Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/stages/{stage_id}/advance": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Advance qualified candidates from current stage to next stage in pipeline",
+        "operationId": "advance_stage_candidates_endpoint_ats_jobs__job_id__stages__stage_id__advance_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "stage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Stage Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/AdvanceStageRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/stages/{stage_id}/skip-remaining-and-advance": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Advance passed candidates and mark remaining pending interviews as skipped",
+        "operationId": "skip_remaining_and_advance_endpoint_ats_jobs__job_id__stages__stage_id__skip_remaining_and_advance_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "stage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Stage Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/AdvanceStageRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/stages/{stage_id}/evaluate-deadline": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Evaluate candidates at stage deadline, rank by composite score, enforce headcount limit, and dispatch pass/fail emails",
+        "operationId": "evaluate_stage_deadline_endpoint_ats_jobs__job_id__stages__stage_id__evaluate_deadline_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "stage_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Stage Id"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Force"
+            }
+          },
+          {
+            "name": "auto_advance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Auto Advance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/pass-to-onboarding": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Pass candidates from Final List to Hiring & Onboarding with optional rejections",
+        "operationId": "pass_final_to_onboarding_endpoint_ats_jobs__job_id__pass_to_onboarding_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassToOnboardingPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/cancel-hiring": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Cancel / Close hiring for this job, cancel pending interviews, and optionally dispatch courtesy emails",
+        "operationId": "cancel_hiring_endpoint_ats_jobs__job_id__cancel_hiring_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/CancelHiringRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/jobs/{job_id}/resume-hiring": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Resume hiring for a previously cancelled or closed job",
+        "operationId": "resume_hiring_endpoint_ats_jobs__job_id__resume_hiring_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/quota/used": {
+      "get": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Get Internal Quota Used",
+        "operationId": "get_internal_quota_used_internal_ats_quota_used_get",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Org Id"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Year"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Month"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/quota/consume": {
+      "post": {
+        "tags": [
+          "Applicant Tracking System (ATS)"
+        ],
+        "summary": "Consume Internal Quota",
+        "operationId": "consume_internal_quota_internal_ats_quota_consume_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuotaConsumePayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/plan-limits": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Internal Plan Limits",
+        "description": "Fetch active platform plan limits (DB rows override default limits).",
+        "operationId": "get_internal_plan_limits_internal_ats_plan_limits_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Internal Plan Limits Internal Ats Plan Limits Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/interviews/{interview_id}": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Internal Interview",
+        "description": "Fetch single interview metadata for internal inter-service communication.",
+        "operationId": "get_internal_interview_internal_ats_interviews__interview_id__get",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Internal Interview Internal Ats Interviews  Interview Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Patch Internal Interview",
+        "description": "Generic update for interview fields (status, call_attempts, human_outcome, etc.).",
+        "operationId": "patch_internal_interview_internal_ats_interviews__interview_id__patch",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Patch Internal Interview Internal Ats Interviews  Interview Id  Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/interviews/{interview_id}/status": {
+      "patch": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Update Internal Interview Status",
+        "description": "Update interview status and optional proctoring score/feedback.",
+        "operationId": "update_internal_interview_status_internal_ats_interviews__interview_id__status_patch",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update Internal Interview Status Internal Ats Interviews  Interview Id  Status Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/candidates/{candidate_id}": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Internal Candidate",
+        "description": "Fetch selected candidate metadata.",
+        "operationId": "get_internal_candidate_internal_ats_candidates__candidate_id__get",
+        "parameters": [
+          {
+            "name": "candidate_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Candidate Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Internal Candidate Internal Ats Candidates  Candidate Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/metrics/summary": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Internal Ats Metrics",
+        "description": "Aggregate interview & candidate metrics.",
+        "operationId": "get_internal_ats_metrics_internal_ats_metrics_summary_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "type": "object",
+                  "title": "Response Get Internal Ats Metrics Internal Ats Metrics Summary Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/metrics/interview-counts": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Internal Interview Counts",
+        "description": "Return interview count, conducted count, and shortlisted count per job for analytics.",
+        "operationId": "get_internal_interview_counts_internal_ats_metrics_interview_counts_get",
+        "parameters": [
+          {
+            "name": "job_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Comma-separated job IDs",
+              "title": "Job Ids"
+            },
+            "description": "Comma-separated job IDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Internal Interview Counts Internal Ats Metrics Interview Counts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/jobs/{job_id}/analytics": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Internal Job Analytics",
+        "description": "Return aggregated shortlisted and interview data for a job or all jobs.",
+        "operationId": "get_internal_job_analytics_internal_ats_jobs__job_id__analytics_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "accessible_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Comma-separated accessible job IDs",
+              "title": "Accessible Ids"
+            },
+            "description": "Comma-separated accessible job IDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Internal Job Analytics Internal Ats Jobs  Job Id  Analytics Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/jobs/{job_id}/outcome-candidates": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Internal Outcome Candidates",
+        "description": "Return candidates filtered by outcome and interview type for analytics.",
+        "operationId": "get_internal_outcome_candidates_internal_ats_jobs__job_id__outcome_candidates_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "outcome",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "PASS | FAIL | CONDITIONAL | pending",
+              "title": "Outcome"
+            },
+            "description": "PASS | FAIL | CONDITIONAL | pending"
+          },
+          {
+            "name": "interview_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "ai | human",
+              "title": "Interview Type"
+            },
+            "description": "ai | human"
+          },
+          {
+            "name": "accessible_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Comma-separated accessible job IDs",
+              "title": "Accessible Ids"
+            },
+            "description": "Comma-separated accessible job IDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Get Internal Outcome Candidates Internal Ats Jobs  Job Id  Outcome Candidates Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/interviews/{interview_id}/report": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Internal Interview Report",
+        "description": "Fetch complete interview report and proctoring metadata.",
+        "operationId": "get_internal_interview_report_internal_ats_interviews__interview_id__report_get",
+        "parameters": [
+          {
+            "name": "interview_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Interview Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Internal Interview Report Internal Ats Interviews  Interview Id  Report Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/jobs/{job_id}/campus-pool-candidates": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Campus Pool Candidates",
+        "description": "Returns all human interview candidates for campus pool roster.",
+        "operationId": "get_campus_pool_candidates_internal_ats_jobs__job_id__campus_pool_candidates_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Get Campus Pool Candidates Internal Ats Jobs  Job Id  Campus Pool Candidates Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/jobs/{job_id}/candidate-interview": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Candidate Interview",
+        "description": "Fetch single interview record for candidate email and job.",
+        "operationId": "get_candidate_interview_internal_ats_jobs__job_id__candidate_interview_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Candidate email address",
+              "title": "Email"
+            },
+            "description": "Candidate email address"
+          },
+          {
+            "name": "interview_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Interview type",
+              "default": "human",
+              "title": "Interview Type"
+            },
+            "description": "Interview type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Candidate Interview Internal Ats Jobs  Job Id  Candidate Interview Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/jobs/{job_id}/candidates/reinstate": {
+      "post": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Reinstate Internal Candidate",
+        "description": "Reinstates a disqualified candidate for human interview.",
+        "operationId": "reinstate_internal_candidate_internal_ats_jobs__job_id__candidates_reinstate_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Reinstate Internal Candidate Internal Ats Jobs  Job Id  Candidates Reinstate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/jobs/{job_id}/candidates/reset-attempts": {
+      "post": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Reset Internal Attempts",
+        "description": "Resets call attempts to 0 for a candidate human interview.",
+        "operationId": "reset_internal_attempts_internal_ats_jobs__job_id__candidates_reset_attempts_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Reset Internal Attempts Internal Ats Jobs  Job Id  Candidates Reset Attempts Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/interviews/scheduled-overlaps": {
+      "get": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Get Scheduled Overlaps",
+        "description": "Find scheduled interviews overlapping a given window for specified interviewers.",
+        "operationId": "get_scheduled_overlaps_internal_ats_interviews_scheduled_overlaps_get",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "End"
+            }
+          },
+          {
+            "name": "emails",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Comma-separated member emails",
+              "title": "Emails"
+            },
+            "description": "Comma-separated member emails"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Get Scheduled Overlaps Internal Ats Interviews Scheduled Overlaps Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/ats/jobs/{job_id}/revoke-member-interviews": {
+      "post": {
+        "tags": [
+          "Internal - ATS"
+        ],
+        "summary": "Revoke Member Interviews Endpoint",
+        "description": "Release all claimed interviews for a revoked team member on this job back to the pool.",
+        "operationId": "revoke_member_interviews_endpoint_internal_ats_jobs__job_id__revoke_member_interviews_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeMemberInterviewsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Revoke Member Interviews Endpoint Internal Ats Jobs  Job Id  Revoke Member Interviews Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/jobs/{job_id}/pass-to-onboarding": {
+      "post": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Pass candidates from Final List to Hiring & Onboarding with optional rejections",
+        "operationId": "pass_candidates_to_onboarding_ats_onboarding_jobs__job_id__pass_to_onboarding_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PassToOnboardingPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/jobs": {
+      "get": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "List jobs with passed candidates and onboarding metrics",
+        "operationId": "list_onboarding_jobs_ats_onboarding_jobs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/jobs/{job_id}/candidates": {
+      "get": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Get passed candidates roster for a specific job",
+        "operationId": "get_job_passed_candidates_ats_onboarding_jobs__job_id__candidates_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/request-documents": {
+      "post": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Send selection notification & document submission request to candidates",
+        "operationId": "request_documents_ats_onboarding_request_documents_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDocumentsPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/{onboarding_id}/remind": {
+      "post": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Manually resend document submission reminder email",
+        "operationId": "remind_candidate_ats_onboarding__onboarding_id__remind_post",
+        "parameters": [
+          {
+            "name": "onboarding_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Onboarding Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemindCandidatePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/{onboarding_id}/request-correction": {
+      "post": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Request document revision/re-upload and reset status to pending_docs",
+        "operationId": "request_document_correction_ats_onboarding__onboarding_id__request_correction_post",
+        "parameters": [
+          {
+            "name": "onboarding_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Onboarding Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCorrectionPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/{onboarding_id}/hire": {
+      "post": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Finalize hiring & dispatch HR custom joining email",
+        "operationId": "hire_candidate_ats_onboarding__onboarding_id__hire_post",
+        "parameters": [
+          {
+            "name": "onboarding_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Onboarding Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HireCandidatePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/public/{token}": {
+      "get": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Get candidate onboarding portal details by token",
+        "operationId": "get_public_portal_ats_onboarding_public__token__get",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/public/{token}/submit": {
+      "post": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Submit onboarding documents via candidate portal (JSON or multipart)",
+        "operationId": "submit_public_portal_json_ats_onboarding_public__token__submit_post",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonSubmitPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ats/onboarding/file": {
+      "get": {
+        "tags": [
+          "Hiring & Onboarding"
+        ],
+        "summary": "Stream or download submitted onboarding document",
+        "operationId": "get_document_file_ats_onboarding_file_get",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdvanceStageRequest": {
+        "properties": {
+          "candidate_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Ids"
+          },
+          "target_stage_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Stage Id"
+          }
+        },
+        "type": "object",
+        "title": "AdvanceStageRequest"
+      },
+      "AssignSelfRequest": {
+        "properties": {
+          "selected_candidate_id": {
+            "type": "string",
+            "title": "Selected Candidate Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "selected_candidate_id"
+        ],
+        "title": "AssignSelfRequest"
+      },
+      "Body_upload_candidate_photo_endpoint_ats_candidate__candidate_email__photo_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_candidate_photo_endpoint_ats_candidate__candidate_email__photo_post"
+      },
+      "Body_upload_candidate_resume_endpoint_ats_candidate__candidate_email__resume_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_candidate_resume_endpoint_ats_candidate__candidate_email__resume_post"
+      },
+      "BulkInterviewDecisionRequest": {
+        "properties": {
+          "interview_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Interview Ids"
+          },
+          "decision": {
+            "type": "string",
+            "title": "Decision"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "custom_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Message"
+          },
+          "send_email": {
+            "type": "boolean",
+            "title": "Send Email",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "interview_ids",
+          "decision"
+        ],
+        "title": "BulkInterviewDecisionRequest"
+      },
+      "CancelHiringRequest": {
+        "properties": {
+          "notify_candidates": {
+            "type": "boolean",
+            "title": "Notify Candidates",
+            "default": true
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "title": "CancelHiringRequest"
+      },
+      "CandidateSelectionInput": {
+        "properties": {
+          "resume_id": {
+            "type": "string",
+            "title": "Resume Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "similarity_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Similarity Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "resume_id",
+          "email"
+        ],
+        "title": "CandidateSelectionInput"
+      },
+      "CandidateSelectionRequest": {
+        "properties": {
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/CandidateSelectionInput"
+            },
+            "type": "array",
+            "title": "Candidates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "candidates"
+        ],
+        "title": "CandidateSelectionRequest"
+      },
+      "ExtendDeadlineRequest": {
+        "properties": {
+          "days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Days"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          }
+        },
+        "type": "object",
+        "title": "ExtendDeadlineRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HireCandidatePayload": {
+        "properties": {
+          "joining_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Joining Date"
+          },
+          "joining_location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Joining Location"
+          },
+          "email_subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email Subject",
+            "default": "Offer of Employment & Joining Details"
+          },
+          "custom_message": {
+            "type": "string",
+            "title": "Custom Message"
+          },
+          "hired_notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hired Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "custom_message"
+        ],
+        "title": "HireCandidatePayload"
+      },
+      "InterviewCreate": {
+        "properties": {
+          "selected_candidate_id": {
+            "type": "string",
+            "title": "Selected Candidate Id"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "candidate_email": {
+            "type": "string",
+            "title": "Candidate Email"
+          },
+          "interview_type": {
+            "type": "string",
+            "title": "Interview Type",
+            "default": "ai"
+          },
+          "round_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Round Type",
+            "default": "technical"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "invite for interview"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "max_questions": {
+            "type": "integer",
+            "title": "Max Questions",
+            "default": 10
+          }
+        },
+        "type": "object",
+        "required": [
+          "selected_candidate_id",
+          "job_id",
+          "candidate_email"
+        ],
+        "title": "InterviewCreate"
+      },
+      "InterviewDecisionRequest": {
+        "properties": {
+          "decision": {
+            "type": "string",
+            "title": "Decision"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "custom_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Message"
+          },
+          "send_email": {
+            "type": "boolean",
+            "title": "Send Email",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "decision"
+        ],
+        "title": "InterviewDecisionRequest"
+      },
+      "InterviewResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "selected_candidate_id": {
+            "type": "string",
+            "title": "Selected Candidate Id"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "candidate_email": {
+            "type": "string",
+            "title": "Candidate Email"
+          },
+          "interview_type": {
+            "type": "string",
+            "title": "Interview Type"
+          },
+          "round_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Round Type",
+            "default": "technical"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "human_outcome": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Human Outcome"
+          },
+          "candidate_feedback": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Feedback"
+          },
+          "internal_report": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Internal Report"
+          },
+          "max_questions": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Questions"
+          },
+          "proctoring_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proctoring Score"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "selected_candidate_id",
+          "job_id",
+          "candidate_email",
+          "interview_type",
+          "status",
+          "created_at"
+        ],
+        "title": "InterviewResponse"
+      },
+      "InterviewUpdate": {
+        "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "round_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Round Type"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "human_outcome": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Human Outcome"
+          },
+          "candidate_feedback": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Feedback"
+          },
+          "internal_report": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Internal Report"
+          },
+          "max_questions": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Questions"
+          },
+          "session_state": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session State"
+          }
+        },
+        "type": "object",
+        "title": "InterviewUpdate"
+      },
+      "JsonSubmitFileItem": {
+        "properties": {
+          "doc_name": {
+            "type": "string",
+            "title": "Doc Name"
+          },
+          "file_name": {
+            "type": "string",
+            "title": "File Name"
+          },
+          "file_data": {
+            "type": "string",
+            "title": "File Data"
+          },
+          "content_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc_name",
+          "file_name",
+          "file_data"
+        ],
+        "title": "JsonSubmitFileItem"
+      },
+      "JsonSubmitPayload": {
+        "properties": {
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "files": {
+            "items": {
+              "$ref": "#/components/schemas/JsonSubmitFileItem"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "JsonSubmitPayload"
+      },
+      "PassToOnboardingPayload": {
+        "properties": {
+          "order_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order By",
+            "default": "AI Score (High to Low)"
+          },
+          "top_n": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top N",
+            "default": 5
+          },
+          "send_rejection_email": {
+            "type": "boolean",
+            "title": "Send Rejection Email",
+            "default": true
+          },
+          "rejection_subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rejection Subject"
+          },
+          "rejection_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rejection Message"
+          }
+        },
+        "type": "object",
+        "title": "PassToOnboardingPayload"
+      },
+      "PlanInterviewRequest": {
+        "properties": {
+          "ai_count": {
+            "type": "integer",
+            "title": "Ai Count",
+            "default": 0
+          },
+          "human_count": {
+            "type": "integer",
+            "title": "Human Count",
+            "default": 0
+          },
+          "round_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Round Type",
+            "default": "technical"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "max_questions": {
+            "type": "integer",
+            "title": "Max Questions",
+            "default": 10
+          },
+          "member_distribution": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Member Distribution"
+          },
+          "interview_flow": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Flow"
+          },
+          "custom_instructions": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Instructions"
+          }
+        },
+        "type": "object",
+        "title": "PlanInterviewRequest"
+      },
+      "ProctoringSubmission": {
+        "properties": {
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "tab_switches": {
+            "type": "integer",
+            "title": "Tab Switches",
+            "default": 0
+          },
+          "window_blurs": {
+            "type": "integer",
+            "title": "Window Blurs",
+            "default": 0
+          },
+          "multiple_faces_detected": {
+            "type": "integer",
+            "title": "Multiple Faces Detected",
+            "default": 0
+          },
+          "face_tracking_available": {
+            "type": "boolean",
+            "title": "Face Tracking Available",
+            "default": false
+          },
+          "events": {
+            "items": {},
+            "type": "array",
+            "title": "Events",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "score"
+        ],
+        "title": "ProctoringSubmission"
+      },
+      "QuotaConsumePayload": {
+        "properties": {
+          "org_id": {
+            "type": "string",
+            "title": "Org Id"
+          },
+          "interview_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Id"
+          },
+          "attempt_no": {
+            "type": "integer",
+            "title": "Attempt No",
+            "default": 1
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "candidate_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Email"
+          },
+          "consumed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Consumed At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "org_id"
+        ],
+        "title": "QuotaConsumePayload"
+      },
+      "ReconductRequest": {
+        "properties": {
+          "new_expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Expires At"
+          }
+        },
+        "type": "object",
+        "title": "ReconductRequest"
+      },
+      "RemindCandidatePayload": {
+        "properties": {
+          "custom_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Note"
+          }
+        },
+        "type": "object",
+        "title": "RemindCandidatePayload"
+      },
+      "RequestCorrectionPayload": {
+        "properties": {
+          "rejected_docs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Rejected Docs",
+            "default": []
+          },
+          "reason_notes": {
+            "type": "string",
+            "title": "Reason Notes"
+          },
+          "deadline_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reason_notes"
+        ],
+        "title": "RequestCorrectionPayload"
+      },
+      "RequestDocumentsCandidateItem": {
+        "properties": {
+          "candidate_email": {
+            "type": "string",
+            "title": "Candidate Email"
+          },
+          "candidate_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Name"
+          },
+          "interview_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Id"
+          },
+          "selected_candidate_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Candidate Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "candidate_email"
+        ],
+        "title": "RequestDocumentsCandidateItem"
+      },
+      "RequestDocumentsPayload": {
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/RequestDocumentsCandidateItem"
+            },
+            "type": "array",
+            "title": "Candidates"
+          },
+          "required_docs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Docs"
+          },
+          "deadline_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline Date"
+          },
+          "custom_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "job_id",
+          "candidates",
+          "required_docs"
+        ],
+        "title": "RequestDocumentsPayload"
+      },
+      "RevokeMemberInterviewsRequest": {
+        "properties": {
+          "member_email": {
+            "type": "string",
+            "title": "Member Email"
+          }
+        },
+        "type": "object",
+        "required": [
+          "member_email"
+        ],
+        "title": "RevokeMemberInterviewsRequest"
+      },
+      "ScheduleHumanRequest": {
+        "properties": {
+          "scheduled_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Scheduled At"
+          },
+          "duration_minutes": {
+            "type": "integer",
+            "title": "Duration Minutes",
+            "default": 60
+          }
+        },
+        "type": "object",
+        "required": [
+          "scheduled_at"
+        ],
+        "title": "ScheduleHumanRequest"
+      },
+      "SelectedCandidateResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "job_id": {
+            "type": "string",
+            "title": "Job Id"
+          },
+          "resume_id": {
+            "type": "string",
+            "title": "Resume Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "similarity_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Similarity Score"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "job_id",
+          "resume_id",
+          "email",
+          "status",
+          "created_at"
+        ],
+        "title": "SelectedCandidateResponse"
+      },
+      "SendInterviewEmailRequest": {
+        "properties": {
+          "template_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Key",
+            "default": "custom"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "badge_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Badge Text"
+          },
+          "cta_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cta Text"
+          },
+          "cta_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cta Url"
+          }
+        },
+        "type": "object",
+        "title": "SendInterviewEmailRequest"
+      },
+      "TransferRequestBatchStatus": {
+        "properties": {
+          "request_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Request Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "request_ids"
+        ],
+        "title": "TransferRequestBatchStatus"
+      },
+      "TransferRequestBody": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email"
+        ],
+        "title": "TransferRequestBody"
+      },
+      "UpdateStatusRequest": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "feedback": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Feedback"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "UpdateStatusRequest"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

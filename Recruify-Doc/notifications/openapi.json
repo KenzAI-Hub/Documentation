@@ -1,0 +1,2168 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Recruify - Notifications Microservice",
+    "description": "Autonomous microservice API for the Notifications domain",
+    "version": "v3"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Notifications Microservice - Health"
+        ],
+        "summary": "Health Check",
+        "description": "Service health check with DB ping.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/send": {
+      "post": {
+        "tags": [
+          "Notifications"
+        ],
+        "summary": "Send Notification",
+        "operationId": "send_notification_notifications_send_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendNotificationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Notification Notifications Send Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/admin/sent": {
+      "get": {
+        "tags": [
+          "Notifications"
+        ],
+        "summary": "List Sent Notifications",
+        "operationId": "list_sent_notifications_notifications_admin_sent_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response List Sent Notifications Notifications Admin Sent Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/unread-count": {
+      "get": {
+        "tags": [
+          "Notifications"
+        ],
+        "summary": "Get Unread Count",
+        "operationId": "get_unread_count_notifications_unread_count_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "type": "object",
+                  "title": "Response Get Unread Count Notifications Unread Count Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/": {
+      "get": {
+        "tags": [
+          "Notifications"
+        ],
+        "summary": "Get My Notifications",
+        "operationId": "get_my_notifications_notifications__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationOut"
+                  },
+                  "type": "array",
+                  "title": "Response Get My Notifications Notifications  Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/read-all": {
+      "put": {
+        "tags": [
+          "Notifications"
+        ],
+        "summary": "Mark All Read",
+        "operationId": "mark_all_read_notifications_read_all_put",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "type": "object",
+                  "title": "Response Mark All Read Notifications Read All Put"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/{nid}/read": {
+      "put": {
+        "tags": [
+          "Notifications"
+        ],
+        "summary": "Mark One Read",
+        "operationId": "mark_one_read_notifications__nid__read_put",
+        "parameters": [
+          {
+            "name": "nid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Nid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Mark One Read Notifications  Nid  Read Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/dispatch": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Dispatch Internal Notification",
+        "description": "Create and persist a notification from another internal microservice.",
+        "operationId": "dispatch_internal_notification_internal_notifications_dispatch_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalNotificationDispatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Dispatch Internal Notification Internal Notifications Dispatch Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/in-app": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Create In App Notification",
+        "description": "Create and persist an in-app notification by user_id.",
+        "operationId": "create_in_app_notification_internal_notifications_in_app_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InternalInAppNotification"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Create In App Notification Internal Notifications In App Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/transfer-requests/resolve": {
+      "put": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Resolve Transfer Notification",
+        "description": "Marks recipient's transfer request notification as read and records resolved status in extra_data.",
+        "operationId": "resolve_transfer_notification_internal_notifications_transfer_requests_resolve_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolveTransferRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Resolve Transfer Notification Internal Notifications Transfer Requests Resolve Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/send": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Raw Email",
+        "description": "Dispatches a raw HTML email via Resend.",
+        "operationId": "send_raw_email_internal_notifications_email_send_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailSendRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Raw Email Internal Notifications Email Send Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/ai-interview": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Ai Interview Email",
+        "description": "Dispatches an AI Interview technical invitation or timeline extension email.",
+        "operationId": "send_ai_interview_email_internal_notifications_email_ai_interview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIInterviewEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Ai Interview Email Internal Notifications Email Ai Interview Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/campus-pool": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Campus Pool Email",
+        "description": "Dispatches a Campus Pool availability window and rolling call invitation email.",
+        "operationId": "send_campus_pool_email_internal_notifications_email_campus_pool_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampusPoolEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Campus Pool Email Internal Notifications Email Campus Pool Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/human-scheduled": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Human Scheduled Email",
+        "description": "Dispatches a 1-on-1 human interview scheduled slot confirmation email.",
+        "operationId": "send_human_scheduled_email_internal_notifications_email_human_scheduled_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HumanScheduledEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Human Scheduled Email Internal Notifications Email Human Scheduled Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/human-shortlisted": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Human Shortlisted Email",
+        "description": "Dispatches an email informing candidate they advanced to Stage 2 Human interview with scheduling to follow.",
+        "operationId": "send_human_shortlisted_email_internal_notifications_email_human_shortlisted_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HumanShortlistedEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Human Shortlisted Email Internal Notifications Email Human Shortlisted Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/interview-rescheduled": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Interview Rescheduled Email",
+        "description": "Dispatches an interview rescheduled date/time update email.",
+        "operationId": "send_interview_rescheduled_email_internal_notifications_email_interview_rescheduled_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewRescheduledEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Interview Rescheduled Email Internal Notifications Email Interview Rescheduled Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/candidate-reminder": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Candidate Reminder Email",
+        "description": "Dispatches a 1-hour pre-interview reminder email to the candidate.",
+        "operationId": "send_candidate_reminder_email_internal_notifications_email_candidate_reminder_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidateReminderEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Candidate Reminder Email Internal Notifications Email Candidate Reminder Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/interviewer-reminder": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Interviewer Reminder Email",
+        "description": "Dispatches a 1-hour pre-interview reminder email to the interviewer.",
+        "operationId": "send_interviewer_reminder_email_internal_notifications_email_interviewer_reminder_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewerReminderEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Interviewer Reminder Email Internal Notifications Email Interviewer Reminder Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/interview-passed": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Interview Passed Email",
+        "description": "Dispatches an interview passed congratulatory notification email.",
+        "operationId": "send_interview_passed_email_internal_notifications_email_interview_passed_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewPassedEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Interview Passed Email Internal Notifications Email Interview Passed Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/interview-failed": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Interview Failed Email",
+        "description": "Dispatches an interview application status update (failed/unsuccessful) email.",
+        "operationId": "send_interview_failed_email_internal_notifications_email_interview_failed_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewFailedEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Interview Failed Email Internal Notifications Email Interview Failed Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/returned-to-pool": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Returned To Pool Email",
+        "description": "Dispatches an interview returned to pool update email.",
+        "operationId": "send_returned_to_pool_email_internal_notifications_email_returned_to_pool_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReturnedToPoolEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Returned To Pool Email Internal Notifications Email Returned To Pool Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/application-received": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Application Received Email",
+        "description": "Dispatches a candidate application received confirmation email.",
+        "operationId": "send_application_received_email_internal_notifications_email_application_received_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationReceivedEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Application Received Email Internal Notifications Email Application Received Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/interview-completed": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Interview Completed Email",
+        "description": "Dispatches an interview completed / under evaluation confirmation email.",
+        "operationId": "send_interview_completed_email_internal_notifications_email_interview_completed_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewCompletedEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Interview Completed Email Internal Notifications Email Interview Completed Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/notifications/email/custom": {
+      "post": {
+        "tags": [
+          "Internal - Notifications"
+        ],
+        "summary": "Send Custom Email",
+        "description": "Dispatches an enterprise-branded custom or templated email.",
+        "operationId": "send_custom_email_internal_notifications_email_custom_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Send Custom Email Internal Notifications Email Custom Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AIInterviewEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "max_questions": {
+            "type": "integer",
+            "title": "Max Questions",
+            "default": 10
+          },
+          "interview_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Id"
+          },
+          "is_extension": {
+            "type": "boolean",
+            "title": "Is Extension",
+            "default": false
+          },
+          "change_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Type"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          },
+          "timezone_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "AIInterviewEmailRequest"
+      },
+      "ApplicationReceivedEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Hiring Company"
+          },
+          "application_id": {
+            "type": "string",
+            "title": "Application Id"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source",
+            "default": "direct"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title",
+          "application_id"
+        ],
+        "title": "ApplicationReceivedEmailRequest"
+      },
+      "CampusPoolEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "pool_start": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pool Start"
+          },
+          "pool_end": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pool End"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "CampusPoolEmailRequest"
+      },
+      "CandidateReminderEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "interview_type": {
+            "type": "string",
+            "title": "Interview Type",
+            "default": "human"
+          },
+          "interview_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Id"
+          },
+          "timezone_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone Name"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "CandidateReminderEmailRequest"
+      },
+      "CustomEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "body_text": {
+            "type": "string",
+            "title": "Body Text"
+          },
+          "candidate_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "badge_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Badge Text",
+            "default": "Update"
+          },
+          "cta_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cta Text"
+          },
+          "cta_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cta Url"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "subject",
+          "body_text"
+        ],
+        "title": "CustomEmailRequest"
+      },
+      "EmailSendRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "html_content": {
+            "type": "string",
+            "title": "Html Content"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "subject",
+          "html_content"
+        ],
+        "title": "EmailSendRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HumanScheduledEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "interview_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Id"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "HumanScheduledEmailRequest"
+      },
+      "HumanShortlistedEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "interviewer_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interviewer Name"
+          },
+          "interview_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Id"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "HumanShortlistedEmailRequest"
+      },
+      "InternalInAppNotification": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "default": "info"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "title",
+          "message"
+        ],
+        "title": "InternalInAppNotification"
+      },
+      "InternalNotificationDispatch": {
+        "properties": {
+          "recipient_email": {
+            "type": "string",
+            "title": "Recipient Email"
+          },
+          "recipient_keycloak_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipient Keycloak Id"
+          },
+          "org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Org Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "default": "info"
+          },
+          "sent_by_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sent By Email",
+            "default": "system@recruify.internal"
+          },
+          "extra_data": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extra Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "recipient_email",
+          "title",
+          "message"
+        ],
+        "title": "InternalNotificationDispatch"
+      },
+      "InterviewCompletedEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "InterviewCompletedEmailRequest"
+      },
+      "InterviewFailedEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "feedback_notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Feedback Notes"
+          },
+          "custom_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Message"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "InterviewFailedEmailRequest"
+      },
+      "InterviewPassedEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "feedback_notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Feedback Notes"
+          },
+          "custom_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Message"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "InterviewPassedEmailRequest"
+      },
+      "InterviewRescheduledEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "new_scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Scheduled At"
+          },
+          "old_scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Old Scheduled At"
+          },
+          "interview_type": {
+            "type": "string",
+            "title": "Interview Type",
+            "default": "human"
+          },
+          "interview_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Id"
+          },
+          "timezone_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone Name"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "InterviewRescheduledEmailRequest"
+      },
+      "InterviewerReminderEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "interviewer_name": {
+            "type": "string",
+            "title": "Interviewer Name"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "interview_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interview Id"
+          },
+          "timezone_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone Name"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "interviewer_name",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "InterviewerReminderEmailRequest"
+      },
+      "NotificationOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "sent_by_email": {
+            "type": "string",
+            "title": "Sent By Email"
+          },
+          "is_read": {
+            "type": "boolean",
+            "title": "Is Read"
+          },
+          "read_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Read At"
+          },
+          "extra_data": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extra Data"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "message",
+          "type",
+          "sent_by_email",
+          "is_read",
+          "read_at",
+          "created_at"
+        ],
+        "title": "NotificationOut"
+      },
+      "ResolveTransferRequest": {
+        "properties": {
+          "transfer_request_id": {
+            "type": "string",
+            "title": "Transfer Request Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "transfer_request_id",
+          "status"
+        ],
+        "title": "ResolveTransferRequest"
+      },
+      "ReturnedToPoolEmailRequest": {
+        "properties": {
+          "to_email": {
+            "type": "string",
+            "title": "To Email"
+          },
+          "candidate_name": {
+            "type": "string",
+            "title": "Candidate Name"
+          },
+          "job_title": {
+            "type": "string",
+            "title": "Job Title"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name",
+            "default": "Our Organization"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "to_email",
+          "candidate_name",
+          "job_title"
+        ],
+        "title": "ReturnedToPoolEmailRequest"
+      },
+      "SendNotificationRequest": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "default": "info"
+          },
+          "recipient_org_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipient Org Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "message"
+        ],
+        "title": "SendNotificationRequest"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
